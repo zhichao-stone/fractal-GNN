@@ -115,7 +115,7 @@ def aug_renormalization_graphs(
 ):
     type_1, type_2 = aug_type[0], aug_type[1]
     aug_graphs_1, aug_graphs_2 = [], []
-    for i in len(graphs):
+    for i in range(len(graphs)):
         g, is_fractal, r2 = graphs[i], is_fractals[i], float(fractal_attrs[i])
         if type_1 == "r" and is_fractal and r2 >= aug_fractal_threshold:
             aug_graphs_1.append(renormalization_graph(g, aug_scales[0]))

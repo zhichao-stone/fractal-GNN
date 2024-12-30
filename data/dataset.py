@@ -82,6 +82,7 @@ class GraphPredGINDataset(Dataset):
         dataset_name: str, 
         raw_dir: str, 
         self_loop: bool = False, 
+        embed_dim: int = 768, 
         train_ratio: float = 0.55, 
         val_ratio: float = 0.05
     ) -> None:
@@ -89,7 +90,7 @@ class GraphPredGINDataset(Dataset):
         self.train_ratio = train_ratio
         self.val_ratio = val_ratio
 
-        dataset = dgldata.GINDataset(name=dataset_name, raw_dir=raw_dir, self_loop=self_loop)
+        dataset = dgldata.GINDataset(name=dataset_name.upper(), raw_dir=raw_dir, self_loop=self_loop)
         self.name = dataset.name
         self.num_classes = dataset.num_classes
         
@@ -98,7 +99,23 @@ class GraphPredGINDataset(Dataset):
             train_ratio=self.train_ratio,
             val_ratio=self.val_ratio
         )
+
+        self.process_feature(embed_dim)
+
         print('train, test, val sizes :',len(self.train),len(self.test),len(self.val))
+
+    def process_feature(self, embed_dim: int):
+        for idx, graph in enumerate(self.train.graphs):
+            if "feat" not in graph.ndata:
+                self.train.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
+
+        for idx, graph in enumerate(self.val.graphs):
+            if "feat" not in graph.ndata:
+                self.val.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
+
+        for idx, graph in enumerate(self.test.graphs):
+            if "feat" not in graph.ndata:
+                self.test.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
 
     def collate(self, samples):
         graphs, labels, is_fractal, fractal_attr = map(list, zip(*samples))

@@ -53,14 +53,23 @@ def train_contrastive_epoch(
 
     for iter, (batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs) in enumerate(data_loader):
         aug_batch_graphs = dgl.unbatch(batch_graphs)
-        aug_graphs_1, aug_graphs_2 = aug_renormalization_graphs(aug_batch_graphs, aug_scales, batch_is_fractal, batch_fractal_attrs)
+        aug_graphs_1, aug_graphs_2 = aug_renormalization_graphs(
+            graphs=aug_batch_graphs, 
+            aug_scales=aug_scales, 
+            is_fractals=batch_is_fractal, 
+            fractal_attrs=batch_fractal_attrs, 
+            aug_type=aug_type, 
+            aug_fractal_threshold=aug_fractal_threshold
+        )
 
         batch_graphs, batch_snorm_n, _ = collate_batched_graph(aug_graphs_1)
         aug_batch_graphs, aug_batch_snorm_n, _ = collate_batched_graph(aug_graphs_2)
         
-        batch_h = batch_graphs.ndata["attr"].to(device)
+        batch_graphs = batch_graphs.to(device)
+        batch_h = batch_graphs.ndata["feat"].to(device)
         batch_snorm_n = batch_snorm_n.to(device)
-        aug_batch_h = aug_batch_graphs.ndata["attr"].to(device)
+        aug_batch_graphs = aug_batch_graphs.to(device)
+        aug_batch_h = aug_batch_graphs.ndata["feat"].to(device)
         aug_batch_snorm_n = aug_batch_snorm_n.to(device)
 
         optimizer.zero_grad()
@@ -88,6 +97,7 @@ if __name__ == "__main__":
     ### train settings
     parser.add_argument("--gpu", type=int, default=0, help="id of gpu to use. -1 if cpu used")
     parser.add_argument("--dataset", type=str, default="redditbinary")
+    parser.add_argument("--embed_dim", type=int, default="768", help="if graph in dataset doesn't have feature, randomly initialize a feature with <feat_dim> dimensions")
     parser.add_argument("--seed", type=int, default=41, help="random seed")
     parser.add_argument("--epoch", type=int, default=80)
     parser.add_argument("--batch_size", type=int, default=128)
@@ -143,6 +153,7 @@ if __name__ == "__main__":
         is_pretrain = configs["train_params"].pop("is_pretrain", True)
 
         model_name = configs["model_params"].pop("model", "GIN")
+        embed_dim = configs["model_params"].pop("embed_dim", 768)
         num_layers = configs["model_params"].pop("num_layers", 4)
         mlp_layers = configs["model_params"].pop("mlp_layers", 2)
         hidden_dim = configs["model_params"].pop("hidden_dim", 128)
@@ -172,6 +183,7 @@ if __name__ == "__main__":
         is_pretrain = args.is_pretrain
 
         model_name = args.model
+        embed_dim = args.embed_dim
         num_layers = args.num_layers
         mlp_layers = args.mlp_layers
         hidden_dim = args.hidden_dim
@@ -194,7 +206,7 @@ if __name__ == "__main__":
     dgl.random.seed(random_seed)
 
     # log setting
-    log_file_name = f"{args.config}" if args.config != "" else f"GIN_{dataset_name}"
+    log_file_name = f"{str(os.path.split(args.config)[-1]).split('.')[0]}" if args.config != "" else f"GIN_{dataset_name}"
     logger = ModelLogger(log_file_name, "log", backupCount=7).get_logger()
     logger.info(f"Logging to {log_file_name}.log")
 
@@ -202,10 +214,10 @@ if __name__ == "__main__":
     device = torch.device(f"cuda:{gpu_id}" if gpu_id >= 0 else "cpu")
     
     # load data
-    dataset = GraphPredGINDataset(dataset_name=dataset_name, raw_dir=DATA_RAW_DIR, self_loop=False)
-    input_dim = dataset.train[0][0].ndata["attr"].size(0)
+    dataset = GraphPredGINDataset(dataset_name=dataset_name, raw_dir=DATA_RAW_DIR, self_loop=False, embed_dim=embed_dim)
+    input_dim = embed_dim
     num_classes = dataset.num_classes
-    logger.info(f"Load Data : {dataset_name}")
+    logger.info(f"Load Data: {dataset_name} , input_dim={input_dim} , num_classes={num_classes}")
 
     # model
     model = GIN(
@@ -258,6 +270,7 @@ if __name__ == "__main__":
             epoch=epoch, 
             head=head, 
             aug_type=aug_type, 
+            aug_scales=aug_scales, 
             aug_fractal_threshold=aug_fractal_threshold, 
             logger=logger
         )
