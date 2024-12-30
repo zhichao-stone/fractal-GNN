@@ -1,19 +1,20 @@
 import os
 import time
 import random
+import glob
 import argparse
 import numpy as np
 import dgl
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from logging import Logger
-from typing import List, Dict
+from typing import List
 
 from data.dataset import GraphPredGINDataset
 from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph, sim_matrix2, compute_diag_sum
 from models.gin import GIN
+from evaluate import evaluate_with_dataloader
 from logger import ModelLogger
 from utils import load_json
 
@@ -36,7 +37,7 @@ def compute_contrastive_loss(vec1:torch.Tensor, vec2:torch.Tensor):
     return contrastive_loss
 
 
-def train_contrastive_epoch(
+def train_epoch_contrastive_learning(
     model: nn.Module,
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
@@ -89,6 +90,44 @@ def train_contrastive_epoch(
     return epoch_loss, optimizer
 
 
+def train_epoch_graph_classification(
+    model: nn.Module,
+    optimizer: torch.optim.Optimizer, 
+    device: torch.device, 
+    data_loader: DataLoader,
+    epoch: int, 
+    head: bool, 
+    logger: Logger
+):
+    model.train()
+    epoch_loss = 0.0
+    epoch_acc = 0
+    nb_data = 0
+
+    for iter, (batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs) in enumerate(data_loader):
+
+        batch_graphs = batch_graphs.to(device)
+        batch_h = batch_graphs.ndata["feat"].to(device)
+        batch_snorm_n = batch_snorm_n.to(device)
+        batch_labels = batch_labels.to(device)
+
+        optimizer.zero_grad()
+        batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n, mlp=False, head=head)
+        criterion = nn.CrossEntropyLoss()
+        loss = criterion(batch_scores, batch_labels)
+        loss.backward()
+        optimizer.step()
+        epoch_loss += loss.detach().cpu().item()
+        nb_data += batch_labels.size(0)
+
+        if (iter + 1) % 20 == 0:
+            logger.info(f"##### Epoch: {epoch+1}/{epochs} , Iter: {iter+1}/{len(data_loader)} , Train_Loss: {loss:.4f} , Train_Acc: {epoch_acc/nb_data:.4f}")
+    
+    epoch_loss = epoch_loss / len(data_loader)
+    epoch_acc = epoch_acc / nb_data
+
+    return epoch_loss, epoch_acc, optimizer
+
 
 if __name__ == "__main__":
     # parse args
@@ -124,6 +163,7 @@ if __name__ == "__main__":
     parser.add_argument("--graph_norm", action="store_true")
     parser.add_argument("--batch_norm", action="store_true")
     parser.add_argument("--residual", action="store_true")
+    parser.add_argument("--load_model", action="store_true")
     
     args = parser.parse_args()
 
@@ -150,7 +190,7 @@ if __name__ == "__main__":
         aug_scales = [int(s) for s in configs["train_params"]["aug_scales"]] if "aug_scales" in configs["train_params"] else [1, 2]
         aug_fractal_threshold = configs["train_params"].pop("aug_fractal_threshold", 0.8)
         log_epoch_interval = configs["train_params"].pop("log_epoch_interval", 5)
-        is_pretrain = configs["train_params"].pop("is_pretrain", True)
+        is_pretrain = configs["train_params"].pop("is_pretrain", False)
 
         model_name = configs["model_params"].pop("model", "GIN")
         embed_dim = configs["model_params"].pop("embed_dim", 768)
@@ -165,6 +205,7 @@ if __name__ == "__main__":
         graph_norm = configs["model_params"].pop("graph_norm", True)
         batch_norm = configs["model_params"].pop("batch_norm", True)
         residual = configs["model_params"].pop("residual", True)
+        load_model = configs["model_params"].pop("load_model", False)
     else:
         gpu_id = args.gpu
         dataset_name = args.dataset
@@ -195,6 +236,7 @@ if __name__ == "__main__":
         graph_norm = args.graph_norm
         batch_norm = args.batch_norm
         residual = args.residual
+        load_model = args.load_model
 
     # random setting
     os.environ['PYTHONHASHSEED'] = str(random_seed)
@@ -214,12 +256,27 @@ if __name__ == "__main__":
     device = torch.device(f"cuda:{gpu_id}" if gpu_id >= 0 else "cpu")
     
     # load data
-    dataset = GraphPredGINDataset(dataset_name=dataset_name, raw_dir=DATA_RAW_DIR, self_loop=False, embed_dim=embed_dim)
+    if is_pretrain:
+        train_ratio, val_ratio = 0.55, 0.05
+    else:
+        train_ratio, val_ratio = 0.3, 0.1
+    dataset = GraphPredGINDataset(
+        dataset_name=dataset_name, 
+        raw_dir=DATA_RAW_DIR, 
+        self_loop=False, 
+        embed_dim=embed_dim, 
+        train_ratio=train_ratio,
+        val_ratio=val_ratio
+    )
     input_dim = embed_dim
     num_classes = dataset.num_classes
     logger.info(f"Load Data: {dataset_name} , input_dim={input_dim} , num_classes={num_classes}")
 
     # model
+    save_model_dir = os.path.join("./contrastive_models", model_name, f"{dataset_name}_{aug_type}")
+    if not os.path.exists(save_model_dir):
+        os.makedirs(save_model_dir)
+
     model = GIN(
         input_dim=input_dim,
         hidden_dim=hidden_dim,
@@ -234,12 +291,17 @@ if __name__ == "__main__":
         batch_norm=batch_norm,
         residual=residual
     )
+    if load_model:
+        load_model_path = glob.glob(save_model_dir + "/*.pkl")
+        checkpoint = torch.load(load_model_path[-1])
+        model_dict = model.state_dict()
+        state_dict = {k:v for k, v in checkpoint.items() if k in model_dict.keys()}
+        model.load_state_dict(state_dict)
+        logger.info(f"Success load pre-trained model : {load_model_path[-1]}")
+    else:
+        logger.info("Train Base Model.")
+
     model = model.to(device)
-
-    save_model_dir = os.path.join("./contrastive_models", model_name, f"{dataset_name}_{aug_type}")
-    if not os.path.exists(save_model_dir):
-        os.makedirs(save_model_dir)
-
 
     # training
     logger.info("=============== Train Argument ===============")
@@ -256,31 +318,80 @@ if __name__ == "__main__":
         verbose=True
     )
 
-    train_loader = DataLoader(dataset.train, batch_size=batch_size, shuffle=True, collate_fn=dataset.collate)
-
-    train_time = 0
-    for epoch in range(epochs):
-        st = time.time()
-
-        epoch_train_loss, optimizer = train_contrastive_epoch(
-            model=model, 
-            optimizer=optimizer, 
-            device=device, 
-            data_loader=train_loader, 
-            epoch=epoch, 
-            head=head, 
-            aug_type=aug_type, 
-            aug_scales=aug_scales, 
-            aug_fractal_threshold=aug_fractal_threshold, 
-            logger=logger
+    train_loader = DataLoader(
+        dataset.train, 
+        batch_size=batch_size, 
+        shuffle=True, 
+        collate_fn=dataset.collate
+    )
+    if not is_pretrain:
+        val_loader = DataLoader(
+            dataset.val, 
+            batch_size=batch_size, 
+            shuffle=False, 
+            collate_fn=dataset.collate
+        )
+        test_loader = DataLoader(
+            dataset.test, 
+            batch_size=batch_size, 
+            shuffle=False, 
+            collate_fn=dataset.collate
         )
 
-        epoch_time = time.time() - st
-        train_time += epoch_time
+    if is_pretrain:
+        train_time = 0
+        for epoch in range(epochs):
+            st = time.time()
 
-        scheduler.step(epoch_train_loss)
-        logger.info(f"# Epoch: {epoch+1} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f}s , Total Time: {train_time:.2f}")
+            epoch_train_loss, optimizer = train_epoch_contrastive_learning(
+                model=model, 
+                optimizer=optimizer, 
+                device=device, 
+                data_loader=train_loader, 
+                epoch=epoch, 
+                head=head, 
+                aug_type=aug_type, 
+                aug_scales=aug_scales, 
+                aug_fractal_threshold=aug_fractal_threshold, 
+                logger=logger
+            )
 
-        ### save model
-        save_ckpt_path = os.path.join(save_model_dir, f"epoch_{epoch}.pkl")
-        torch.save(model.state_dict(), save_ckpt_path)
+            epoch_time = time.time() - st
+            train_time += epoch_time
+
+            scheduler.step(epoch_train_loss)
+            logger.info(f"# Epoch: {epoch+1} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f}s , Total Time: {train_time:.2f}")
+
+            ### save model
+            save_ckpt_path = os.path.join(save_model_dir, f"epoch_{epoch}.pkl")
+            torch.save(model.state_dict(), save_ckpt_path)
+    else:
+        train_time = 0
+        for epoch in range(epochs):
+            st = time.time()
+
+            epoch_train_loss, epoch_train_acc, optimizer = train_epoch_graph_classification(
+                model=model,
+                optimizer=optimizer,
+                device=device, 
+                data_loader=train_loader, 
+                epoch=epoch, 
+                head=head, 
+                logger=logger
+            )
+
+            epoch_time = time.time() - st
+            train_time += epoch_time
+
+            epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, head=head, criterion=nn.CrossEntropyLoss())
+
+            scheduler.step(epoch_val_loss)
+            logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} , Train_Acc: {epoch_train_acc:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Cost Time: {epoch_time:.2f}s , Total Time: {train_time:.2f}")
+
+            if optimizer.param_groups[0]["lr"] < min_lr:
+                logger.info("!! Learning Rate is equal to min_lr, stop training")
+                break
+        
+        logger.info("=============== Start Evaluating ===============")
+        _, test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
+        logger.info(f"Test Accuracy {test_acc:.4f}\n")

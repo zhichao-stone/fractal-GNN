@@ -190,8 +190,3 @@ class GIN(nn.Module):
                     return self.proj_head(vector_over_layer)
                 else:
                     return vector_over_layer
-
-    def loss(self, pred, label):
-        criterion = nn.CrossEntropyLoss()
-        loss = criterion(pred, label)
-        return loss

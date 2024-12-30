@@ -14,7 +14,7 @@
         "aug_scales": [1, 2],
         "aug_fractal_threshold": 0.8, 
         "log_epoch_interval": 5,
-        "is_pretrain": true
+        "is_pretrain": false
     },
     "model_params": {
         "model": "GIN",
@@ -30,6 +30,6 @@
         "graph_norm": true,
         "batch_norm": true,
         "residual": true,
-        "load_model": false
+        "load_model": true
     }
 }

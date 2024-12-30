@@ -29,6 +29,7 @@
         "learn_eps": true,
         "graph_norm": true,
         "batch_norm": true,
-        "residual": true
+        "residual": true,
+        "load_model": false
     }
 }
