@@ -11,7 +11,7 @@ import networkx as nx
 def load_json(path:str, **kwargs):
     encoding = kwargs.pop("encoding", "utf-8")
     with open(path, "r", encoding=encoding, **kwargs) as fr:
-        data = load_json(fr)
+        data = json.load(fr)
     return data
 
 def dump_json(obj, path:str, **kwargs):

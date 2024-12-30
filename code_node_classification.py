@@ -7,9 +7,9 @@ import dgl
 import torch
 import torch.nn.functional as F
 
-from model import GAT
-from loading import *
+from models.gat import GAT
 from evaluate import *
+from data import load_dataset
 from logger import ModelLogger
 from utils import add_fractal_covering_matrix
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     device = torch.device("cuda")
     if DATA in ["citeseer", "cora", "pubmed"]:
-        g, features, labels, train_mask, val_mask, test_mask, num_classes = LOAD_FUNCTION_MAP[DATA](raw_dir=RAW_DIR)
+        g, features, labels, train_mask, val_mask, test_mask, num_classes = load_dataset(DATA)
     else:
         raise Exception(f"No loading function for data {DATA}")
     features, labels = features.to(device), labels.to(device)

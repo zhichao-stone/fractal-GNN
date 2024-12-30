@@ -1,5 +1,4 @@
 import os
-import json
 import dgl
 import numpy as np
 import networkx as nx
@@ -113,7 +112,7 @@ def test_fractal(G:nx.MultiDiGraph, data_title:str, draw_figure:bool=True, figur
 
 
 if __name__ == "__main__":
-    from loading import *
+    from data import load_dataset, NODE_PRED_DATA, LINK_PRED_DATA, GRAPH_PRED_DATA
     from utils import dump_json
     import argparse
 
@@ -123,7 +122,7 @@ if __name__ == "__main__":
     DATA = str(args.data).lower()
 
     if DATA in NODE_PRED_DATA or DATA in LINK_PRED_DATA:
-        load_data = LOAD_FUNCTION_MAP[DATA]()
+        load_data = load_dataset(DATA)
         g = load_data[0]
         G = dgl.to_networkx(g)
 
@@ -133,7 +132,7 @@ if __name__ == "__main__":
 
     elif DATA in GRAPH_PRED_DATA:
         from tqdm import tqdm
-        graphs, labels, num_classes = LOAD_FUNCTION_MAP[DATA]()
+        graphs, labels, num_classes = load_dataset(DATA)
         print(f"number of graphs: {len(graphs)} , number of classes: {num_classes}")
         regression_results = []
         index = 0
