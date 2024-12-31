@@ -125,7 +125,7 @@ def aug_renormalization_graphs(
     for i in range(len(graphs)):
         g, is_fractal, r2, diameter = graphs[i], is_fractals[i], float(fractal_attrs[i]), int(diameters[i])
         if aug_type == "renormalization" and is_fractal and r2 >= aug_fractal_threshold:
-            radius_scales = list(range(1, max(1, diameter//4)))
+            radius_scales = list(range(1, max(1, diameter//4)+1))
             if len(radius_scales) >= 2:
                 radius_1, radius_2 = random.sample(radius_scales, 2)
             else:
