@@ -8,8 +8,6 @@ import dgl
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from logging import Logger
-from typing import List
 
 from data.dataset import GraphPredGINDataset
 from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph, sim_matrix2, compute_diag_sum
@@ -42,23 +40,20 @@ def train_epoch_contrastive_learning(
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
     data_loader: DataLoader, 
-    epoch: int, 
-    aug_scales: List[int], 
     head: bool, 
     aug_type: str, 
-    aug_fractal_threshold: float, 
-    logger: Logger
+    aug_fractal_threshold: float
 ):
     model.train()
     epoch_loss = 0.0
 
-    for iter, (batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs) in enumerate(data_loader):
+    for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in data_loader:
         aug_batch_graphs = dgl.unbatch(batch_graphs)
         aug_graphs_1, aug_graphs_2 = aug_renormalization_graphs(
             graphs=aug_batch_graphs, 
-            aug_scales=aug_scales, 
             is_fractals=batch_is_fractal, 
             fractal_attrs=batch_fractal_attrs, 
+            diameters=batch_diameters, 
             aug_type=aug_type, 
             aug_fractal_threshold=aug_fractal_threshold
         )
@@ -81,9 +76,6 @@ def train_epoch_contrastive_learning(
         contrastive_loss.backward()
         optimizer.step()
         epoch_loss += float(contrastive_loss.detach().cpu().item())
-
-        if (iter + 1) % 20 == 0:
-            logger.info(f"##### Epoch: {epoch+1}/{epochs} , Iter: {iter+1}/{len(data_loader)} , Loss: {contrastive_loss:.4f}")
     
     epoch_loss = epoch_loss / len(data_loader)
 
@@ -95,16 +87,12 @@ def train_epoch_graph_classification(
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
     data_loader: DataLoader,
-    epoch: int, 
-    head: bool, 
-    logger: Logger
+    head: bool
 ):
     model.train()
     epoch_loss = 0.0
-    epoch_acc = 0
-    nb_data = 0
 
-    for iter, (batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs) in enumerate(data_loader):
+    for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in data_loader:
 
         batch_graphs = batch_graphs.to(device)
         batch_h = batch_graphs.ndata["feat"].to(device)
@@ -118,15 +106,10 @@ def train_epoch_graph_classification(
         loss.backward()
         optimizer.step()
         epoch_loss += loss.detach().cpu().item()
-        nb_data += batch_labels.size(0)
-
-        if (iter + 1) % 20 == 0:
-            logger.info(f"##### Epoch: {epoch+1}/{epochs} , Iter: {iter+1}/{len(data_loader)} , Train_Loss: {loss:.4f} , Train_Acc: {epoch_acc/nb_data:.4f}")
     
     epoch_loss = epoch_loss / len(data_loader)
-    epoch_acc = epoch_acc / nb_data
 
-    return epoch_loss, epoch_acc, optimizer
+    return epoch_loss, optimizer
 
 
 if __name__ == "__main__":
@@ -146,7 +129,7 @@ if __name__ == "__main__":
     parser.add_argument("--min_lr", type=float, default=1e-5)
     parser.add_argument("--weight_decay", type=float, default=1e-6)
     parser.add_argument("--aug_type", type=str, default="rr", help="type of data augmentation, n (drop node) or r (renormalization). aug_type should be selected from [ nn, nr, rn, rr ]")
-    parser.add_argument("--aug_scales", nargs="*", help="scales of renormalized graph")
+    # parser.add_argument("--aug_scales", nargs="*", help="scales of renormalized graph")
     parser.add_argument("--aug_fractal_threshold", type=float, default=0.8)
     parser.add_argument("--log_epoch_interval", type=int, default=5)
     parser.add_argument("--is_pretrain", action="store_true")
@@ -187,9 +170,7 @@ if __name__ == "__main__":
         min_lr = configs["train_params"].pop("min_lr", 1e-5)
         weight_decay = configs["train_params"].pop("weight_decay", 1e-6)
         aug_type = configs["train_params"].pop("aug_type", "nn")
-        aug_scales = [int(s) for s in configs["train_params"]["aug_scales"]] if "aug_scales" in configs["train_params"] else [1, 2]
         aug_fractal_threshold = configs["train_params"].pop("aug_fractal_threshold", 0.8)
-        log_epoch_interval = configs["train_params"].pop("log_epoch_interval", 5)
         is_pretrain = configs["train_params"].pop("is_pretrain", False)
 
         model_name = configs["model_params"].pop("model", "GIN")
@@ -218,9 +199,7 @@ if __name__ == "__main__":
         min_lr = args.min_lr
         weight_decay = args.weight_decay
         aug_type = args.aug_type
-        aug_scales = [int(s) for s in args.aug_scales] if args.aug_scales is not None else [1, 2]
         aug_fractal_threshold = args.aug_fractal_threshold
-        log_epoch_interval = args.log_epoch_interval
         is_pretrain = args.is_pretrain
 
         model_name = args.model
@@ -260,6 +239,7 @@ if __name__ == "__main__":
         train_ratio, val_ratio = 0.55, 0.05
     else:
         train_ratio, val_ratio = 0.3, 0.1
+
     dataset = GraphPredGINDataset(
         dataset_name=dataset_name, 
         raw_dir=DATA_RAW_DIR, 
@@ -292,14 +272,19 @@ if __name__ == "__main__":
         residual=residual
     )
     if load_model:
-        load_model_path = glob.glob(save_model_dir + "/*.pkl")
+        load_model_path = sorted(glob.glob(save_model_dir + "/*.pkl"), key=lambda x:int(os.path.split(x)[-1].replace("epoch_", "").replace(".pkl", "")))
         checkpoint = torch.load(load_model_path[-1])
         model_dict = model.state_dict()
         state_dict = {k:v for k, v in checkpoint.items() if k in model_dict.keys()}
         model.load_state_dict(state_dict)
         logger.info(f"Success load pre-trained model : {load_model_path[-1]}")
+        if is_pretrain:
+            current_epoch = 1 + int(os.path.splitext(load_model_path[-1])[-1].replace("epoch_", "").replace(".pkl", ""))
+        else:
+            current_epoch = 0
     else:
         logger.info("Train Base Model.")
+        current_epoch = 0
 
     model = model.to(device)
 
@@ -340,7 +325,7 @@ if __name__ == "__main__":
 
     if is_pretrain:
         train_time = 0
-        for epoch in range(epochs):
+        for epoch in range(current_epoch, epochs):
             st = time.time()
 
             epoch_train_loss, optimizer = train_epoch_contrastive_learning(
@@ -348,50 +333,36 @@ if __name__ == "__main__":
                 optimizer=optimizer, 
                 device=device, 
                 data_loader=train_loader, 
-                epoch=epoch, 
                 head=head, 
                 aug_type=aug_type, 
-                aug_scales=aug_scales, 
-                aug_fractal_threshold=aug_fractal_threshold, 
-                logger=logger
+                aug_fractal_threshold=aug_fractal_threshold
             )
 
             epoch_time = time.time() - st
             train_time += epoch_time
 
             scheduler.step(epoch_train_loss)
-            logger.info(f"# Epoch: {epoch+1} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f}s , Total Time: {train_time:.2f}")
+            logger.info(f"# Epoch: {epoch+1:04d} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f} s")
 
             ### save model
             save_ckpt_path = os.path.join(save_model_dir, f"epoch_{epoch}.pkl")
             torch.save(model.state_dict(), save_ckpt_path)
+        logger.info(f"Pre-training finished, Totally cost : {train_time:.2f} s ({train_time/60:.2f} min)")
     else:
-        train_time = 0
-        for epoch in range(epochs):
-            st = time.time()
-
-            epoch_train_loss, epoch_train_acc, optimizer = train_epoch_graph_classification(
+        for epoch in range(current_epoch, epochs):
+            epoch_train_loss, optimizer = train_epoch_graph_classification(
                 model=model,
                 optimizer=optimizer,
                 device=device, 
                 data_loader=train_loader, 
-                epoch=epoch, 
-                head=head, 
-                logger=logger
+                head=head
             )
-
-            epoch_time = time.time() - st
-            train_time += epoch_time
 
             epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, head=head, criterion=nn.CrossEntropyLoss())
 
             scheduler.step(epoch_val_loss)
-            logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} , Train_Acc: {epoch_train_acc:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Cost Time: {epoch_time:.2f}s , Total Time: {train_time:.2f}")
+            logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
 
-            if optimizer.param_groups[0]["lr"] < min_lr:
-                logger.info("!! Learning Rate is equal to min_lr, stop training")
-                break
-        
         logger.info("=============== Start Evaluating ===============")
         _, test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
         logger.info(f"Test Accuracy {test_acc:.4f}\n")

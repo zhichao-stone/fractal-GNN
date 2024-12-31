@@ -33,7 +33,7 @@ def evaluate_with_dataloader(
     acc = 0
     nb_data = 0
     with torch.no_grad():
-        for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs in data_loader:
+        for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in data_loader:
             batch_graphs = batch_graphs.to(device)
             batch_h = batch_graphs.ndata["feat"].to(device)
             batch_snorm_n = batch_snorm_n.to(device)

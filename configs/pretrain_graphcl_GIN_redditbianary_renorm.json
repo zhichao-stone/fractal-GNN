@@ -3,18 +3,16 @@
         "gpu": 7, 
         "dataset": "redditbinary", 
         "seed": 41,
-        "epoch": 80,
+        "epoch": 200,
         "batch_size": 128,
         "lr": 0.001,
         "lr_reduce_factor": 0.5,
         "lr_schedule_patience": 5,
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
-        "aug_type": "nn",
-        "aug_scales": [1, 2],
+        "aug_type": "renormalization",
         "aug_fractal_threshold": 0.8, 
-        "log_epoch_interval": 5,
-        "is_pretrain": false
+        "is_pretrain": true
     },
     "model_params": {
         "model": "GIN",
@@ -30,6 +28,6 @@
         "graph_norm": true,
         "batch_norm": true,
         "residual": true,
-        "load_model": true
+        "load_model": false
     }
 }

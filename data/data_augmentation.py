@@ -63,18 +63,25 @@ def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
     subgraph = nx.Graph()
     subgraph.add_nodes_from(visited_nodes)
     subgraph.add_edges_from(visited_edges)
+    subgraph = dgl.from_networkx(subgraph)
+    subgraph.ndata["feat"] = torch.stack([graph.ndata["feat"][n] for n in visited_nodes])
 
-    return dgl.from_networkx(subgraph)
+    return subgraph
 
 
 def renormalization_graph(graph:dgl.DGLGraph, radius:int=2) -> dgl.DGLGraph:
+    if radius <= 0:
+        return copy.deepcopy(graph)
+
     G = dgl.to_networkx(graph)
     remaining_nodes = set(G.nodes)
     supernodes = []
+    supernodes_features = []
     while remaining_nodes:
         max_degree_node = max(remaining_nodes, key=lambda node:G.degree(node))
         ball = {node for node in remaining_nodes if nx.shortest_path_length(G, max_degree_node, node) <= radius}
         supernodes.append(ball)
+        supernodes_features.append(torch.mean(torch.stack([graph.ndata["feat"][n] for n in ball]), dim=0))
         remaining_nodes -= ball
 
     renormalization_graph = nx.Graph()
@@ -86,7 +93,9 @@ def renormalization_graph(graph:dgl.DGLGraph, radius:int=2) -> dgl.DGLGraph:
                 if any(G.has_edge(u, v) for u in supernode1 for v in supernode2):
                     renormalization_graph.add_edge(i, j)
     
-    return dgl.from_networkx(renormalization_graph)
+    renormalization_graph = dgl.from_networkx(renormalization_graph)
+    renormalization_graph.ndata["feat"] = torch.stack(supernodes_features)
+    return renormalization_graph
 
 
 def collate_batched_graph(graphs:List[dgl.DGLGraph]):
@@ -104,27 +113,30 @@ def collate_batched_graph(graphs:List[dgl.DGLGraph]):
     return batched_graph, snorm_n, snorm_e
 
 
-
 def aug_renormalization_graphs(
     graphs: List[dgl.DGLGraph], 
-    aug_scales: List[int], 
     is_fractals: List[bool], 
-    fractal_attrs:List[float], 
+    fractal_attrs: List[float], 
+    diameters: List[int], 
     aug_type:str, 
     aug_fractal_threshold: float, 
 ):
-    type_1, type_2 = aug_type[0], aug_type[1]
     aug_graphs_1, aug_graphs_2 = [], []
     for i in range(len(graphs)):
-        g, is_fractal, r2 = graphs[i], is_fractals[i], float(fractal_attrs[i])
-        if type_1 == "r" and is_fractal and r2 >= aug_fractal_threshold:
-            aug_graphs_1.append(renormalization_graph(g, aug_scales[0]))
+        g, is_fractal, r2, diameter = graphs[i], is_fractals[i], float(fractal_attrs[i]), int(diameters[i])
+        if aug_type == "renormalization" and is_fractal and r2 >= aug_fractal_threshold:
+            radius_scales = list(range(1, max(1, diameter//4)))
+            if len(radius_scales) >= 2:
+                radius_1, radius_2 = random.sample(radius_scales, 2)
+            else:
+                radius_1, radius_2 = 0, radius_scales[0]
+            aug_graphs_1.append(renormalization_graph(g, radius_1))
+            aug_graphs_2.append(renormalization_graph(g, radius_2))
+        elif aug_type == "simple random walk":
+            aug_graphs_1.append(simple_random_walk(g))
+            aug_graphs_2.append(simple_random_walk(g))
         else:
             aug_graphs_1.append(aug_drop_node(g))
-
-        if type_2 == "r" and is_fractal and r2 >= aug_fractal_threshold:
-            aug_graphs_2.append(renormalization_graph(g, aug_scales[1]))
-        else:
             aug_graphs_2.append(aug_drop_node(g))
         
     return aug_graphs_1, aug_graphs_2
