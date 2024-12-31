@@ -12,7 +12,6 @@
         "weight_decay": 1e-6,
         "aug_type": "renormalization",
         "aug_fractal_threshold": 0.85, 
-        "log_epoch_interval": 5,
         "is_pretrain": false, 
         "test": true
     },
