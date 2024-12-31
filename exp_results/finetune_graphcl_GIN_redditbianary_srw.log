@@ -1,0 +1,221 @@
+2024-12-31 17:38:32,718 - INFO - Logging to finetune_graphcl_GIN_redditbianary_srw.log
+2024-12-31 17:38:37,838 - INFO - Load Data: redditbinary , input_dim=512 , num_classes=2
+2024-12-31 17:38:39,260 - INFO - Success load pre-trained model : ./contrastive_models/GIN/redditbinary_simple random walk/epoch_199.pkl
+2024-12-31 17:38:39,264 - INFO - =============== Train Argument ===============
+2024-12-31 17:38:39,267 - INFO - Learnig Rate: 0.0005
+2024-12-31 17:38:39,268 - INFO - Weight Decay: 1e-06
+2024-12-31 17:38:39,269 - INFO - Epochs: 120
+2024-12-31 17:38:39,270 - INFO - =============== Start Training ===============
+2024-12-31 17:38:47,212 - INFO - # Epoch: 0001 | Train_Loss: 195.5369 | Val_Loss: 309.7350 , Val_Acc: 0.1950
+2024-12-31 17:38:49,831 - INFO - # Epoch: 0002 | Train_Loss: 36.1193 | Val_Loss: 94.2488 , Val_Acc: 0.5150
+2024-12-31 17:38:52,184 - INFO - # Epoch: 0003 | Train_Loss: 15.5233 | Val_Loss: 34.9142 , Val_Acc: 0.6600
+2024-12-31 17:38:53,541 - INFO - # Epoch: 0004 | Train_Loss: 7.2029 | Val_Loss: 17.2623 , Val_Acc: 0.6450
+2024-12-31 17:38:54,718 - INFO - # Epoch: 0005 | Train_Loss: 4.2462 | Val_Loss: 9.6297 , Val_Acc: 0.6500
+2024-12-31 17:38:57,474 - INFO - # Epoch: 0006 | Train_Loss: 2.5071 | Val_Loss: 6.4433 , Val_Acc: 0.6900
+2024-12-31 17:38:59,667 - INFO - # Epoch: 0007 | Train_Loss: 1.4653 | Val_Loss: 4.3721 , Val_Acc: 0.6850
+2024-12-31 17:39:01,894 - INFO - # Epoch: 0008 | Train_Loss: 1.0810 | Val_Loss: 2.9433 , Val_Acc: 0.7100
+2024-12-31 17:39:03,108 - INFO - # Epoch: 0009 | Train_Loss: 0.9144 | Val_Loss: 2.3895 , Val_Acc: 0.7350
+2024-12-31 17:39:04,487 - INFO - # Epoch: 0010 | Train_Loss: 0.6603 | Val_Loss: 2.0196 , Val_Acc: 0.7700
+2024-12-31 17:39:06,607 - INFO - # Epoch: 0011 | Train_Loss: 0.6037 | Val_Loss: 1.8278 , Val_Acc: 0.7650
+2024-12-31 17:39:08,444 - INFO - # Epoch: 0012 | Train_Loss: 0.5427 | Val_Loss: 1.6833 , Val_Acc: 0.7200
+2024-12-31 17:39:11,108 - INFO - # Epoch: 0013 | Train_Loss: 0.4910 | Val_Loss: 1.5929 , Val_Acc: 0.7450
+2024-12-31 17:39:13,522 - INFO - # Epoch: 0014 | Train_Loss: 0.4778 | Val_Loss: 1.4874 , Val_Acc: 0.7550
+2024-12-31 17:39:14,895 - INFO - # Epoch: 0015 | Train_Loss: 0.4548 | Val_Loss: 1.5005 , Val_Acc: 0.8050
+2024-12-31 17:39:15,935 - INFO - # Epoch: 0016 | Train_Loss: 0.4129 | Val_Loss: 1.5156 , Val_Acc: 0.7700
+2024-12-31 17:39:17,281 - INFO - # Epoch: 0017 | Train_Loss: 0.4428 | Val_Loss: 1.4457 , Val_Acc: 0.7750
+2024-12-31 17:39:19,290 - INFO - # Epoch: 0018 | Train_Loss: 0.4415 | Val_Loss: 1.4356 , Val_Acc: 0.7750
+2024-12-31 17:39:21,864 - INFO - # Epoch: 0019 | Train_Loss: 0.3529 | Val_Loss: 1.4319 , Val_Acc: 0.7950
+2024-12-31 17:39:23,958 - INFO - # Epoch: 0020 | Train_Loss: 0.3815 | Val_Loss: 1.4192 , Val_Acc: 0.7550
+2024-12-31 17:39:26,385 - INFO - # Epoch: 0021 | Train_Loss: 0.4003 | Val_Loss: 1.3963 , Val_Acc: 0.7650
+2024-12-31 17:39:28,792 - INFO - # Epoch: 0022 | Train_Loss: 0.3380 | Val_Loss: 1.3357 , Val_Acc: 0.7950
+2024-12-31 17:39:31,800 - INFO - # Epoch: 0023 | Train_Loss: 0.3596 | Val_Loss: 1.2745 , Val_Acc: 0.7750
+2024-12-31 17:39:34,178 - INFO - # Epoch: 0024 | Train_Loss: 0.3655 | Val_Loss: 1.3209 , Val_Acc: 0.7700
+2024-12-31 17:39:36,804 - INFO - # Epoch: 0025 | Train_Loss: 0.3731 | Val_Loss: 1.2809 , Val_Acc: 0.7750
+2024-12-31 17:39:38,177 - INFO - # Epoch: 0026 | Train_Loss: 0.3254 | Val_Loss: 1.2964 , Val_Acc: 0.7600
+2024-12-31 17:39:39,002 - INFO - # Epoch: 0027 | Train_Loss: 0.3537 | Val_Loss: 1.3291 , Val_Acc: 0.7750
+2024-12-31 17:39:39,969 - INFO - # Epoch: 0028 | Train_Loss: 0.3649 | Val_Loss: 1.4119 , Val_Acc: 0.7850
+2024-12-31 17:39:40,873 - INFO - # Epoch: 0029 | Train_Loss: 0.3246 | Val_Loss: 1.3954 , Val_Acc: 0.7800
+2024-12-31 17:39:42,095 - INFO - # Epoch: 0030 | Train_Loss: 0.2999 | Val_Loss: 1.4135 , Val_Acc: 0.7800
+2024-12-31 17:39:43,092 - INFO - # Epoch: 0031 | Train_Loss: 0.3392 | Val_Loss: 1.4105 , Val_Acc: 0.7550
+2024-12-31 17:39:44,847 - INFO - # Epoch: 0032 | Train_Loss: 0.3080 | Val_Loss: 1.4361 , Val_Acc: 0.7750
+2024-12-31 17:39:46,504 - INFO - # Epoch: 0033 | Train_Loss: 0.3138 | Val_Loss: 1.4888 , Val_Acc: 0.7600
+2024-12-31 17:39:47,679 - INFO - # Epoch: 0034 | Train_Loss: 0.2959 | Val_Loss: 1.4815 , Val_Acc: 0.7650
+2024-12-31 17:39:49,389 - INFO - # Epoch: 0035 | Train_Loss: 0.2979 | Val_Loss: 1.4624 , Val_Acc: 0.7850
+2024-12-31 17:39:50,850 - INFO - # Epoch: 0036 | Train_Loss: 0.3054 | Val_Loss: 1.4846 , Val_Acc: 0.7800
+2024-12-31 17:39:53,064 - INFO - # Epoch: 0037 | Train_Loss: 0.2784 | Val_Loss: 1.4587 , Val_Acc: 0.7750
+2024-12-31 17:39:54,581 - INFO - # Epoch: 0038 | Train_Loss: 0.2753 | Val_Loss: 1.4735 , Val_Acc: 0.7750
+2024-12-31 17:39:55,379 - INFO - # Epoch: 0039 | Train_Loss: 0.2917 | Val_Loss: 1.4341 , Val_Acc: 0.7850
+2024-12-31 17:39:56,620 - INFO - # Epoch: 0040 | Train_Loss: 0.2891 | Val_Loss: 1.4336 , Val_Acc: 0.7850
+2024-12-31 17:39:57,726 - INFO - # Epoch: 0041 | Train_Loss: 0.2990 | Val_Loss: 1.5221 , Val_Acc: 0.7750
+2024-12-31 17:39:59,061 - INFO - # Epoch: 0042 | Train_Loss: 0.2851 | Val_Loss: 1.5126 , Val_Acc: 0.7750
+2024-12-31 17:40:00,138 - INFO - # Epoch: 0043 | Train_Loss: 0.2560 | Val_Loss: 1.4522 , Val_Acc: 0.7800
+2024-12-31 17:40:01,146 - INFO - # Epoch: 0044 | Train_Loss: 0.2889 | Val_Loss: 1.4344 , Val_Acc: 0.7800
+2024-12-31 17:40:01,894 - INFO - # Epoch: 0045 | Train_Loss: 0.2808 | Val_Loss: 1.4797 , Val_Acc: 0.7800
+2024-12-31 17:40:02,780 - INFO - # Epoch: 0046 | Train_Loss: 0.2657 | Val_Loss: 1.4202 , Val_Acc: 0.7850
+2024-12-31 17:40:04,111 - INFO - # Epoch: 0047 | Train_Loss: 0.2895 | Val_Loss: 1.4478 , Val_Acc: 0.7900
+2024-12-31 17:40:06,518 - INFO - # Epoch: 0048 | Train_Loss: 0.2789 | Val_Loss: 1.4302 , Val_Acc: 0.7800
+2024-12-31 17:40:08,099 - INFO - # Epoch: 0049 | Train_Loss: 0.2737 | Val_Loss: 1.5197 , Val_Acc: 0.7800
+2024-12-31 17:40:10,979 - INFO - # Epoch: 0050 | Train_Loss: 0.2779 | Val_Loss: 1.4678 , Val_Acc: 0.7800
+2024-12-31 17:40:13,043 - INFO - # Epoch: 0051 | Train_Loss: 0.2665 | Val_Loss: 1.4761 , Val_Acc: 0.7800
+2024-12-31 17:40:15,312 - INFO - # Epoch: 0052 | Train_Loss: 0.2750 | Val_Loss: 1.4511 , Val_Acc: 0.7900
+2024-12-31 17:40:17,238 - INFO - # Epoch: 0053 | Train_Loss: 0.3235 | Val_Loss: 1.4861 , Val_Acc: 0.7900
+2024-12-31 17:40:19,015 - INFO - # Epoch: 0054 | Train_Loss: 0.2682 | Val_Loss: 1.4470 , Val_Acc: 0.7850
+2024-12-31 17:40:21,666 - INFO - # Epoch: 0055 | Train_Loss: 0.2702 | Val_Loss: 1.4671 , Val_Acc: 0.7800
+2024-12-31 17:40:23,464 - INFO - # Epoch: 0056 | Train_Loss: 0.2430 | Val_Loss: 1.4552 , Val_Acc: 0.7750
+2024-12-31 17:40:25,218 - INFO - # Epoch: 0057 | Train_Loss: 0.2832 | Val_Loss: 1.4888 , Val_Acc: 0.7750
+2024-12-31 17:40:27,389 - INFO - # Epoch: 0058 | Train_Loss: 0.2780 | Val_Loss: 1.4449 , Val_Acc: 0.7750
+2024-12-31 17:40:29,716 - INFO - # Epoch: 0059 | Train_Loss: 0.2603 | Val_Loss: 1.4727 , Val_Acc: 0.7750
+2024-12-31 17:40:31,582 - INFO - # Epoch: 0060 | Train_Loss: 0.2514 | Val_Loss: 1.5027 , Val_Acc: 0.7850
+2024-12-31 17:40:33,402 - INFO - # Epoch: 0061 | Train_Loss: 0.2646 | Val_Loss: 1.4590 , Val_Acc: 0.7850
+2024-12-31 17:40:34,967 - INFO - # Epoch: 0062 | Train_Loss: 0.2476 | Val_Loss: 1.4366 , Val_Acc: 0.7950
+2024-12-31 17:40:36,366 - INFO - # Epoch: 0063 | Train_Loss: 0.2754 | Val_Loss: 1.4584 , Val_Acc: 0.7950
+2024-12-31 17:40:37,420 - INFO - # Epoch: 0064 | Train_Loss: 0.2771 | Val_Loss: 1.4649 , Val_Acc: 0.7900
+2024-12-31 17:40:39,259 - INFO - # Epoch: 0065 | Train_Loss: 0.2716 | Val_Loss: 1.4566 , Val_Acc: 0.8000
+2024-12-31 17:40:40,603 - INFO - # Epoch: 0066 | Train_Loss: 0.2759 | Val_Loss: 1.4787 , Val_Acc: 0.7900
+2024-12-31 17:40:42,057 - INFO - # Epoch: 0067 | Train_Loss: 0.2762 | Val_Loss: 1.4723 , Val_Acc: 0.7900
+2024-12-31 17:40:43,484 - INFO - # Epoch: 0068 | Train_Loss: 0.2686 | Val_Loss: 1.4827 , Val_Acc: 0.7900
+2024-12-31 17:40:44,648 - INFO - # Epoch: 0069 | Train_Loss: 0.2667 | Val_Loss: 1.4626 , Val_Acc: 0.7900
+2024-12-31 17:40:45,930 - INFO - # Epoch: 0070 | Train_Loss: 0.2601 | Val_Loss: 1.4627 , Val_Acc: 0.7850
+2024-12-31 17:40:47,735 - INFO - # Epoch: 0071 | Train_Loss: 0.3059 | Val_Loss: 1.4423 , Val_Acc: 0.7750
+2024-12-31 17:40:49,371 - INFO - # Epoch: 0072 | Train_Loss: 0.2474 | Val_Loss: 1.4862 , Val_Acc: 0.7800
+2024-12-31 17:40:50,934 - INFO - # Epoch: 0073 | Train_Loss: 0.2871 | Val_Loss: 1.4121 , Val_Acc: 0.7850
+2024-12-31 17:40:52,248 - INFO - # Epoch: 0074 | Train_Loss: 0.3015 | Val_Loss: 1.4408 , Val_Acc: 0.7800
+2024-12-31 17:40:53,770 - INFO - # Epoch: 0075 | Train_Loss: 0.2626 | Val_Loss: 1.4461 , Val_Acc: 0.7850
+2024-12-31 17:40:54,790 - INFO - # Epoch: 0076 | Train_Loss: 0.2889 | Val_Loss: 1.4657 , Val_Acc: 0.7850
+2024-12-31 17:40:57,223 - INFO - # Epoch: 0077 | Train_Loss: 0.2685 | Val_Loss: 1.5458 , Val_Acc: 0.7900
+2024-12-31 17:40:59,262 - INFO - # Epoch: 0078 | Train_Loss: 0.2828 | Val_Loss: 1.5063 , Val_Acc: 0.7900
+2024-12-31 17:41:00,540 - INFO - # Epoch: 0079 | Train_Loss: 0.2916 | Val_Loss: 1.5089 , Val_Acc: 0.7850
+2024-12-31 17:41:02,260 - INFO - # Epoch: 0080 | Train_Loss: 0.2591 | Val_Loss: 1.5077 , Val_Acc: 0.7850
+2024-12-31 17:41:04,045 - INFO - # Epoch: 0081 | Train_Loss: 0.2691 | Val_Loss: 1.4926 , Val_Acc: 0.7950
+2024-12-31 17:41:06,074 - INFO - # Epoch: 0082 | Train_Loss: 0.2724 | Val_Loss: 1.4631 , Val_Acc: 0.7900
+2024-12-31 17:41:06,938 - INFO - # Epoch: 0083 | Train_Loss: 0.2612 | Val_Loss: 1.4765 , Val_Acc: 0.7800
+2024-12-31 17:41:08,515 - INFO - # Epoch: 0084 | Train_Loss: 0.2633 | Val_Loss: 1.5408 , Val_Acc: 0.7700
+2024-12-31 17:41:10,336 - INFO - # Epoch: 0085 | Train_Loss: 0.2713 | Val_Loss: 1.4985 , Val_Acc: 0.7750
+2024-12-31 17:41:12,580 - INFO - # Epoch: 0086 | Train_Loss: 0.2566 | Val_Loss: 1.4916 , Val_Acc: 0.7800
+2024-12-31 17:41:15,915 - INFO - # Epoch: 0087 | Train_Loss: 0.2701 | Val_Loss: 1.4609 , Val_Acc: 0.7850
+2024-12-31 17:41:17,806 - INFO - # Epoch: 0088 | Train_Loss: 0.2895 | Val_Loss: 1.4472 , Val_Acc: 0.7850
+2024-12-31 17:41:19,196 - INFO - # Epoch: 0089 | Train_Loss: 0.2515 | Val_Loss: 1.4411 , Val_Acc: 0.7800
+2024-12-31 17:41:20,202 - INFO - # Epoch: 0090 | Train_Loss: 0.2676 | Val_Loss: 1.5053 , Val_Acc: 0.7750
+2024-12-31 17:41:21,366 - INFO - # Epoch: 0091 | Train_Loss: 0.2706 | Val_Loss: 1.5333 , Val_Acc: 0.7650
+2024-12-31 17:41:22,865 - INFO - # Epoch: 0092 | Train_Loss: 0.2544 | Val_Loss: 1.5008 , Val_Acc: 0.7850
+2024-12-31 17:41:24,332 - INFO - # Epoch: 0093 | Train_Loss: 0.2692 | Val_Loss: 1.5020 , Val_Acc: 0.7800
+2024-12-31 17:41:26,262 - INFO - # Epoch: 0094 | Train_Loss: 0.3059 | Val_Loss: 1.5983 , Val_Acc: 0.7700
+2024-12-31 17:41:27,975 - INFO - # Epoch: 0095 | Train_Loss: 0.2600 | Val_Loss: 1.5319 , Val_Acc: 0.7700
+2024-12-31 17:41:29,596 - INFO - # Epoch: 0096 | Train_Loss: 0.2801 | Val_Loss: 1.5259 , Val_Acc: 0.7900
+2024-12-31 17:41:31,270 - INFO - # Epoch: 0097 | Train_Loss: 0.2472 | Val_Loss: 1.4454 , Val_Acc: 0.7850
+2024-12-31 17:41:33,218 - INFO - # Epoch: 0098 | Train_Loss: 0.2723 | Val_Loss: 1.4130 , Val_Acc: 0.7850
+2024-12-31 17:41:33,930 - INFO - # Epoch: 0099 | Train_Loss: 0.2942 | Val_Loss: 1.4539 , Val_Acc: 0.7850
+2024-12-31 17:41:35,082 - INFO - # Epoch: 0100 | Train_Loss: 0.2569 | Val_Loss: 1.4257 , Val_Acc: 0.8000
+2024-12-31 17:41:35,935 - INFO - # Epoch: 0101 | Train_Loss: 0.2410 | Val_Loss: 1.4130 , Val_Acc: 0.7800
+2024-12-31 17:41:37,125 - INFO - # Epoch: 0102 | Train_Loss: 0.2484 | Val_Loss: 1.3840 , Val_Acc: 0.7750
+2024-12-31 17:41:37,807 - INFO - # Epoch: 0103 | Train_Loss: 0.2531 | Val_Loss: 1.4305 , Val_Acc: 0.7750
+2024-12-31 17:41:38,921 - INFO - # Epoch: 0104 | Train_Loss: 0.2746 | Val_Loss: 1.4341 , Val_Acc: 0.7850
+2024-12-31 17:41:39,699 - INFO - # Epoch: 0105 | Train_Loss: 0.2783 | Val_Loss: 1.4814 , Val_Acc: 0.7850
+2024-12-31 17:41:40,813 - INFO - # Epoch: 0106 | Train_Loss: 0.2627 | Val_Loss: 1.4727 , Val_Acc: 0.7900
+2024-12-31 17:41:43,056 - INFO - # Epoch: 0107 | Train_Loss: 0.2760 | Val_Loss: 1.4824 , Val_Acc: 0.7900
+2024-12-31 17:41:46,522 - INFO - # Epoch: 0108 | Train_Loss: 0.2561 | Val_Loss: 1.5182 , Val_Acc: 0.7850
+2024-12-31 17:41:49,557 - INFO - # Epoch: 0109 | Train_Loss: 0.2889 | Val_Loss: 1.4952 , Val_Acc: 0.7900
+2024-12-31 17:41:51,662 - INFO - # Epoch: 0110 | Train_Loss: 0.2729 | Val_Loss: 1.5522 , Val_Acc: 0.7750
+2024-12-31 17:41:52,722 - INFO - # Epoch: 0111 | Train_Loss: 0.2670 | Val_Loss: 1.5686 , Val_Acc: 0.7800
+2024-12-31 17:41:53,611 - INFO - # Epoch: 0112 | Train_Loss: 0.2612 | Val_Loss: 1.5436 , Val_Acc: 0.7900
+2024-12-31 17:41:54,594 - INFO - # Epoch: 0113 | Train_Loss: 0.2765 | Val_Loss: 1.5022 , Val_Acc: 0.7900
+2024-12-31 17:41:55,705 - INFO - # Epoch: 0114 | Train_Loss: 0.2667 | Val_Loss: 1.4719 , Val_Acc: 0.7800
+2024-12-31 17:41:56,626 - INFO - # Epoch: 0115 | Train_Loss: 0.2710 | Val_Loss: 1.4912 , Val_Acc: 0.7850
+2024-12-31 17:41:57,685 - INFO - # Epoch: 0116 | Train_Loss: 0.2945 | Val_Loss: 1.5430 , Val_Acc: 0.7850
+2024-12-31 17:41:59,524 - INFO - # Epoch: 0117 | Train_Loss: 0.2592 | Val_Loss: 1.4981 , Val_Acc: 0.7850
+2024-12-31 17:42:00,957 - INFO - # Epoch: 0118 | Train_Loss: 0.3032 | Val_Loss: 1.4971 , Val_Acc: 0.7900
+2024-12-31 17:42:02,242 - INFO - # Epoch: 0119 | Train_Loss: 0.2784 | Val_Loss: 1.5082 , Val_Acc: 0.7850
+2024-12-31 17:42:03,836 - INFO - # Epoch: 0120 | Train_Loss: 0.2537 | Val_Loss: 1.5352 , Val_Acc: 0.7700
+2024-12-31 17:42:03,837 - INFO - =============== Start Evaluating ===============
+2024-12-31 17:42:07,019 - INFO - Test Accuracy 0.7425
+
+2024-12-31 17:45:38,580 - INFO - Logging to finetune_graphcl_GIN_redditbianary_srw.log
+2024-12-31 17:45:43,580 - INFO - Load Data: redditbinary , input_dim=512 , num_classes=2
+2024-12-31 17:45:45,055 - INFO - Success load pre-trained model : ./contrastive_models/GIN/redditbinary_simple_random_walk/epoch_199.pkl
+2024-12-31 17:45:45,058 - INFO - =============== Train Argument ===============
+2024-12-31 17:45:45,063 - INFO - Learnig Rate: 0.0005
+2024-12-31 17:45:45,063 - INFO - Weight Decay: 1e-06
+2024-12-31 17:45:45,063 - INFO - Epochs: 28
+2024-12-31 17:45:45,064 - INFO - =============== Start Training ===============
+2024-12-31 17:45:50,227 - INFO - # Epoch: 0001 | Train_Loss: 195.5369 | Val_Loss: 309.6987 , Val_Acc: 0.1950
+2024-12-31 17:45:51,690 - INFO - # Epoch: 0002 | Train_Loss: 36.1193 | Val_Loss: 94.2277 , Val_Acc: 0.5150
+2024-12-31 17:45:53,222 - INFO - # Epoch: 0003 | Train_Loss: 15.5234 | Val_Loss: 34.8993 , Val_Acc: 0.6650
+2024-12-31 17:45:54,798 - INFO - # Epoch: 0004 | Train_Loss: 7.2029 | Val_Loss: 17.2498 , Val_Acc: 0.6450
+2024-12-31 17:45:56,132 - INFO - # Epoch: 0005 | Train_Loss: 4.2462 | Val_Loss: 9.6236 , Val_Acc: 0.6500
+2024-12-31 17:45:57,414 - INFO - # Epoch: 0006 | Train_Loss: 2.5071 | Val_Loss: 6.4419 , Val_Acc: 0.6900
+2024-12-31 17:45:59,311 - INFO - # Epoch: 0007 | Train_Loss: 1.4653 | Val_Loss: 4.3703 , Val_Acc: 0.6850
+2024-12-31 17:46:01,978 - INFO - # Epoch: 0008 | Train_Loss: 1.0810 | Val_Loss: 2.9423 , Val_Acc: 0.7100
+2024-12-31 17:46:03,324 - INFO - # Epoch: 0009 | Train_Loss: 0.9144 | Val_Loss: 2.3890 , Val_Acc: 0.7350
+2024-12-31 17:46:05,219 - INFO - # Epoch: 0010 | Train_Loss: 0.6603 | Val_Loss: 2.0192 , Val_Acc: 0.7700
+2024-12-31 17:46:07,077 - INFO - # Epoch: 0011 | Train_Loss: 0.6037 | Val_Loss: 1.8276 , Val_Acc: 0.7650
+2024-12-31 17:46:08,658 - INFO - # Epoch: 0012 | Train_Loss: 0.5427 | Val_Loss: 1.6833 , Val_Acc: 0.7200
+2024-12-31 17:46:10,458 - INFO - # Epoch: 0013 | Train_Loss: 0.4910 | Val_Loss: 1.5930 , Val_Acc: 0.7450
+2024-12-31 17:46:11,643 - INFO - # Epoch: 0014 | Train_Loss: 0.4778 | Val_Loss: 1.4876 , Val_Acc: 0.7550
+2024-12-31 17:46:12,989 - INFO - # Epoch: 0015 | Train_Loss: 0.4548 | Val_Loss: 1.5008 , Val_Acc: 0.8050
+2024-12-31 17:46:13,843 - INFO - # Epoch: 0016 | Train_Loss: 0.4129 | Val_Loss: 1.5158 , Val_Acc: 0.7700
+2024-12-31 17:46:14,767 - INFO - # Epoch: 0017 | Train_Loss: 0.4428 | Val_Loss: 1.4459 , Val_Acc: 0.7750
+2024-12-31 17:46:15,938 - INFO - # Epoch: 0018 | Train_Loss: 0.4416 | Val_Loss: 1.4358 , Val_Acc: 0.7750
+2024-12-31 17:46:16,887 - INFO - # Epoch: 0019 | Train_Loss: 0.3529 | Val_Loss: 1.4320 , Val_Acc: 0.7950
+2024-12-31 17:46:18,495 - INFO - # Epoch: 0020 | Train_Loss: 0.3815 | Val_Loss: 1.4192 , Val_Acc: 0.7550
+2024-12-31 17:46:19,659 - INFO - # Epoch: 0021 | Train_Loss: 0.4002 | Val_Loss: 1.3962 , Val_Acc: 0.7650
+2024-12-31 17:46:20,439 - INFO - # Epoch: 0022 | Train_Loss: 0.3380 | Val_Loss: 1.3358 , Val_Acc: 0.7950
+2024-12-31 17:46:21,166 - INFO - # Epoch: 0023 | Train_Loss: 0.3595 | Val_Loss: 1.2744 , Val_Acc: 0.7750
+2024-12-31 17:46:21,905 - INFO - # Epoch: 0024 | Train_Loss: 0.3655 | Val_Loss: 1.3211 , Val_Acc: 0.7750
+2024-12-31 17:46:22,743 - INFO - # Epoch: 0025 | Train_Loss: 0.3732 | Val_Loss: 1.2810 , Val_Acc: 0.7750
+2024-12-31 17:46:23,524 - INFO - # Epoch: 0026 | Train_Loss: 0.3254 | Val_Loss: 1.2967 , Val_Acc: 0.7600
+2024-12-31 17:46:24,473 - INFO - # Epoch: 0027 | Train_Loss: 0.3537 | Val_Loss: 1.3293 , Val_Acc: 0.7750
+2024-12-31 17:46:25,703 - INFO - # Epoch: 0028 | Train_Loss: 0.3650 | Val_Loss: 1.4120 , Val_Acc: 0.7850
+2024-12-31 17:46:25,704 - INFO - =============== Start Evaluating ===============
+2024-12-31 17:46:29,361 - INFO - Test Accuracy 0.7525
+
+2024-12-31 17:51:48,281 - INFO - Logging to finetune_graphcl_GIN_redditbianary_srw.log
+2024-12-31 17:51:53,983 - INFO - Load Data: redditbinary , input_dim=512 , num_classes=2
+2024-12-31 17:51:56,602 - INFO - Success load pre-trained model : ./contrastive_models/GIN/redditbinary_simple_random_walk/epoch_199.pkl
+2024-12-31 17:51:56,606 - INFO - =============== Train Argument ===============
+2024-12-31 17:51:56,607 - INFO - Learnig Rate: 0.0005
+2024-12-31 17:51:56,608 - INFO - Weight Decay: 1e-06
+2024-12-31 17:51:56,609 - INFO - Epochs: 40
+2024-12-31 17:51:56,610 - INFO - =============== Start Training ===============
+2024-12-31 17:52:09,153 - INFO - # Epoch: 0001 | Train_Loss: 195.5369 | Val_Loss: 309.6416 , Val_Acc: 0.1950
+2024-12-31 17:52:13,415 - INFO - # Epoch: 0002 | Train_Loss: 36.1193 | Val_Loss: 94.2067 , Val_Acc: 0.5150
+2024-12-31 17:52:18,252 - INFO - # Epoch: 0003 | Train_Loss: 15.5234 | Val_Loss: 34.8846 , Val_Acc: 0.6600
+2024-12-31 17:52:25,230 - INFO - # Epoch: 0004 | Train_Loss: 7.2029 | Val_Loss: 17.2438 , Val_Acc: 0.6450
+2024-12-31 17:52:32,036 - INFO - # Epoch: 0005 | Train_Loss: 4.2462 | Val_Loss: 9.6218 , Val_Acc: 0.6500
+2024-12-31 17:52:37,263 - INFO - # Epoch: 0006 | Train_Loss: 2.5071 | Val_Loss: 6.4407 , Val_Acc: 0.6900
+2024-12-31 17:52:41,333 - INFO - # Epoch: 0007 | Train_Loss: 1.4653 | Val_Loss: 4.3695 , Val_Acc: 0.6850
+2024-12-31 17:52:43,721 - INFO - # Epoch: 0008 | Train_Loss: 1.0810 | Val_Loss: 2.9422 , Val_Acc: 0.7100
+2024-12-31 17:52:48,257 - INFO - # Epoch: 0009 | Train_Loss: 0.9144 | Val_Loss: 2.3892 , Val_Acc: 0.7350
+2024-12-31 17:52:52,949 - INFO - # Epoch: 0010 | Train_Loss: 0.6603 | Val_Loss: 2.0198 , Val_Acc: 0.7700
+2024-12-31 17:53:00,779 - INFO - # Epoch: 0011 | Train_Loss: 0.6037 | Val_Loss: 1.8284 , Val_Acc: 0.7650
+2024-12-31 17:53:07,410 - INFO - # Epoch: 0012 | Train_Loss: 0.5427 | Val_Loss: 1.6841 , Val_Acc: 0.7200
+2024-12-31 17:53:14,898 - INFO - # Epoch: 0013 | Train_Loss: 0.4910 | Val_Loss: 1.5938 , Val_Acc: 0.7450
+2024-12-31 17:53:20,273 - INFO - # Epoch: 0014 | Train_Loss: 0.4778 | Val_Loss: 1.4883 , Val_Acc: 0.7550
+2024-12-31 17:53:24,128 - INFO - # Epoch: 0015 | Train_Loss: 0.4548 | Val_Loss: 1.5015 , Val_Acc: 0.8050
+2024-12-31 17:53:27,703 - INFO - # Epoch: 0016 | Train_Loss: 0.4129 | Val_Loss: 1.5165 , Val_Acc: 0.7700
+2024-12-31 17:53:31,892 - INFO - # Epoch: 0017 | Train_Loss: 0.4428 | Val_Loss: 1.4464 , Val_Acc: 0.7750
+2024-12-31 17:53:37,154 - INFO - # Epoch: 0018 | Train_Loss: 0.4416 | Val_Loss: 1.4363 , Val_Acc: 0.7750
+2024-12-31 17:53:41,823 - INFO - # Epoch: 0019 | Train_Loss: 0.3529 | Val_Loss: 1.4326 , Val_Acc: 0.7950
+2024-12-31 17:53:45,766 - INFO - # Epoch: 0020 | Train_Loss: 0.3815 | Val_Loss: 1.4197 , Val_Acc: 0.7550
+2024-12-31 17:53:49,387 - INFO - # Epoch: 0021 | Train_Loss: 0.4002 | Val_Loss: 1.3968 , Val_Acc: 0.7650
+2024-12-31 17:53:54,764 - INFO - # Epoch: 0022 | Train_Loss: 0.3380 | Val_Loss: 1.3361 , Val_Acc: 0.7950
+2024-12-31 17:53:58,327 - INFO - # Epoch: 0023 | Train_Loss: 0.3596 | Val_Loss: 1.2748 , Val_Acc: 0.7750
+2024-12-31 17:54:00,821 - INFO - # Epoch: 0024 | Train_Loss: 0.3655 | Val_Loss: 1.3213 , Val_Acc: 0.7750
+2024-12-31 17:54:02,673 - INFO - # Epoch: 0025 | Train_Loss: 0.3731 | Val_Loss: 1.2813 , Val_Acc: 0.7750
+2024-12-31 17:54:06,715 - INFO - # Epoch: 0026 | Train_Loss: 0.3254 | Val_Loss: 1.2969 , Val_Acc: 0.7600
+2024-12-31 17:54:10,424 - INFO - # Epoch: 0027 | Train_Loss: 0.3537 | Val_Loss: 1.3295 , Val_Acc: 0.7750
+2024-12-31 17:54:13,601 - INFO - # Epoch: 0028 | Train_Loss: 0.3649 | Val_Loss: 1.4125 , Val_Acc: 0.7850
+2024-12-31 17:54:18,334 - INFO - # Epoch: 0029 | Train_Loss: 0.3246 | Val_Loss: 1.3958 , Val_Acc: 0.7800
+2024-12-31 17:54:22,718 - INFO - # Epoch: 0030 | Train_Loss: 0.2999 | Val_Loss: 1.4138 , Val_Acc: 0.7800
+2024-12-31 17:54:27,766 - INFO - # Epoch: 0031 | Train_Loss: 0.3392 | Val_Loss: 1.4106 , Val_Acc: 0.7550
+2024-12-31 17:54:31,072 - INFO - # Epoch: 0032 | Train_Loss: 0.3080 | Val_Loss: 1.4361 , Val_Acc: 0.7750
+2024-12-31 17:54:34,331 - INFO - # Epoch: 0033 | Train_Loss: 0.3138 | Val_Loss: 1.4888 , Val_Acc: 0.7600
+2024-12-31 17:54:37,060 - INFO - # Epoch: 0034 | Train_Loss: 0.2959 | Val_Loss: 1.4815 , Val_Acc: 0.7650
+2024-12-31 17:54:39,540 - INFO - # Epoch: 0035 | Train_Loss: 0.2979 | Val_Loss: 1.4623 , Val_Acc: 0.7850
+2024-12-31 17:54:44,488 - INFO - # Epoch: 0036 | Train_Loss: 0.3054 | Val_Loss: 1.4846 , Val_Acc: 0.7800
+2024-12-31 17:54:48,591 - INFO - # Epoch: 0037 | Train_Loss: 0.2784 | Val_Loss: 1.4586 , Val_Acc: 0.7750
+2024-12-31 17:54:52,957 - INFO - # Epoch: 0038 | Train_Loss: 0.2753 | Val_Loss: 1.4734 , Val_Acc: 0.7750
+2024-12-31 17:54:57,324 - INFO - # Epoch: 0039 | Train_Loss: 0.2916 | Val_Loss: 1.4340 , Val_Acc: 0.7850
+2024-12-31 17:55:02,121 - INFO - # Epoch: 0040 | Train_Loss: 0.2890 | Val_Loss: 1.4335 , Val_Acc: 0.7850
+2024-12-31 17:55:02,122 - INFO - =============== Start Evaluating ===============
+2024-12-31 17:55:07,532 - INFO - Test Accuracy 0.7442
+

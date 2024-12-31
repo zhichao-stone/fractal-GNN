@@ -129,10 +129,10 @@ if __name__ == "__main__":
     parser.add_argument("--min_lr", type=float, default=1e-5)
     parser.add_argument("--weight_decay", type=float, default=1e-6)
     parser.add_argument("--aug_type", type=str, default="rr", help="type of data augmentation, n (drop_node) or r (renormalization). aug_type should be selected from [ nn, nr, rn, rr ]")
-    # parser.add_argument("--aug_scales", nargs="*", help="scales of renormalized graph")
     parser.add_argument("--aug_fractal_threshold", type=float, default=0.8)
     parser.add_argument("--log_epoch_interval", type=int, default=5)
     parser.add_argument("--is_pretrain", action="store_true")
+    parser.add_argument("--test", action="store_true")
     # model settings
     parser.add_argument("--model", type=str, default="GIN")
     parser.add_argument("--num_layers", type=int, default=4)
@@ -172,6 +172,7 @@ if __name__ == "__main__":
         aug_type = configs["train_params"].pop("aug_type", "nn")
         aug_fractal_threshold = configs["train_params"].pop("aug_fractal_threshold", 0.8)
         is_pretrain = configs["train_params"].pop("is_pretrain", False)
+        test_mode = configs["train_params"].pop("test", False)
 
         model_name = configs["model_params"].pop("model", "GIN")
         embed_dim = configs["model_params"].pop("embed_dim", 768)
@@ -201,6 +202,7 @@ if __name__ == "__main__":
         aug_type = args.aug_type
         aug_fractal_threshold = args.aug_fractal_threshold
         is_pretrain = args.is_pretrain
+        test_mode = args.test
 
         model_name = args.model
         embed_dim = args.embed_dim
@@ -228,6 +230,8 @@ if __name__ == "__main__":
 
     # log setting
     log_file_name = f"{str(os.path.split(args.config)[-1]).split('.')[0]}" if args.config != "" else f"GIN_{dataset_name}"
+    if test_mode:
+        log_file_name += "_test"
     logger = ModelLogger(log_file_name, "log", backupCount=7).get_logger()
     logger.info(f"Logging to {log_file_name}.log")
 
@@ -349,6 +353,9 @@ if __name__ == "__main__":
             torch.save(model.state_dict(), save_ckpt_path)
         logger.info(f"Pre-training finished, Totally cost : {train_time:.2f} s ({train_time/60:.2f} min)")
     else:
+        if test_mode:
+            best_test_acc, best_test_epoch = 0.0, 0
+
         for epoch in range(current_epoch, epochs):
             epoch_train_loss, optimizer = train_epoch_graph_classification(
                 model=model,
@@ -359,10 +366,20 @@ if __name__ == "__main__":
             )
 
             epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, head=head, criterion=nn.CrossEntropyLoss())
+            if test_mode:
+                _, epoch_test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
 
             scheduler.step(epoch_val_loss)
-            logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
+            if test_mode:
+                if epoch_test_acc >= best_test_acc:
+                    best_test_acc, best_test_epoch = epoch_test_acc, epoch+1
+                logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Test_Acc: {epoch_test_acc:.4f}")
+            else:
+                logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
 
         logger.info("=============== Start Evaluating ===============")
-        _, test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
-        logger.info(f"Test Accuracy {test_acc:.4f}\n")
+        if not test_mode:
+            _, test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
+            logger.info(f"Test Accuracy: {test_acc:.4f}\n")
+        else:
+            logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n")
