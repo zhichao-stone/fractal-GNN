@@ -10,7 +10,7 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
-        "aug_type": "simple random walk",
+        "aug_type": "simple_random_walk",
         "aug_fractal_threshold": 0.8, 
         "is_pretrain": true
     },

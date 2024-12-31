@@ -128,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--lr_schedule_patience", type=int, default=5)
     parser.add_argument("--min_lr", type=float, default=1e-5)
     parser.add_argument("--weight_decay", type=float, default=1e-6)
-    parser.add_argument("--aug_type", type=str, default="rr", help="type of data augmentation, n (drop node) or r (renormalization). aug_type should be selected from [ nn, nr, rn, rr ]")
+    parser.add_argument("--aug_type", type=str, default="rr", help="type of data augmentation, n (drop_node) or r (renormalization). aug_type should be selected from [ nn, nr, rn, rr ]")
     # parser.add_argument("--aug_scales", nargs="*", help="scales of renormalized graph")
     parser.add_argument("--aug_fractal_threshold", type=float, default=0.8)
     parser.add_argument("--log_epoch_interval", type=int, default=5)

@@ -132,7 +132,7 @@ def aug_renormalization_graphs(
                 radius_1, radius_2 = 0, radius_scales[0]
             aug_graphs_1.append(renormalization_graph(g, radius_1))
             aug_graphs_2.append(renormalization_graph(g, radius_2))
-        elif aug_type == "simple random walk":
+        elif aug_type == "simple_random_walk":
             aug_graphs_1.append(simple_random_walk(g))
             aug_graphs_2.append(simple_random_walk(g))
         else:
