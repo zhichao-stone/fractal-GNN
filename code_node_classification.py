@@ -11,7 +11,7 @@ from models.gat import GAT
 from evaluate import *
 from data import load_dataset
 from logger import ModelLogger
-from utils import add_fractal_covering_matrix
+from data.process_fractal_features import add_fractal_covering_matrix
 
 
 

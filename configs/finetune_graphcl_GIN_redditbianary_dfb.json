@@ -1,0 +1,34 @@
+{   
+    "train_params": {
+        "gpu": 7, 
+        "dataset": "redditbinary", 
+        "seed": 41,
+        "epoch": 120,
+        "batch_size": 128,
+        "lr": 5e-4,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 5,
+        "min_lr": 1e-6,
+        "weight_decay": 1e-6,
+        "aug_type": "drop_fractal_box",
+        "aug_fractal_threshold": 0.85, 
+        "is_pretrain": false, 
+        "test": true
+    },
+    "model_params": {
+        "model": "GIN",
+        "embed_dim": 512,
+        "num_layers": 4,
+        "mlp_layers": 2,
+        "hidden_dim": 128,
+        "neighbor_aggr": "sum",
+        "pooling_type": "sum",
+        "dropout": 0.2,
+        "head": true,
+        "learn_eps": true,
+        "graph_norm": true,
+        "batch_norm": true,
+        "residual": true,
+        "load_model": true
+    }
+}

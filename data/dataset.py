@@ -9,6 +9,9 @@ import numpy as np
 
 import random
 from typing import List, Dict
+from tqdm import trange
+
+from .process_fractal_features import add_fractal_covering_matrix
 
 
 
@@ -45,7 +48,7 @@ def split_train_val_test_GIN(
     dataset_size = len(dataset)
     train_size, val_size = int(dataset_size*train_ratio), int(dataset_size*val_ratio)
 
-    if fractal_results is None:
+    if fractal_results is None or len(fractal_results) == 0:
         is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
     else:
         is_fractals, fractal_attrs, diameters = [], [], []
@@ -89,38 +92,44 @@ class GraphPredGINDataset(Dataset):
         self_loop: bool = False, 
         embed_dim: int = 768, 
         train_ratio: float = 0.55, 
-        val_ratio: float = 0.05
+        val_ratio: float = 0.05, 
+        fractal_results: List[Dict[str, str]] = [], 
+        covering_matrix: torch.Tensor = None
     ) -> None:
 
         self.train_ratio = train_ratio
         self.val_ratio = val_ratio
 
         dataset = dgldata.GINDataset(name=dataset_name.upper(), raw_dir=raw_dir, self_loop=self_loop)
+        if covering_matrix is not None:
+            for idx in range(len(dataset)):
+                dataset.graphs[idx].ndata["frac_cover_mat"] = covering_matrix[idx]
+
         self.name = dataset.name
         self.num_classes = dataset.num_classes
         
         self.train, self.val, self.test = split_train_val_test_GIN(
             dataset=dataset, 
+            fractal_results=fractal_results, 
             train_ratio=self.train_ratio,
             val_ratio=self.val_ratio
         )
 
-        self.process_feature(embed_dim)
+        self.process_feature(self.train, embed_dim)
+        self.process_feature(self.val, embed_dim)
+        self.process_feature(self.test, embed_dim)
 
         print('train, test, val sizes :',len(self.train),len(self.test),len(self.val))
 
-    def process_feature(self, embed_dim: int):
-        for idx, graph in enumerate(self.train.graphs):
+    def process_feature(self, dataset: GINDGL, embed_dim: int):
+        for idx, graph in enumerate(dataset.graphs):
             if "feat" not in graph.ndata:
-                self.train.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
+                dataset.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
 
-        for idx, graph in enumerate(self.val.graphs):
-            if "feat" not in graph.ndata:
-                self.val.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
-
-        for idx, graph in enumerate(self.test.graphs):
-            if "feat" not in graph.ndata:
-                self.test.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
+    def process_fractal(self, dataset:GINDGL, scales:List[int]):
+        for idx in trange(len(dataset), desc="add covering mat"):
+            add_fractal_covering_matrix(dataset.graphs[idx], scales)
+        
 
     def collate(self, samples):
         graphs, labels, is_fractal, fractal_attr, diameters = map(list, zip(*samples))

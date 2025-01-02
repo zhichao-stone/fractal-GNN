@@ -3,8 +3,6 @@ import json
 
 import dgl
 import torch
-import networkx as nx
-
 
 
 # functions for load json/jsonline files
@@ -44,28 +42,6 @@ def dump_jsonlines(obj, path:str, **kwargs):
         for row in obj:
             json.dump(row, fw)
             fw.write("\n")
-
-
-# functions for fractal graph
-def get_fractal_covering_vectors(G:dgl.DGLGraph, scale:int):
-    F = dgl.to_networkx(G)
-    covering_vectors = [0 for _ in F.nodes]
-    while len(F) > 0:
-        center_node = max(F.degree, key=lambda x: x[1])[0]
-        subgraph_nodes = [node for node, distance in nx.single_source_shortest_path_length(F, center_node).items() if distance <= scale]
-        for n in subgraph_nodes:
-            covering_vectors[n] = center_node
-        F.remove_nodes_from(subgraph_nodes)
-    return covering_vectors
-
-
-def add_fractal_covering_matrix(G:dgl.DGLGraph, scales:list=[1, 2]):
-    covering_matrix = []
-    for s in scales:
-        covering_vectors = get_fractal_covering_vectors(G, s)
-        covering_matrix.append(torch.LongTensor(covering_vectors, device=G.device))
-    covering_matrix = torch.stack(covering_matrix).T.to(G.device)
-    G.ndata["frac_cover_mat"] = covering_matrix
 
 
 # functions for link prediction

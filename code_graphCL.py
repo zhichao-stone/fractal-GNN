@@ -244,13 +244,22 @@ if __name__ == "__main__":
     else:
         train_ratio, val_ratio = 0.3, 0.1
 
+    if is_pretrain and aug_type in ["renormalization", "drop_fractal_box"]:
+        fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
+        covering_matrix = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{dataset_name}.pt"))
+    else:
+        fractal_results = []
+        covering_matrix = None
+
     dataset = GraphPredGINDataset(
         dataset_name=dataset_name, 
         raw_dir=DATA_RAW_DIR, 
         self_loop=False, 
         embed_dim=embed_dim, 
         train_ratio=train_ratio,
-        val_ratio=val_ratio
+        val_ratio=val_ratio, 
+        fractal_results=fractal_results, 
+        covering_matrix=covering_matrix
     )
     input_dim = embed_dim
     num_classes = dataset.num_classes

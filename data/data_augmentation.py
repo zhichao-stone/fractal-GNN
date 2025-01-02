@@ -25,22 +25,29 @@ def aug_drop_node(graph:dgl.DGLGraph, drop_percent:float=0.2):
     return aug_graph
 
 
-def covering_subgraph(graph:dgl.DGLGraph, radius:int) -> List[dgl.DGLGraph]:
-    G = dgl.to_networkx(graph)
-    ### adjust radius based on the diameter of G
-    largest_cc = max(nx.connected_components(nx.to_undirected(G.copy())), key=len)
-    diameter = nx.diameter(G.subgraph(largest_cc))
-    radius = min(radius, diameter//2)
-    ### get subgraphs
-    subgraphs = []
-    if radius > 2:
-        F = G.copy()
-        while F.nodes:
-            center_node = max(F.degree, key=lambda x:x[1])[0]
-            subgraph_nodes = list(nx.single_source_shortest_path_length(F, center_node, cutoff=radius).keys())
-            subgraph = F.subgraph(subgraph_nodes)
-            subgraphs.append(dgl.from_networkx(subgraph))
-    return subgraphs
+def aug_drop_fractal_box(graph:dgl.DGLGraph, radius:int=2, drop_percent:float=0.2):
+    node_num = graph.number_of_nodes()
+
+    center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
+    balls = {int(c):[] for c in set(center_nodes)}
+    for n, c in enumerate(center_nodes):
+        balls[int(c)].append(n)
+    boxes = list(balls.values())
+    random.shuffle(boxes)
+
+    min_drop_num = int(node_num * drop_percent)
+    drop_nodes = []
+    for b in boxes:
+        drop_nodes += b
+        if len(drop_nodes) >= min_drop_num:
+            break
+    if len(drop_nodes) == node_num:
+        drop_nodes = random.sample(list(range(node_num)), min_drop_num)
+    
+    aug_graph = copy.deepcopy(graph)
+    aug_graph.remove_nodes(drop_nodes)
+    return aug_graph
+
 
 
 def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
@@ -71,19 +78,18 @@ def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
 
 def renormalization_graph(graph:dgl.DGLGraph, radius:int=2) -> dgl.DGLGraph:
     if radius <= 0:
-        return copy.deepcopy(graph)
+        g = dgl.graph(graph.edges(), num_nodes=graph.number_of_nodes())
+        g.ndata["feat"] = graph.ndata["feat"]
+        return g
+
+    center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
+    balls = {int(c):[] for c in set(center_nodes)}
+    for n, c in enumerate(center_nodes):
+        balls[int(c)].append(n)
+    supernodes = list(balls.values())
+    supernodes_features = [torch.mean(torch.stack([graph.ndata["feat"][n] for n in ball]), dim=0) for ball in supernodes]
 
     G = dgl.to_networkx(graph)
-    remaining_nodes = set(G.nodes)
-    supernodes = []
-    supernodes_features = []
-    while remaining_nodes:
-        max_degree_node = max(remaining_nodes, key=lambda node:G.degree(node))
-        ball = {node for node in remaining_nodes if nx.shortest_path_length(G, max_degree_node, node) <= radius}
-        supernodes.append(ball)
-        supernodes_features.append(torch.mean(torch.stack([graph.ndata["feat"][n] for n in ball]), dim=0))
-        remaining_nodes -= ball
-
     renormalization_graph = nx.Graph()
     for i, supernode in enumerate(supernodes):
         renormalization_graph.add_node(i, members=supernode)
@@ -124,20 +130,41 @@ def aug_renormalization_graphs(
     aug_graphs_1, aug_graphs_2 = [], []
     for i in range(len(graphs)):
         g, is_fractal, r2, diameter = graphs[i], is_fractals[i], float(fractal_attrs[i]), int(diameters[i])
-        if aug_type == "renormalization" and is_fractal and r2 >= aug_fractal_threshold:
-            radius_scales = list(range(1, max(1, diameter//4)+1))
-            if len(radius_scales) >= 2:
-                radius_1, radius_2 = random.sample(radius_scales, 2)
+        if aug_type == "renormalization":
+            if is_fractal and r2 >= aug_fractal_threshold:
+                radius_scales = list(range(1, max(1, diameter//4)+1))
+                if len(radius_scales) >= 2:
+                    radius_1, radius_2 = random.sample(radius_scales, 2)
+                else:
+                    radius_1, radius_2 = 0, radius_scales[0]
+                aug_graphs_1.append(renormalization_graph(g, radius_1))
+                aug_graphs_2.append(renormalization_graph(g, radius_2))
             else:
-                radius_1, radius_2 = 0, radius_scales[0]
-            aug_graphs_1.append(renormalization_graph(g, radius_1))
-            aug_graphs_2.append(renormalization_graph(g, radius_2))
+                aug_g1 = aug_drop_node(g, 0.2)
+                g1 = dgl.graph(aug_g1.edges(), num_nodes=aug_g1.number_of_nodes())
+                g1.ndata["feat"] = aug_g1.ndata["feat"]
+                aug_graphs_1.append(g1)
+                aug_g2 = aug_drop_node(g, 0.2)
+                g2 = dgl.graph(aug_g2.edges(), num_nodes=aug_g2.number_of_nodes())
+                g2.ndata["feat"] = aug_g2.ndata["feat"]
+                aug_graphs_2.append(g2)
+
         elif aug_type == "simple_random_walk":
             aug_graphs_1.append(simple_random_walk(g))
             aug_graphs_2.append(simple_random_walk(g))
+
+        elif aug_type == "drop_fractal_box":
+            if is_fractal and r2 >= aug_fractal_threshold:
+                radius = random.choice(list(range(1, max(1, diameter//4)+1)))
+                aug_graphs_1.append(aug_drop_fractal_box(g, radius, 0.2))
+                aug_graphs_2.append(aug_drop_fractal_box(g, radius, 0.2))
+            else:
+                aug_graphs_1.append(aug_drop_node(g, 0.2))
+                aug_graphs_2.append(aug_drop_node(g, 0.2))
+
         else:
-            aug_graphs_1.append(aug_drop_node(g))
-            aug_graphs_2.append(aug_drop_node(g))
+            aug_graphs_1.append(aug_drop_node(g, 0.2))
+            aug_graphs_2.append(aug_drop_node(g, 0.2))
         
     return aug_graphs_1, aug_graphs_2
 
