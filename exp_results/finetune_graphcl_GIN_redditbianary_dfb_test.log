@@ -1,0 +1,139 @@
+2025-01-02 20:55:27,892 - INFO - Logging to finetune_graphcl_GIN_redditbianary_dfb_test.log
+2025-01-02 20:55:39,574 - INFO - Load Data: redditbinary , input_dim=512 , num_classes=2
+2025-01-02 20:55:43,260 - INFO - Success load pre-trained model : ./contrastive_models/GIN/redditbinary_drop_fractal_box/epoch_199.pkl
+2025-01-02 20:55:43,265 - INFO - =============== Train Argument ===============
+2025-01-02 20:55:43,268 - INFO - Learnig Rate: 0.0005
+2025-01-02 20:55:43,269 - INFO - Weight Decay: 1e-06
+2025-01-02 20:55:43,269 - INFO - Epochs: 120
+2025-01-02 20:55:43,269 - INFO - =============== Start Training ===============
+2025-01-02 20:57:00,959 - INFO - Logging to finetune_graphcl_GIN_redditbianary_dfb_test.log
+2025-01-02 20:57:08,461 - INFO - Load Data: redditbinary , input_dim=512 , num_classes=2
+2025-01-02 20:57:10,020 - INFO - Success load pre-trained model : ./contrastive_models/GIN/redditbinary_drop_fractal_box/epoch_199.pkl
+2025-01-02 20:57:10,364 - INFO - =============== Train Argument ===============
+2025-01-02 20:57:10,365 - INFO - Learnig Rate: 0.0005
+2025-01-02 20:57:10,365 - INFO - Weight Decay: 1e-06
+2025-01-02 20:57:10,365 - INFO - Epochs: 120
+2025-01-02 20:57:10,366 - INFO - =============== Start Training ===============
+2025-01-02 20:57:51,489 - INFO - # Epoch: 0001 | Train_Loss: 124.9465 | Val_Loss: 28.4452 , Val_Acc: 0.4800 | Test_Acc: 0.5150
+2025-01-02 20:58:29,445 - INFO - # Epoch: 0002 | Train_Loss: 25.4929 | Val_Loss: 15.3816 , Val_Acc: 0.6050 | Test_Acc: 0.5808
+2025-01-02 20:59:01,384 - INFO - # Epoch: 0003 | Train_Loss: 11.8934 | Val_Loss: 17.9349 , Val_Acc: 0.5650 | Test_Acc: 0.5100
+2025-01-02 20:59:37,713 - INFO - # Epoch: 0004 | Train_Loss: 7.8927 | Val_Loss: 9.7181 , Val_Acc: 0.5700 | Test_Acc: 0.5658
+2025-01-02 21:00:19,799 - INFO - # Epoch: 0005 | Train_Loss: 4.6314 | Val_Loss: 9.2062 , Val_Acc: 0.5700 | Test_Acc: 0.5925
+2025-01-02 21:01:03,107 - INFO - # Epoch: 0006 | Train_Loss: 3.1261 | Val_Loss: 6.5698 , Val_Acc: 0.6950 | Test_Acc: 0.6617
+2025-01-02 21:01:43,041 - INFO - # Epoch: 0007 | Train_Loss: 1.8392 | Val_Loss: 7.0230 , Val_Acc: 0.6500 | Test_Acc: 0.7008
+2025-01-02 21:02:23,604 - INFO - # Epoch: 0008 | Train_Loss: 1.2405 | Val_Loss: 6.2330 , Val_Acc: 0.6850 | Test_Acc: 0.7108
+2025-01-02 21:02:59,411 - INFO - # Epoch: 0009 | Train_Loss: 0.9626 | Val_Loss: 7.1804 , Val_Acc: 0.6500 | Test_Acc: 0.6833
+2025-01-02 21:03:38,152 - INFO - # Epoch: 0010 | Train_Loss: 0.6594 | Val_Loss: 6.2333 , Val_Acc: 0.6600 | Test_Acc: 0.7075
+2025-01-02 21:04:20,156 - INFO - # Epoch: 0011 | Train_Loss: 0.6261 | Val_Loss: 6.1506 , Val_Acc: 0.6750 | Test_Acc: 0.7175
+2025-01-02 21:05:01,070 - INFO - # Epoch: 0012 | Train_Loss: 0.4985 | Val_Loss: 5.4898 , Val_Acc: 0.7550 | Test_Acc: 0.7042
+2025-01-02 21:05:35,830 - INFO - # Epoch: 0013 | Train_Loss: 0.3717 | Val_Loss: 5.4696 , Val_Acc: 0.7400 | Test_Acc: 0.7225
+2025-01-02 21:06:17,341 - INFO - # Epoch: 0014 | Train_Loss: 0.3565 | Val_Loss: 5.4472 , Val_Acc: 0.7400 | Test_Acc: 0.7292
+2025-01-02 21:06:52,730 - INFO - # Epoch: 0015 | Train_Loss: 0.2964 | Val_Loss: 5.6647 , Val_Acc: 0.7150 | Test_Acc: 0.7308
+2025-01-02 21:07:27,562 - INFO - # Epoch: 0016 | Train_Loss: 0.1306 | Val_Loss: 5.3304 , Val_Acc: 0.7250 | Test_Acc: 0.7225
+2025-01-02 21:08:07,925 - INFO - # Epoch: 0017 | Train_Loss: 0.2103 | Val_Loss: 5.3226 , Val_Acc: 0.7350 | Test_Acc: 0.7167
+2025-01-02 21:08:40,028 - INFO - # Epoch: 0018 | Train_Loss: 0.1840 | Val_Loss: 5.2865 , Val_Acc: 0.7500 | Test_Acc: 0.7217
+2025-01-02 21:09:14,686 - INFO - # Epoch: 0019 | Train_Loss: 0.1375 | Val_Loss: 5.4358 , Val_Acc: 0.7550 | Test_Acc: 0.7175
+2025-01-02 21:09:48,384 - INFO - # Epoch: 0020 | Train_Loss: 0.0918 | Val_Loss: 5.8665 , Val_Acc: 0.7350 | Test_Acc: 0.7317
+2025-01-02 21:10:26,737 - INFO - # Epoch: 0021 | Train_Loss: 0.0859 | Val_Loss: 5.9670 , Val_Acc: 0.7150 | Test_Acc: 0.7283
+2025-01-02 21:11:11,714 - INFO - # Epoch: 0022 | Train_Loss: 0.0970 | Val_Loss: 5.9139 , Val_Acc: 0.7250 | Test_Acc: 0.7233
+2025-01-02 21:11:48,725 - INFO - # Epoch: 0023 | Train_Loss: 0.0514 | Val_Loss: 5.9627 , Val_Acc: 0.7200 | Test_Acc: 0.7258
+2025-01-02 21:12:27,648 - INFO - # Epoch: 0024 | Train_Loss: 0.0755 | Val_Loss: 5.9183 , Val_Acc: 0.7200 | Test_Acc: 0.7208
+2025-01-02 21:13:03,451 - INFO - # Epoch: 0025 | Train_Loss: 0.1663 | Val_Loss: 6.0141 , Val_Acc: 0.7150 | Test_Acc: 0.7158
+2025-01-02 21:13:41,656 - INFO - # Epoch: 0026 | Train_Loss: 0.1251 | Val_Loss: 5.9460 , Val_Acc: 0.7000 | Test_Acc: 0.7142
+2025-01-02 21:14:17,307 - INFO - # Epoch: 0027 | Train_Loss: 0.0439 | Val_Loss: 5.9681 , Val_Acc: 0.7100 | Test_Acc: 0.7200
+2025-01-02 21:14:58,271 - INFO - # Epoch: 0028 | Train_Loss: 0.0246 | Val_Loss: 5.9536 , Val_Acc: 0.7200 | Test_Acc: 0.7167
+2025-01-02 21:15:33,512 - INFO - # Epoch: 0029 | Train_Loss: 0.0407 | Val_Loss: 5.9549 , Val_Acc: 0.7250 | Test_Acc: 0.7192
+2025-01-02 21:16:09,707 - INFO - # Epoch: 0030 | Train_Loss: 0.0332 | Val_Loss: 6.0030 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 21:16:53,091 - INFO - # Epoch: 0031 | Train_Loss: 0.0098 | Val_Loss: 5.9721 , Val_Acc: 0.7300 | Test_Acc: 0.7208
+2025-01-02 21:17:36,905 - INFO - # Epoch: 0032 | Train_Loss: 0.0575 | Val_Loss: 6.0095 , Val_Acc: 0.7350 | Test_Acc: 0.7217
+2025-01-02 21:18:17,638 - INFO - # Epoch: 0033 | Train_Loss: 0.0197 | Val_Loss: 6.0756 , Val_Acc: 0.7250 | Test_Acc: 0.7317
+2025-01-02 21:18:58,579 - INFO - # Epoch: 0034 | Train_Loss: 0.0411 | Val_Loss: 6.1359 , Val_Acc: 0.7250 | Test_Acc: 0.7300
+2025-01-02 21:19:29,765 - INFO - # Epoch: 0035 | Train_Loss: 0.0311 | Val_Loss: 6.1517 , Val_Acc: 0.7250 | Test_Acc: 0.7325
+2025-01-02 21:20:02,441 - INFO - # Epoch: 0036 | Train_Loss: 0.0249 | Val_Loss: 6.0967 , Val_Acc: 0.7250 | Test_Acc: 0.7275
+2025-01-02 21:20:37,568 - INFO - # Epoch: 0037 | Train_Loss: 0.0446 | Val_Loss: 6.0420 , Val_Acc: 0.7300 | Test_Acc: 0.7283
+2025-01-02 21:21:16,815 - INFO - # Epoch: 0038 | Train_Loss: 0.0599 | Val_Loss: 6.0437 , Val_Acc: 0.7350 | Test_Acc: 0.7267
+2025-01-02 21:21:58,629 - INFO - # Epoch: 0039 | Train_Loss: 0.0355 | Val_Loss: 5.9996 , Val_Acc: 0.7300 | Test_Acc: 0.7283
+2025-01-02 21:22:41,780 - INFO - # Epoch: 0040 | Train_Loss: 0.0563 | Val_Loss: 6.0059 , Val_Acc: 0.7300 | Test_Acc: 0.7258
+2025-01-02 21:23:21,358 - INFO - # Epoch: 0041 | Train_Loss: 0.0956 | Val_Loss: 6.0152 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:23:58,846 - INFO - # Epoch: 0042 | Train_Loss: 0.0119 | Val_Loss: 6.0265 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:24:41,407 - INFO - # Epoch: 0043 | Train_Loss: 0.0905 | Val_Loss: 6.0713 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:25:17,603 - INFO - # Epoch: 0044 | Train_Loss: 0.0182 | Val_Loss: 6.0284 , Val_Acc: 0.7250 | Test_Acc: 0.7275
+2025-01-02 21:25:59,698 - INFO - # Epoch: 0045 | Train_Loss: 0.0172 | Val_Loss: 6.0853 , Val_Acc: 0.7200 | Test_Acc: 0.7283
+2025-01-02 21:26:38,702 - INFO - # Epoch: 0046 | Train_Loss: 0.0428 | Val_Loss: 6.0855 , Val_Acc: 0.7250 | Test_Acc: 0.7267
+2025-01-02 21:27:18,251 - INFO - # Epoch: 0047 | Train_Loss: 0.0460 | Val_Loss: 6.0697 , Val_Acc: 0.7300 | Test_Acc: 0.7283
+2025-01-02 21:27:58,733 - INFO - # Epoch: 0048 | Train_Loss: 0.2078 | Val_Loss: 6.0377 , Val_Acc: 0.7200 | Test_Acc: 0.7275
+2025-01-02 21:28:34,051 - INFO - # Epoch: 0049 | Train_Loss: 0.0923 | Val_Loss: 6.0037 , Val_Acc: 0.7350 | Test_Acc: 0.7267
+2025-01-02 21:29:10,751 - INFO - # Epoch: 0050 | Train_Loss: 0.0513 | Val_Loss: 6.0053 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:29:42,474 - INFO - # Epoch: 0051 | Train_Loss: 0.0740 | Val_Loss: 6.0071 , Val_Acc: 0.7250 | Test_Acc: 0.7242
+2025-01-02 21:30:19,113 - INFO - # Epoch: 0052 | Train_Loss: 0.0284 | Val_Loss: 5.9667 , Val_Acc: 0.7300 | Test_Acc: 0.7183
+2025-01-02 21:31:00,308 - INFO - # Epoch: 0053 | Train_Loss: 0.0560 | Val_Loss: 5.9796 , Val_Acc: 0.7250 | Test_Acc: 0.7208
+2025-01-02 21:31:30,046 - INFO - # Epoch: 0054 | Train_Loss: 0.0665 | Val_Loss: 6.0146 , Val_Acc: 0.7300 | Test_Acc: 0.7192
+2025-01-02 21:32:09,049 - INFO - # Epoch: 0055 | Train_Loss: 0.1636 | Val_Loss: 6.0303 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 21:32:49,850 - INFO - # Epoch: 0056 | Train_Loss: 0.0693 | Val_Loss: 6.0383 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:33:31,403 - INFO - # Epoch: 0057 | Train_Loss: 0.0169 | Val_Loss: 6.0256 , Val_Acc: 0.7200 | Test_Acc: 0.7208
+2025-01-02 21:34:12,365 - INFO - # Epoch: 0058 | Train_Loss: 0.0177 | Val_Loss: 6.0168 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:34:45,741 - INFO - # Epoch: 0059 | Train_Loss: 0.0190 | Val_Loss: 6.0058 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:35:27,822 - INFO - # Epoch: 0060 | Train_Loss: 0.0324 | Val_Loss: 5.9993 , Val_Acc: 0.7300 | Test_Acc: 0.7258
+2025-01-02 21:36:07,648 - INFO - # Epoch: 0061 | Train_Loss: 0.0665 | Val_Loss: 6.0407 , Val_Acc: 0.7250 | Test_Acc: 0.7242
+2025-01-02 21:36:43,148 - INFO - # Epoch: 0062 | Train_Loss: 0.0271 | Val_Loss: 5.9933 , Val_Acc: 0.7250 | Test_Acc: 0.7225
+2025-01-02 21:37:17,542 - INFO - # Epoch: 0063 | Train_Loss: 0.0356 | Val_Loss: 5.9661 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:37:58,282 - INFO - # Epoch: 0064 | Train_Loss: 0.0475 | Val_Loss: 5.9472 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 21:38:33,893 - INFO - # Epoch: 0065 | Train_Loss: 0.0321 | Val_Loss: 5.9658 , Val_Acc: 0.7300 | Test_Acc: 0.7225
+2025-01-02 21:39:08,849 - INFO - # Epoch: 0066 | Train_Loss: 0.0414 | Val_Loss: 5.9571 , Val_Acc: 0.7300 | Test_Acc: 0.7208
+2025-01-02 21:39:44,792 - INFO - # Epoch: 0067 | Train_Loss: 0.0777 | Val_Loss: 5.9686 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:40:16,268 - INFO - # Epoch: 0068 | Train_Loss: 0.0506 | Val_Loss: 5.9889 , Val_Acc: 0.7250 | Test_Acc: 0.7233
+2025-01-02 21:40:53,817 - INFO - # Epoch: 0069 | Train_Loss: 0.0722 | Val_Loss: 5.9912 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:41:34,235 - INFO - # Epoch: 0070 | Train_Loss: 0.0622 | Val_Loss: 5.9994 , Val_Acc: 0.7350 | Test_Acc: 0.7242
+2025-01-02 21:42:09,470 - INFO - # Epoch: 0071 | Train_Loss: 0.0911 | Val_Loss: 5.9761 , Val_Acc: 0.7250 | Test_Acc: 0.7258
+2025-01-02 21:42:47,248 - INFO - # Epoch: 0072 | Train_Loss: 0.0581 | Val_Loss: 5.9874 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:43:25,096 - INFO - # Epoch: 0073 | Train_Loss: 0.0505 | Val_Loss: 5.9715 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:43:56,293 - INFO - # Epoch: 0074 | Train_Loss: 0.0286 | Val_Loss: 5.9985 , Val_Acc: 0.7350 | Test_Acc: 0.7225
+2025-01-02 21:44:29,174 - INFO - # Epoch: 0075 | Train_Loss: 0.0809 | Val_Loss: 6.0240 , Val_Acc: 0.7350 | Test_Acc: 0.7242
+2025-01-02 21:45:08,065 - INFO - # Epoch: 0076 | Train_Loss: 0.0077 | Val_Loss: 6.0568 , Val_Acc: 0.7350 | Test_Acc: 0.7208
+2025-01-02 21:45:44,138 - INFO - # Epoch: 0077 | Train_Loss: 0.0810 | Val_Loss: 6.0222 , Val_Acc: 0.7300 | Test_Acc: 0.7225
+2025-01-02 21:46:18,710 - INFO - # Epoch: 0078 | Train_Loss: 0.0333 | Val_Loss: 6.0017 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:46:54,287 - INFO - # Epoch: 0079 | Train_Loss: 0.0375 | Val_Loss: 5.9993 , Val_Acc: 0.7300 | Test_Acc: 0.7208
+2025-01-02 21:47:26,853 - INFO - # Epoch: 0080 | Train_Loss: 0.0743 | Val_Loss: 6.0073 , Val_Acc: 0.7300 | Test_Acc: 0.7208
+2025-01-02 21:48:07,423 - INFO - # Epoch: 0081 | Train_Loss: 0.0085 | Val_Loss: 6.0085 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:48:47,591 - INFO - # Epoch: 0082 | Train_Loss: 0.0379 | Val_Loss: 5.9908 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 21:49:29,928 - INFO - # Epoch: 0083 | Train_Loss: 0.0239 | Val_Loss: 5.9923 , Val_Acc: 0.7250 | Test_Acc: 0.7242
+2025-01-02 21:50:10,902 - INFO - # Epoch: 0084 | Train_Loss: 0.0358 | Val_Loss: 5.9457 , Val_Acc: 0.7350 | Test_Acc: 0.7208
+2025-01-02 21:50:50,337 - INFO - # Epoch: 0085 | Train_Loss: 0.0559 | Val_Loss: 5.9450 , Val_Acc: 0.7300 | Test_Acc: 0.7225
+2025-01-02 21:51:28,318 - INFO - # Epoch: 0086 | Train_Loss: 0.0353 | Val_Loss: 5.9803 , Val_Acc: 0.7300 | Test_Acc: 0.7225
+2025-01-02 21:52:07,181 - INFO - # Epoch: 0087 | Train_Loss: 0.0332 | Val_Loss: 5.9956 , Val_Acc: 0.7250 | Test_Acc: 0.7225
+2025-01-02 21:52:48,413 - INFO - # Epoch: 0088 | Train_Loss: 0.0185 | Val_Loss: 5.9600 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 21:53:25,137 - INFO - # Epoch: 0089 | Train_Loss: 0.0602 | Val_Loss: 5.9542 , Val_Acc: 0.7350 | Test_Acc: 0.7217
+2025-01-02 21:54:10,095 - INFO - # Epoch: 0090 | Train_Loss: 0.0600 | Val_Loss: 5.9523 , Val_Acc: 0.7400 | Test_Acc: 0.7208
+2025-01-02 21:54:44,231 - INFO - # Epoch: 0091 | Train_Loss: 0.0366 | Val_Loss: 6.0104 , Val_Acc: 0.7350 | Test_Acc: 0.7225
+2025-01-02 21:55:21,116 - INFO - # Epoch: 0092 | Train_Loss: 0.0266 | Val_Loss: 5.9850 , Val_Acc: 0.7300 | Test_Acc: 0.7200
+2025-01-02 21:55:54,371 - INFO - # Epoch: 0093 | Train_Loss: 0.0056 | Val_Loss: 5.9812 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:56:28,963 - INFO - # Epoch: 0094 | Train_Loss: 0.0455 | Val_Loss: 5.9875 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 21:56:50,919 - INFO - # Epoch: 0095 | Train_Loss: 0.0402 | Val_Loss: 5.9835 , Val_Acc: 0.7250 | Test_Acc: 0.7233
+2025-01-02 21:57:08,329 - INFO - # Epoch: 0096 | Train_Loss: 0.0042 | Val_Loss: 5.9778 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 21:57:28,896 - INFO - # Epoch: 0097 | Train_Loss: 0.0508 | Val_Loss: 5.9948 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 21:57:47,133 - INFO - # Epoch: 0098 | Train_Loss: 0.0139 | Val_Loss: 6.0206 , Val_Acc: 0.7300 | Test_Acc: 0.7200
+2025-01-02 21:58:05,821 - INFO - # Epoch: 0099 | Train_Loss: 0.0380 | Val_Loss: 6.0184 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 21:58:16,180 - INFO - # Epoch: 0100 | Train_Loss: 0.0457 | Val_Loss: 6.0194 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 21:58:28,540 - INFO - # Epoch: 0101 | Train_Loss: 0.0582 | Val_Loss: 6.0565 , Val_Acc: 0.7300 | Test_Acc: 0.7250
+2025-01-02 21:58:42,454 - INFO - # Epoch: 0102 | Train_Loss: 0.0472 | Val_Loss: 6.0542 , Val_Acc: 0.7250 | Test_Acc: 0.7233
+2025-01-02 21:58:48,926 - INFO - # Epoch: 0103 | Train_Loss: 0.0210 | Val_Loss: 6.0354 , Val_Acc: 0.7250 | Test_Acc: 0.7250
+2025-01-02 21:58:59,820 - INFO - # Epoch: 0104 | Train_Loss: 0.0343 | Val_Loss: 6.0292 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 21:59:08,927 - INFO - # Epoch: 0105 | Train_Loss: 0.0247 | Val_Loss: 6.0051 , Val_Acc: 0.7350 | Test_Acc: 0.7225
+2025-01-02 21:59:19,150 - INFO - # Epoch: 0106 | Train_Loss: 0.0077 | Val_Loss: 6.0322 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 21:59:27,305 - INFO - # Epoch: 0107 | Train_Loss: 0.0248 | Val_Loss: 6.0199 , Val_Acc: 0.7400 | Test_Acc: 0.7233
+2025-01-02 21:59:35,951 - INFO - # Epoch: 0108 | Train_Loss: 0.0675 | Val_Loss: 6.0429 , Val_Acc: 0.7400 | Test_Acc: 0.7208
+2025-01-02 21:59:45,333 - INFO - # Epoch: 0109 | Train_Loss: 0.0669 | Val_Loss: 6.0417 , Val_Acc: 0.7400 | Test_Acc: 0.7225
+2025-01-02 21:59:56,226 - INFO - # Epoch: 0110 | Train_Loss: 0.0385 | Val_Loss: 6.0479 , Val_Acc: 0.7300 | Test_Acc: 0.7233
+2025-01-02 22:00:05,606 - INFO - # Epoch: 0111 | Train_Loss: 0.0498 | Val_Loss: 6.0310 , Val_Acc: 0.7300 | Test_Acc: 0.7225
+2025-01-02 22:00:13,061 - INFO - # Epoch: 0112 | Train_Loss: 0.0733 | Val_Loss: 6.0236 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 22:00:17,053 - INFO - # Epoch: 0113 | Train_Loss: 0.0369 | Val_Loss: 6.0412 , Val_Acc: 0.7250 | Test_Acc: 0.7217
+2025-01-02 22:00:21,188 - INFO - # Epoch: 0114 | Train_Loss: 0.0561 | Val_Loss: 6.0647 , Val_Acc: 0.7350 | Test_Acc: 0.7225
+2025-01-02 22:00:25,309 - INFO - # Epoch: 0115 | Train_Loss: 0.0583 | Val_Loss: 6.0473 , Val_Acc: 0.7250 | Test_Acc: 0.7233
+2025-01-02 22:00:31,689 - INFO - # Epoch: 0116 | Train_Loss: 0.0262 | Val_Loss: 6.0063 , Val_Acc: 0.7350 | Test_Acc: 0.7258
+2025-01-02 22:00:35,770 - INFO - # Epoch: 0117 | Train_Loss: 0.0478 | Val_Loss: 6.0581 , Val_Acc: 0.7350 | Test_Acc: 0.7242
+2025-01-02 22:00:38,254 - INFO - # Epoch: 0118 | Train_Loss: 0.0742 | Val_Loss: 6.0198 , Val_Acc: 0.7300 | Test_Acc: 0.7242
+2025-01-02 22:00:43,679 - INFO - # Epoch: 0119 | Train_Loss: 0.0386 | Val_Loss: 6.0171 , Val_Acc: 0.7300 | Test_Acc: 0.7267
+2025-01-02 22:00:48,886 - INFO - # Epoch: 0120 | Train_Loss: 0.0350 | Val_Loss: 6.0115 , Val_Acc: 0.7300 | Test_Acc: 0.7217
+2025-01-02 22:00:48,887 - INFO - =============== Start Evaluating ===============
+2025-01-02 22:00:48,887 - INFO - Best Test Accuracy: 0.7325 , Best Test Epoch: 35
+
