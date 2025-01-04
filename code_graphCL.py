@@ -55,7 +55,8 @@ def train_epoch_contrastive_learning(
             fractal_attrs=batch_fractal_attrs, 
             diameters=batch_diameters, 
             aug_type=aug_type, 
-            aug_fractal_threshold=aug_fractal_threshold
+            aug_fractal_threshold=aug_fractal_threshold,
+            device=device
         )
 
         batch_graphs, batch_snorm_n, _ = collate_batched_graph(aug_graphs_1)
