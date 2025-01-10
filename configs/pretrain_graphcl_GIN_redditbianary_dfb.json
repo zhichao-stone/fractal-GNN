@@ -12,11 +12,16 @@
         "weight_decay": 1e-6,
         "aug_type": "drop_fractal_box",
         "aug_fractal_threshold": 0.85, 
-        "is_pretrain": true
+        "is_pretrain": true,
+        "load_model": false
     },
+    "data_params": {
+        "embed_dim": 512, 
+        "train_ratio": 0.55, 
+        "val_ratio": 0.05
+    }, 
     "model_params": {
         "model": "GIN",
-        "embed_dim": 512,
         "num_layers": 4,
         "mlp_layers": 2,
         "hidden_dim": 128,
@@ -24,10 +29,10 @@
         "pooling_type": "sum",
         "dropout": 0.0,
         "head": true,
+        "mlp": false, 
         "learn_eps": true,
         "graph_norm": true,
         "batch_norm": true,
-        "residual": true,
-        "load_model": false
+        "residual": true
     }
 }

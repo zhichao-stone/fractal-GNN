@@ -13,11 +13,16 @@
         "aug_type": "simple_random_walk",
         "aug_fractal_threshold": 0.85, 
         "is_pretrain": false, 
-        "test": true
+        "test": true,
+        "load_model": true
     },
+    "data_params": {
+        "embed_dim": 512, 
+        "train_ratio": 0.3, 
+        "val_ratio": 0.1
+    }, 
     "model_params": {
         "model": "GIN",
-        "embed_dim": 512,
         "num_layers": 4,
         "mlp_layers": 2,
         "hidden_dim": 128,
@@ -25,10 +30,10 @@
         "pooling_type": "sum",
         "dropout": 0.2,
         "head": true,
+        "mlp": false,
         "learn_eps": true,
         "graph_norm": true,
         "batch_norm": true,
-        "residual": true,
-        "load_model": true
+        "residual": true
     }
 }

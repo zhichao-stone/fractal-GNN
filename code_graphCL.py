@@ -40,7 +40,6 @@ def train_epoch_contrastive_learning(
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
     data_loader: DataLoader, 
-    head: bool, 
     aug_type: str, 
     aug_fractal_threshold: float
 ):
@@ -70,8 +69,8 @@ def train_epoch_contrastive_learning(
         aug_batch_snorm_n = aug_batch_snorm_n.to(device)
 
         optimizer.zero_grad()
-        ori_vector = model.forward(batch_graphs, batch_h, batch_snorm_n, mlp=False, head=head)
-        aug_vector = model.forward(aug_batch_graphs, aug_batch_h, aug_batch_snorm_n, mlp=False, head=head)
+        ori_vector = model.forward(batch_graphs, batch_h, batch_snorm_n)
+        aug_vector = model.forward(aug_batch_graphs, aug_batch_h, aug_batch_snorm_n)
 
         contrastive_loss = compute_contrastive_loss(ori_vector, aug_vector)
         contrastive_loss.backward()
@@ -88,7 +87,6 @@ def train_epoch_graph_classification(
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
     data_loader: DataLoader,
-    head: bool
 ):
     model.train()
     epoch_loss = 0.0
@@ -101,7 +99,7 @@ def train_epoch_graph_classification(
         batch_labels = batch_labels.to(device)
 
         optimizer.zero_grad()
-        batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n, mlp=False, head=head)
+        batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n)
         criterion = nn.CrossEntropyLoss()
         loss = criterion(batch_scores, batch_labels)
         loss.backward()
@@ -116,109 +114,42 @@ def train_epoch_graph_classification(
 if __name__ == "__main__":
     # parse args
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="")
-    ### train settings
-    parser.add_argument("--gpu", type=int, default=0, help="id of gpu to use. -1 if cpu used")
-    parser.add_argument("--dataset", type=str, default="redditbinary")
-    parser.add_argument("--embed_dim", type=int, default="768", help="if graph in dataset doesn't have feature, randomly initialize a feature with <feat_dim> dimensions")
-    parser.add_argument("--seed", type=int, default=41, help="random seed")
-    parser.add_argument("--epoch", type=int, default=80)
-    parser.add_argument("--batch_size", type=int, default=128)
-    parser.add_argument("--lr", type=float, default=0.001)
-    parser.add_argument("--lr_reduce_factor", type=float, default=0.5)
-    parser.add_argument("--lr_schedule_patience", type=int, default=5)
-    parser.add_argument("--min_lr", type=float, default=1e-5)
-    parser.add_argument("--weight_decay", type=float, default=1e-6)
-    parser.add_argument("--aug_type", type=str, default="rr", help="type of data augmentation, n (drop_node) or r (renormalization). aug_type should be selected from [ nn, nr, rn, rr ]")
-    parser.add_argument("--aug_fractal_threshold", type=float, default=0.8)
-    parser.add_argument("--log_epoch_interval", type=int, default=5)
-    parser.add_argument("--is_pretrain", action="store_true")
-    parser.add_argument("--test", action="store_true")
-    # model settings
-    parser.add_argument("--model", type=str, default="GIN")
-    parser.add_argument("--num_layers", type=int, default=4)
-    parser.add_argument("--mlp_layers", type=int, default=2)
-    parser.add_argument("--hidden_dim", type=int, default=128)
-    parser.add_argument("--neighbor_aggr", type=str, default="sum")
-    parser.add_argument("--pooling_type", type=str, default="sum")
-    parser.add_argument("--dropout", type=float, default=0.2, help="dropout rate")
-    parser.add_argument("--head", action="store_true", help="use projection head or not")
-    parser.add_argument("--learn_eps", action="store_true")
-    parser.add_argument("--graph_norm", action="store_true")
-    parser.add_argument("--batch_norm", action="store_true")
-    parser.add_argument("--residual", action="store_true")
-    parser.add_argument("--load_model", action="store_true")
-    
+    parser.add_argument("--config", type=str)
     args = parser.parse_args()
 
     if args.config != "":
         try:
-            configs = load_json(args.config)
-            assert "train_params" in configs and "model_params" in configs
+            configs: dict = load_json(args.config)
+            train_params: dict = configs.pop("train_params", {})
+            data_params: dict = configs.pop("data_params", {})
+            model_params: dict = configs.pop("model_params", {})
         except Exception as e:
             print(str(e))
             configs = None
+    if configs is None:
+        raise Exception(f"There is error in configurations of {args.config}")
 
-    if configs is not None:
-        gpu_id = configs["train_params"].pop("gpu", 0)
-        dataset_name = configs["train_params"].pop("dataset", "redditbinary")
-        random_seed = configs["train_params"].pop("seed", 41)
-        epochs = configs["train_params"].pop("epoch", 80)
-        batch_size = configs["train_params"].pop("batch_size", 128)
-        lr = configs["train_params"].pop("lr", 0.001)
-        lr_reduce_factor = configs["train_params"].pop("lr_reduce_factor", 0.5)
-        lr_schedule_patience = configs["train_params"].pop("lr_schedule_patience", 5)
-        min_lr = configs["train_params"].pop("min_lr", 1e-5)
-        weight_decay = configs["train_params"].pop("weight_decay", 1e-6)
-        aug_type = configs["train_params"].pop("aug_type", "nn")
-        aug_fractal_threshold = configs["train_params"].pop("aug_fractal_threshold", 0.8)
-        is_pretrain = configs["train_params"].pop("is_pretrain", False)
-        test_mode = configs["train_params"].pop("test", False)
+    gpu_id = train_params.pop("gpu", 0)
+    dataset_name = train_params.pop("dataset", "redditbinary")
+    random_seed = train_params.pop("seed", 41)
+    epochs = train_params.pop("epoch", 80)
+    batch_size = train_params.pop("batch_size", 128)
+    lr = train_params.pop("lr", 0.001)
+    lr_reduce_factor = train_params.pop("lr_reduce_factor", 0.5)
+    lr_schedule_patience = train_params.pop("lr_schedule_patience", 5)
+    min_lr = train_params.pop("min_lr", 1e-5)
+    weight_decay = train_params.pop("weight_decay", 1e-6)
+    aug_type = train_params.pop("aug_type", "drop_node")
+    aug_fractal_threshold = train_params.pop("aug_fractal_threshold", 0.8)
+    is_pretrain = train_params.pop("is_pretrain", False)
+    test_mode = train_params.pop("test", False)
+    load_model = train_params.pop("load_model", False)
 
-        model_name = configs["model_params"].pop("model", "GIN")
-        embed_dim = configs["model_params"].pop("embed_dim", 768)
-        num_layers = configs["model_params"].pop("num_layers", 4)
-        mlp_layers = configs["model_params"].pop("mlp_layers", 2)
-        hidden_dim = configs["model_params"].pop("hidden_dim", 128)
-        neighbor_aggr_type = configs["model_params"].pop("neighbor_aggr_type", "sum")
-        pooling_type = configs["model_params"].pop("pooling_type", "sum")
-        dropout = configs["model_params"].pop("dropout", 0.0)
-        head = configs["model_params"].pop("head", True)
-        learn_eps = configs["model_params"].pop("learn_eps", True)
-        graph_norm = configs["model_params"].pop("graph_norm", True)
-        batch_norm = configs["model_params"].pop("batch_norm", True)
-        residual = configs["model_params"].pop("residual", True)
-        load_model = configs["model_params"].pop("load_model", False)
-    else:
-        gpu_id = args.gpu
-        dataset_name = args.dataset
-        random_seed = args.seed
-        epochs = args.epoch
-        batch_size = args.batch_size
-        lr = args.lr
-        lr_reduce_factor = args.lr_reduce_factor
-        lr_schedule_patience = args.lr_schedule_patience
-        min_lr = args.min_lr
-        weight_decay = args.weight_decay
-        aug_type = args.aug_type
-        aug_fractal_threshold = args.aug_fractal_threshold
-        is_pretrain = args.is_pretrain
-        test_mode = args.test
+    embed_dim = data_params.pop("embed_dim", 768)
+    train_ratio = data_params.pop("train_ratio", 0.55)
+    val_ratio = data_params.pop("val_ratio", 0.05)
 
-        model_name = args.model
-        embed_dim = args.embed_dim
-        num_layers = args.num_layers
-        mlp_layers = args.mlp_layers
-        hidden_dim = args.hidden_dim
-        neighbor_aggr_type = args.neighbor_aggr_type
-        pooling_type = args.pooling_type
-        dropout = args.dropout
-        head = args.head
-        learn_eps = args.learn_eps
-        graph_norm = args.graph_norm
-        batch_norm = args.batch_norm
-        residual = args.residual
-        load_model = args.load_model
+    model_name = model_params.pop("model", "GIN")
 
     # random setting
     os.environ['PYTHONHASHSEED'] = str(random_seed)
@@ -235,16 +166,17 @@ if __name__ == "__main__":
         log_file_name += "_test"
     logger = ModelLogger(log_file_name, "log", backupCount=7).get_logger()
     logger.info(f"Logging to {log_file_name}.log")
+    logger.info("=============== Configurations ===============")
+    logger.info(f"model: {model_name}")
+    logger.info(f"embedding dim: {embed_dim}")
+    logger.info(f"model_params: ")
+    for k, v in model_params.items():
+        logger.info(f"\t{k}: {v}")
 
     # device
     device = torch.device(f"cuda:{gpu_id}" if gpu_id >= 0 else "cpu")
     
     # load data
-    if is_pretrain:
-        train_ratio, val_ratio = 0.55, 0.05
-    else:
-        train_ratio, val_ratio = 0.3, 0.1
-
     if is_pretrain and aug_type in ["renormalization", "drop_fractal_box"]:
         fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
         covering_matrix = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{dataset_name}.pt"))
@@ -271,20 +203,15 @@ if __name__ == "__main__":
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)
 
-    model = GIN(
-        input_dim=input_dim,
-        hidden_dim=hidden_dim,
-        num_classes=num_classes,
-        dropout=dropout,
-        num_layers=num_layers,
-        mlp_num_layers=mlp_layers,
-        neighbor_aggr_type=neighbor_aggr_type,
-        pooling_type=pooling_type,
-        learn_eps=learn_eps,
-        graph_norm=graph_norm,
-        batch_norm=batch_norm,
-        residual=residual
-    )
+    if model_name == "GIN":
+        model = GIN(
+            input_dim=input_dim,
+            num_classes=num_classes,
+            **model_params
+        )
+    else:
+        raise Exception(f"Model {model_name} is not supported!")
+
     if load_model:
         load_model_path = sorted(glob.glob(save_model_dir + "/*.pkl"), key=lambda x:int(os.path.split(x)[-1].replace("epoch_", "").replace(".pkl", "")))
         checkpoint = torch.load(load_model_path[-1])
@@ -304,9 +231,16 @@ if __name__ == "__main__":
 
     # training
     logger.info("=============== Train Argument ===============")
-    logger.info(f"Learnig Rate: {lr}")
-    logger.info(f"Weight Decay: {weight_decay}")
-    logger.info(f"Epochs: {epochs}")
+    logger.info(f"batch size: {batch_size}")
+    logger.info(f"learnig rate: {lr}")
+    logger.info(f"lr reduce factor: {lr_reduce_factor} , schedule patience: {lr_schedule_patience}")
+    logger.info(f"min learning rate: {min_lr}")
+    logger.info(f"weight decay: {weight_decay}")
+    logger.info(f"epochs: {epochs}")
+    if is_pretrain:
+        logger.info(f"augmentation type: {aug_type}")
+        logger.info(f"fractal threshold: {aug_fractal_threshold}")
+
     logger.info("=============== Start Training ===============")
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -347,7 +281,7 @@ if __name__ == "__main__":
                 optimizer=optimizer, 
                 device=device, 
                 data_loader=train_loader, 
-                head=head, 
+ 
                 aug_type=aug_type, 
                 aug_fractal_threshold=aug_fractal_threshold
             )
@@ -371,13 +305,12 @@ if __name__ == "__main__":
                 model=model,
                 optimizer=optimizer,
                 device=device, 
-                data_loader=train_loader, 
-                head=head
+                data_loader=train_loader
             )
 
-            epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, head=head, criterion=nn.CrossEntropyLoss())
+            epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, criterion=nn.CrossEntropyLoss())
             if test_mode:
-                _, epoch_test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
+                _, epoch_test_acc = evaluate_with_dataloader(model, test_loader, device=device)
 
             scheduler.step(epoch_val_loss)
             if test_mode:
@@ -389,7 +322,7 @@ if __name__ == "__main__":
 
         logger.info("=============== Start Evaluating ===============")
         if not test_mode:
-            _, test_acc = evaluate_with_dataloader(model, test_loader, device=device, head=head)
+            _, test_acc = evaluate_with_dataloader(model, test_loader, device=device)
             logger.info(f"Test Accuracy: {test_acc:.4f}\n")
         else:
             logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n")

@@ -109,13 +109,15 @@ class GIN(nn.Module):
         num_classes: int,
         dropout: float = 0.0, 
         num_layers: int = 4,
-        mlp_num_layers: int = 2,
+        mlp_layers: int = 2,
         neighbor_aggr_type: str = "sum",
         pooling_type: str = "sum",
         learn_eps: bool = True,
         graph_norm: bool = True,
         batch_norm: bool = True,
-        residual: bool = True
+        residual: bool = True, 
+        head: bool = True, 
+        mlp: bool = False, 
     ) -> None:
         super(GIN, self).__init__()
 
@@ -131,13 +133,14 @@ class GIN(nn.Module):
         self.graph_norm = graph_norm
         self.batch_norm = batch_norm
         self.residual = residual
-        
+        self.head = head
+        self.mlp = mlp
 
         self.gin_layers = nn.ModuleList()
         self.node_embeddings = nn.Linear(input_dim, hidden_dim)
         for _ in range(self.num_layers):
             self.gin_layers.append(GINLayer(
-                apply_func=MLP(mlp_num_layers, hidden_dim, hidden_dim, hidden_dim),
+                apply_func=MLP(mlp_layers, hidden_dim, hidden_dim, hidden_dim),
                 aggr_type=self.neighbor_aggr_type, 
                 dropout=self.dropout, 
                 graph_norm=self.graph_norm, 
@@ -165,9 +168,7 @@ class GIN(nn.Module):
     def forward(self, 
         graph: dgl.DGLGraph, 
         h: torch.Tensor, 
-        snorm_n: torch.Tensor, 
-        mlp: bool = True, 
-        head: bool = False
+        snorm_n: torch.Tensor
     ):
         with graph.local_scope():
             h = self.node_embeddings(h)
@@ -183,10 +184,10 @@ class GIN(nn.Module):
                 vector_over_layer += pooled_h
                 score_over_layer += self.linears[i](pooled_h)
 
-            if mlp:
+            if self.mlp:
                 return score_over_layer
             else:
-                if head:
+                if self.head:
                     return self.proj_head(vector_over_layer)
                 else:
                     return vector_over_layer

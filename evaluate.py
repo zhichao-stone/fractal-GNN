@@ -26,7 +26,6 @@ def evaluate_with_dataloader(
     data_loader: DataLoader, 
     device: torch.device,  
     criterion: nn.Module = None,
-    head: bool = True
 ): 
     model.eval()
     loss = 0
@@ -39,7 +38,7 @@ def evaluate_with_dataloader(
             batch_snorm_n = batch_snorm_n.to(device)
             batch_labels = batch_labels.to(device)
 
-            batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n, mlp=False, head=head)
+            batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n)
 
             if criterion is not None:
                 batch_loss = criterion(batch_scores, batch_labels)
