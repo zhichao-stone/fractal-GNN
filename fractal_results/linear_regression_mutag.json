@@ -1,0 +1,4658 @@
+[
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            },
+            "Largest Connected Component": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 26,
+            "Edges": 56,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.084626267703674,
+                "Intercept": 2.6805170970368177,
+                "R²": 0.5306969618497921
+            },
+            "Largest Connected Component": {
+                "Slope": -1.084626267703674,
+                "Intercept": 2.6805170970368177,
+                "R²": 0.5306969618497921
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                26
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            },
+            "Largest Connected Component": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6587720115973282,
+                "Intercept": 2.1234263445996553,
+                "R²": 0.43398056326398904
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6587720115973282,
+                "Intercept": 2.1234263445996553,
+                "R²": 0.43398056326398904
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5503397132132081,
+                "Intercept": 1.9909043329980034,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5503397132132081,
+                "Intercept": 1.9909043329980034,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6587720115973282,
+                "Intercept": 2.1234263445996553,
+                "R²": 0.43398056326398904
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6587720115973282,
+                "Intercept": 2.1234263445996553,
+                "R²": 0.43398056326398904
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 56,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            },
+            "Largest Connected Component": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            },
+            "Largest Connected Component": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 28,
+            "Edges": 66,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.39736908751418615,
+                "Intercept": 2.074832720131787,
+                "R²": 0.15398456482666367
+            },
+            "Largest Connected Component": {
+                "Slope": -0.39736908751418615,
+                "Intercept": 2.074832720131787,
+                "R²": 0.15398456482666367
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                28
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 34,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.856744694619504,
+                "Intercept": 2.323653750513353,
+                "R²": 0.46169636946509296
+            },
+            "Largest Connected Component": {
+                "Slope": -0.856744694619504,
+                "Intercept": 2.323653750513353,
+                "R²": 0.46169636946509296
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.8039102654190402,
+                "Intercept": 2.305998041328886,
+                "R²": 0.9402166811550037
+            },
+            "Largest Connected Component": {
+                "Slope": -0.8039102654190402,
+                "Intercept": 2.305998041328886,
+                "R²": 0.9402166811550037
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 56,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.2712850623007678,
+                "Intercept": 1.8832167580477273,
+                "R²": 0.21641672530991263
+            },
+            "Largest Connected Component": {
+                "Slope": -0.2712850623007678,
+                "Intercept": 1.8832167580477273,
+                "R²": 0.21641672530991263
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 48,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.8915209403173519,
+                "Intercept": 2.421372779351425,
+                "R²": 0.5192072528018574
+            },
+            "Largest Connected Component": {
+                "Slope": -0.8915209403173519,
+                "Intercept": 2.421372779351425,
+                "R²": 0.5192072528018574
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            },
+            "Largest Connected Component": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6082915791648384,
+                "Intercept": 2.0262869408364312,
+                "R²": 0.9425833014318596
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6082915791648384,
+                "Intercept": 2.0262869408364312,
+                "R²": 0.9425833014318596
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 34,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            },
+            "Largest Connected Component": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.1748925122650529,
+                "Intercept": 2.5574895967783715,
+                "R²": 0.7718830844660198
+            },
+            "Largest Connected Component": {
+                "Slope": -1.1748925122650529,
+                "Intercept": 2.5574895967783715,
+                "R²": 0.7718830844660198
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.33691984088143057,
+                "Intercept": 1.817592008502444,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.33691984088143057,
+                "Intercept": 1.817592008502444,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889952,
+                "Intercept": 2.1699878453941444,
+                "R²": 0.8293860057986638
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889952,
+                "Intercept": 2.1699878453941444,
+                "R²": 0.8293860057986638
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.5063491683259615e-16,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.5063491683259615e-16,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -6.837399254589362e-16,
+                "Intercept": 1.6094379124341005,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -6.837399254589362e-16,
+                "Intercept": 1.6094379124341005,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 1.3151970006390745,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 1.3151970006390745,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 34,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.10256246376888666,
+                "Intercept": 1.4209934498257843,
+                "R²": 0.026796188414815347
+            },
+            "Largest Connected Component": {
+                "Slope": -0.10256246376888666,
+                "Intercept": 1.4209934498257843,
+                "R²": 0.026796188414815347
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.5063491683259615e-16,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.5063491683259615e-16,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 34,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5198982189055351,
+                "Intercept": 1.5181318421383632,
+                "R²": 0.7718830844660198
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5198982189055351,
+                "Intercept": 1.5181318421383632,
+                "R²": 0.7718830844660198
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 26,
+            "Edges": 60,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6885950205715411,
+                "Intercept": 2.1686267187407395,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6885950205715411,
+                "Intercept": 2.1686267187407395,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                26
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 24,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.1787366035649298,
+                "Intercept": 2.3785981918474866,
+                "R²": 0.7206181736252194
+            },
+            "Largest Connected Component": {
+                "Slope": -1.1787366035649298,
+                "Intercept": 2.3785981918474866,
+                "R²": 0.7206181736252194
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                24
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.1748925122650529,
+                "Intercept": 2.5574895967783715,
+                "R²": 0.7718830844660198
+            },
+            "Largest Connected Component": {
+                "Slope": -1.1748925122650529,
+                "Intercept": 2.5574895967783715,
+                "R²": 0.7718830844660198
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.33691984088143057,
+                "Intercept": 1.817592008502444,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.33691984088143057,
+                "Intercept": 1.817592008502444,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.3834884573897628,
+                "Intercept": 2.464177688267899,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.3834884573897628,
+                "Intercept": 2.464177688267899,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 52,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.04656861650833342,
+                "Intercept": 1.3397328603254017,
+                "R²": 0.009533081036164126
+            },
+            "Largest Connected Component": {
+                "Slope": -0.04656861650833342,
+                "Intercept": 1.3397328603254017,
+                "R²": 0.009533081036164126
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 24,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                24
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 44,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.34412984615927,
+                "Intercept": 2.615090557612389,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -1.34412984615927,
+                "Intercept": 2.615090557612389,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7247164457924357,
+                "Intercept": 2.1325108128962995,
+                "R²": 0.9711743279770244
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 28,
+            "Edges": 66,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.31140497942845946,
+                "Intercept": 1.9257178434813615,
+                "R²": 0.2851610234922297
+            },
+            "Largest Connected Component": {
+                "Slope": -0.31140497942845946,
+                "Intercept": 1.9257178434813615,
+                "R²": 0.2851610234922297
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                28
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            },
+            "Largest Connected Component": {
+                "Slope": -0.036121425220894385,
+                "Intercept": 1.5733220065896605,
+                "R²": 0.009533081036165902
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.2793175452283578,
+                "Intercept": 2.736291583745282,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 48,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 18,
+            "Edges": 40,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 8.917882344921308e-17,
+                "Intercept": 1.0986122886681093,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 8.917882344921308e-17,
+                "Intercept": 1.0986122886681093,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                18
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 18,
+            "Edges": 38,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5324651619681692,
+                "Intercept": 1.7783801894273874,
+                "R²": 0.41247269054206515
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5324651619681692,
+                "Intercept": 1.7783801894273874,
+                "R²": 0.41247269054206515
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                18
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9878231325549157,
+                "Intercept": 2.290002972319767,
+                "R²": 0.43781226203019885
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9878231325549157,
+                "Intercept": 2.290002972319767,
+                "R²": 0.43781226203019885
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 27,
+            "Edges": 66,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7923388173561291,
+                "Intercept": 2.4351957187380173,
+                "R²": 0.31637000504482904
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7923388173561291,
+                "Intercept": 2.4351957187380173,
+                "R²": 0.31637000504482904
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                27
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7436999948128783,
+                "Intercept": 2.1620134798765225,
+                "R²": 0.7206181736252193
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7436999948128783,
+                "Intercept": 2.1620134798765225,
+                "R²": 0.7206181736252193
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 50,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5389242731791478,
+                "Intercept": 2.0709694956215463,
+                "R²": 0.7744994846285013
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5389242731791478,
+                "Intercept": 2.0709694956215463,
+                "R²": 0.7744994846285013
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9878231325549157,
+                "Intercept": 2.290002972319767,
+                "R²": 0.43781226203019885
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9878231325549157,
+                "Intercept": 2.290002972319767,
+                "R²": 0.43781226203019885
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6590816672117736,
+                "Intercept": 2.1981355624415837,
+                "R²": 0.4080209312217786
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6590816672117736,
+                "Intercept": 2.1981355624415837,
+                "R²": 0.4080209312217786
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 24,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.1328950133145614,
+                "Intercept": 2.636922375271419,
+                "R²": 0.7242073072908892
+            },
+            "Largest Connected Component": {
+                "Slope": -1.1328950133145614,
+                "Intercept": 2.636922375271419,
+                "R²": 0.7242073072908892
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                24
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 50,
+            "Diameter": 12
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.652599695383846,
+                "Intercept": 1.8526861272775177,
+                "R²": 0.8983027417902077
+            },
+            "Largest Connected Component": {
+                "Slope": -0.652599695383846,
+                "Intercept": 1.8526861272775177,
+                "R²": 0.8983027417902077
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5465686165083329,
+                "Intercept": 1.5424654143794827,
+                "R²": 0.6610809131651714
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5465686165083329,
+                "Intercept": 1.5424654143794827,
+                "R²": 0.6610809131651714
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 36,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.3877966049110053,
+                "Intercept": 1.7012131655137466,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": -0.3877966049110053,
+                "Intercept": 1.7012131655137466,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.0328800408853462,
+                "R²": 0.8293860057986637
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 24,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6878402452386699,
+                "Intercept": 2.2389974936423136,
+                "R²": 0.9114878597716323
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6878402452386699,
+                "Intercept": 2.2389974936423136,
+                "R²": 0.9114878597716323
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 50,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.1281897980703741,
+                "Intercept": 2.445806494306686,
+                "R²": 0.8886153866167604
+            },
+            "Largest Connected Component": {
+                "Slope": -1.1281897980703741,
+                "Intercept": 2.445806494306686,
+                "R²": 0.8886153866167604
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.2402366934239835,
+                "Intercept": 1.3566993262741591,
+                "R²": 0.11118710094556383
+            },
+            "Largest Connected Component": {
+                "Slope": -0.2402366934239835,
+                "Intercept": 1.3566993262741591,
+                "R²": 0.11118710094556383
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -6.837399254589362e-16,
+                "Intercept": 1.6094379124341005,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -6.837399254589362e-16,
+                "Intercept": 1.6094379124341005,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.709511291351456,
+                "Intercept": 2.976702400963707,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.709511291351456,
+                "Intercept": 2.976702400963707,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 26,
+            "Edges": 60,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0931372330166662,
+                "Intercept": 2.6794657206508017,
+                "R²": 0.5700505779022687
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0931372330166662,
+                "Intercept": 2.6794657206508017,
+                "R²": 0.5700505779022687
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                26
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 26,
+            "Edges": 60,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.31140497942845946,
+                "Intercept": 1.9257178434813615,
+                "R²": 0.2851610234922297
+            },
+            "Largest Connected Component": {
+                "Slope": -0.31140497942845946,
+                "Intercept": 1.9257178434813615,
+                "R²": 0.2851610234922297
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                26
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 42,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.11607002018036974,
+                "Intercept": 1.0316117409815382,
+                "R²": 0.1019002145167831
+            },
+            "Largest Connected Component": {
+                "Slope": 0.11607002018036974,
+                "Intercept": 1.0316117409815382,
+                "R²": 0.1019002145167831
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 42,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.15020579131241438,
+                "Intercept": 1.304729663989123,
+                "R²": 0.02506668957826319
+            },
+            "Largest Connected Component": {
+                "Slope": -0.15020579131241438,
+                "Intercept": 1.304729663989123,
+                "R²": 0.02506668957826319
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 44,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7718830844660196,
+                "Intercept": 2.120718909014063,
+                "R²": 0.5958034960847771
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7718830844660196,
+                "Intercept": 2.120718909014063,
+                "R²": 0.5958034960847771
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 58,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0160062222080586,
+                "Intercept": 2.654173509565474,
+                "R²": 0.9360733348021437
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0160062222080586,
+                "Intercept": 2.654173509565474,
+                "R²": 0.9360733348021437
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.438345148993511,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0465686165083332,
+                "Intercept": 2.438345148993511,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 40,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -2.390345874630997,
+                "Intercept": 3.778105827003605,
+                "R²": 0.5921631554791222
+            },
+            "Largest Connected Component": {
+                "Slope": -2.390345874630997,
+                "Intercept": 3.778105827003605,
+                "R²": 0.5921631554791222
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": 0.3877966049110052,
+                "Intercept": 0.7836934842742537,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 48,
+            "Diameter": 15
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5285405434195407,
+                "Intercept": 1.7623865011268165,
+                "R²": 0.8270796921049884
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5285405434195407,
+                "Intercept": 1.7623865011268165,
+                "R²": 0.8270796921049884
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.19259336588045667,
+                "Intercept": 1.4729631121108218,
+                "R²": 0.2104160619185761
+            },
+            "Largest Connected Component": {
+                "Slope": -0.19259336588045667,
+                "Intercept": 1.4729631121108218,
+                "R²": 0.2104160619185761
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 46,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.4496602867867916,
+                "Intercept": 1.2977571524380591,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 0.4496602867867916,
+                "Intercept": 1.2977571524380591,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9675017707202211,
+                "Intercept": 2.400430009506517,
+                "R²": 0.42107884551284736
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9675017707202211,
+                "Intercept": 2.400430009506517,
+                "R²": 0.42107884551284736
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 42,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9343652214193382,
+                "Intercept": 2.14506629122512,
+                "R²": 0.6610809131651716
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9343652214193382,
+                "Intercept": 2.14506629122512,
+                "R²": 0.6610809131651716
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 28,
+            "Edges": 62,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.2622622820797926,
+                "Intercept": 2.0601970602789814,
+                "R²": 0.29401573132227365
+            },
+            "Largest Connected Component": {
+                "Slope": -0.2622622820797926,
+                "Intercept": 2.0601970602789814,
+                "R²": 0.29401573132227365
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                28
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 26,
+            "Edges": 60,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.06563477858066286,
+                "Intercept": 1.7261347196827719,
+                "R²": 0.009533081036164792
+            },
+            "Largest Connected Component": {
+                "Slope": -0.06563477858066286,
+                "Intercept": 1.7261347196827719,
+                "R²": 0.009533081036164792
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                26
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 36,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.489201726918915,
+                "Intercept": 2.9620099605640418,
+                "R²": 0.9437657651464426
+            },
+            "Largest Connected Component": {
+                "Slope": -1.489201726918915,
+                "Intercept": 2.9620099605640418,
+                "R²": 0.9437657651464426
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 18,
+            "Edges": 38,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 1.3151970006390745,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 1.3151970006390745,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                18
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 38,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.2598510045646636,
+                "Intercept": 2.482700084173712,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.2598510045646636,
+                "Intercept": 2.482700084173712,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 24,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 56,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.2712850623007678,
+                "Intercept": 1.8832167580477273,
+                "R²": 0.21641672530991263
+            },
+            "Largest Connected Component": {
+                "Slope": -0.2712850623007678,
+                "Intercept": 1.8832167580477273,
+                "R²": 0.21641672530991263
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 36,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            },
+            "Largest Connected Component": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9675017707202211,
+                "Intercept": 2.400430009506517,
+                "R²": 0.6814960239289309
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9675017707202211,
+                "Intercept": 2.400430009506517,
+                "R²": 0.6814960239289309
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 36,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5198982189055351,
+                "Intercept": 1.5181318421383632,
+                "R²": 0.7718830844660198
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5198982189055351,
+                "Intercept": 1.5181318421383632,
+                "R²": 0.7718830844660198
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9638785747791072,
+                "Intercept": 2.5210225556324413,
+                "R²": 0.872667160184221
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9638785747791072,
+                "Intercept": 2.5210225556324413,
+                "R²": 0.872667160184221
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 58,
+            "Diameter": 11
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7345429594333482,
+                "Intercept": 2.350680596113999,
+                "R²": 0.9455540987087502
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            },
+            "Largest Connected Component": {
+                "Slope": -0.980933837927671,
+                "Intercept": 2.09850479043063,
+                "R²": 0.9622311943915088
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 23,
+            "Edges": 54,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            },
+            "Largest Connected Component": {
+                "Slope": -0.3834884573897634,
+                "Intercept": 1.7710305077079544,
+                "R²": 0.2719352789704641
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                23
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 44,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 40,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6590816672117736,
+                "Intercept": 2.1981355624415837,
+                "R²": 0.4080209312217786
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6590816672117736,
+                "Intercept": 2.1981355624415837,
+                "R²": 0.4080209312217786
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 25,
+            "Edges": 56,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5441539081484845,
+                "Intercept": 2.2236642782331333,
+                "R²": 0.45245751626171293
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5441539081484845,
+                "Intercept": 2.2236642782331333,
+                "R²": 0.45245751626171293
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                25
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 18,
+            "Edges": 40,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7436999948128775,
+                "Intercept": 1.7565483717683572,
+                "R²": 0.7206181736252195
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                18
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 34,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7712850623007682,
+                "Intercept": 2.0859493121018096,
+                "R²": 0.8293860057986634
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 24,
+            "Edges": 50,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.3007984156605362,
+                "Intercept": 1.8537079143468838,
+                "R²": 0.6610809131651718
+            },
+            "Largest Connected Component": {
+                "Slope": -0.3007984156605362,
+                "Intercept": 1.8537079143468838,
+                "R²": 0.6610809131651718
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                24
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 10,
+            "Edges": 20,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                10
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 44,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.04656861650833342,
+                "Intercept": 1.3397328603254017,
+                "R²": 0.009533081036164126
+            },
+            "Largest Connected Component": {
+                "Slope": -0.04656861650833342,
+                "Intercept": 1.3397328603254017,
+                "R²": 0.009533081036164126
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 17,
+            "Edges": 36,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.06563477858066216,
+                "Intercept": 1.0329875391228256,
+                "R²": 0.009533081036164903
+            },
+            "Largest Connected Component": {
+                "Slope": -0.06563477858066216,
+                "Intercept": 1.0329875391228256,
+                "R²": 0.009533081036164903
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                17
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 19,
+            "Edges": 40,
+            "Diameter": 12
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6905517836071341,
+                "Intercept": 1.8215323701441615,
+                "R²": 0.8895062380232925
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6905517836071341,
+                "Intercept": 1.8215323701441615,
+                "R²": 0.8895062380232925
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                19
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 21,
+            "Edges": 46,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.2926000742976873,
+                "Intercept": 2.8614518886118554,
+                "R²": 0.7668040980234166
+            },
+            "Largest Connected Component": {
+                "Slope": -1.2926000742976873,
+                "Intercept": 2.8614518886118554,
+                "R²": 0.7668040980234166
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                21
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 20,
+            "Edges": 44,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.0679795274642123,
+                "Intercept": 2.301821932854322,
+                "R²": 0.9440341622981869
+            },
+            "Largest Connected Component": {
+                "Slope": -1.0679795274642123,
+                "Intercept": 2.301821932854322,
+                "R²": 0.9440341622981869
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                20
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 24,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -3.9693622959161194,
+                "Intercept": 4.360790196469311,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -3.9693622959161194,
+                "Intercept": 4.360790196469311,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 24,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 0.7095112913514551,
+                "Intercept": 0.606816537492402,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 0.7095112913514551,
+                "Intercept": 0.606816537492402,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -8.546749068236702e-17,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -8.546749068236702e-17,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 48,
+            "Diameter": 10
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 2.0083441811990195,
+                "R²": 0.7206181736252191
+            },
+            "Largest Connected Component": {
+                "Slope": -0.43503660875205186,
+                "Intercept": 2.0083441811990195,
+                "R²": 0.7206181736252191
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 22,
+            "Edges": 46,
+            "Diameter": 14
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.460306884710982,
+                "Intercept": 1.6654360093357612,
+                "R²": 0.6273150181175668
+            },
+            "Largest Connected Component": {
+                "Slope": -0.460306884710982,
+                "Intercept": 1.6654360093357612,
+                "R²": 0.6273150181175668
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                22
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 30,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": 3.418699627294681e-16,
+                "Intercept": 1.098612288668109,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 36,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 30,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 32,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 15,
+            "Edges": 32,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -8.546749068236702e-17,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -8.546749068236702e-17,
+                "Intercept": 1.3862943611198901,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                15
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -3.9693622959161194,
+                "Intercept": 4.360790196469311,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -3.9693622959161194,
+                "Intercept": 4.360790196469311,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 30,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -2.259851004564664,
+                "Intercept": 3.175847264733657,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.9343652214193382,
+                "Intercept": 2.14506629122512,
+                "R²": 0.6610809131651716
+            },
+            "Largest Connected Component": {
+                "Slope": -0.9343652214193382,
+                "Intercept": 2.14506629122512,
+                "R²": 0.6610809131651716
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 14,
+            "Edges": 30,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                14
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -1.7095112913514552,
+                "Intercept": 2.571237292855543,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 10,
+            "Edges": 20,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                10
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 8
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            },
+            "Largest Connected Component": {
+                "Slope": -0.5000000000000001,
+                "Intercept": 1.5890269151739727,
+                "R²": 0.24999999999999978
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -0.6122033950889949,
+                "Intercept": 1.476840664834199,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 16,
+            "Edges": 34,
+            "Diameter": 9
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -1.6587720115973283,
+                "Intercept": 2.8165735251596002,
+                "R²": 0.8293860057986636
+            },
+            "Largest Connected Component": {
+                "Slope": -1.6587720115973283,
+                "Intercept": 2.8165735251596002,
+                "R²": 0.8293860057986636
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                16
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 11,
+            "Edges": 22,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                11
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 24,
+            "Diameter": 7
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 5
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Can Test Fractality": false
+            },
+            "Largest Connected Component": {
+                "Can Test Fractality": false
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 13,
+            "Edges": 28,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -0.7095112913514562,
+                "Intercept": 1.8780901122955982,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                13
+            ]
+        }
+    },
+    {
+        "Statistics of Graph": {
+            "Nodes": 12,
+            "Edges": 26,
+            "Diameter": 6
+        },
+        "Linear Regression": {
+            "Origin Graph": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            },
+            "Largest Connected Component": {
+                "Slope": -4.273374534118351e-17,
+                "Intercept": 0.6931471805599451,
+                "R²": 1.0
+            }
+        },
+        "Statistic of Connected Components": {
+            "Number of CC": 1,
+            "Nodes Number of each CC": [
+                12
+            ]
+        }
+    }
+]

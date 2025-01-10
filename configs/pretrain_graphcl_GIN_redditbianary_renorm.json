@@ -23,7 +23,7 @@
         "num_layers": 4,
         "mlp_layers": 2,
         "hidden_dim": 128,
-        "neighbor_aggr": "sum",
+        "neighbor_aggr_type": "sum",
         "pooling_type": "sum",
         "dropout": 0.0,
         "head": true,

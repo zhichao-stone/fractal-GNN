@@ -9,9 +9,6 @@ import numpy as np
 
 import random
 from typing import List, Dict
-from tqdm import trange
-
-from .process_fractal_features import add_fractal_covering_matrix
 
 
 
@@ -47,6 +44,7 @@ def split_train_val_test_GIN(
 
     dataset_size = len(dataset)
     train_size, val_size = int(dataset_size*train_ratio), int(dataset_size*val_ratio)
+    test_size = dataset_size - train_size - val_size
 
     if fractal_results is None or len(fractal_results) == 0:
         is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
@@ -67,15 +65,19 @@ def split_train_val_test_GIN(
     train_idxs, val_idxs, test_idxs = indexs[:train_size], indexs[train_size:train_size+val_size], indexs[train_size+val_size:]
     
     train_graphs, train_labels = zip(*[dataset[i] for i in train_idxs])
-    val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
-    test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
-    
     train_is_fractals, train_fractal_attrs = [is_fractals[i] for i in train_idxs], [fractal_attrs[i] for i in train_idxs]
-    val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
-    test_is_fractals, test_fractal_attrs = [is_fractals[i] for i in test_idxs], [fractal_attrs[i] for i in test_idxs]
     train_diameters = [diameters[i] for i in train_idxs]
+
+    val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
+    val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
     val_diameters = [diameters[i] for i in val_idxs]
-    test_diameters = [diameters[i] for i in test_idxs]
+
+    if test_size > 0:
+        test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
+        test_is_fractals, test_fractal_attrs = [is_fractals[i] for i in test_idxs], [fractal_attrs[i] for i in test_idxs]
+        test_diameters = [diameters[i] for i in test_idxs]
+    else:
+        test_graphs, test_labels, test_is_fractals, test_fractal_attrs, test_diameters = [], [], [], [], []
 
     train = GINDGL(graphs=train_graphs, labels=train_labels, is_fractal=train_is_fractals, fractal_attr=train_fractal_attrs, diameters=train_diameters)
     val = GINDGL(graphs=val_graphs, labels=val_labels, is_fractal=val_is_fractals, fractal_attr=val_fractal_attrs, diameters=val_diameters)
@@ -125,11 +127,6 @@ class GraphPredGINDataset(Dataset):
         for idx, graph in enumerate(dataset.graphs):
             if "feat" not in graph.ndata:
                 dataset.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
-
-    def process_fractal(self, dataset:GINDGL, scales:List[int]):
-        for idx in trange(len(dataset), desc="add covering mat"):
-            add_fractal_covering_matrix(dataset.graphs[idx], scales)
-        
 
     def collate(self, samples):
         graphs, labels, is_fractal, fractal_attr, diameters = map(list, zip(*samples))

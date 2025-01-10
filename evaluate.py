@@ -38,7 +38,7 @@ def evaluate_with_dataloader(
             batch_snorm_n = batch_snorm_n.to(device)
             batch_labels = batch_labels.to(device)
 
-            batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n)
+            batch_scores = model.forward(graph=batch_graphs, h=batch_h, snorm_n=batch_snorm_n)
 
             if criterion is not None:
                 batch_loss = criterion(batch_scores, batch_labels)

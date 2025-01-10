@@ -10,8 +10,7 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
-        "aug_type": "renormalization_random_center",
-        "aug_fractal_threshold": 0.95, 
+        "aug_type": "drop_node",
         "is_pretrain": true,
         "load_model": false
     },
@@ -21,18 +20,16 @@
         "val_ratio": 0.1
     }, 
     "model_params": {
-        "model": "GIN",
-        "num_layers": 4,
-        "mlp_layers": 2,
-        "hidden_dim": 128,
-        "neighbor_aggr_type": "sum",
-        "pooling_type": "sum",
-        "dropout": 0.0,
+        "model": "ResGCN", 
+        "hidden_dim": 128, 
+        "dropout": 0.0, 
+        "num_conv_layers": 3, 
+        "num_fc_layers": 2,  
+        "pooling_type": "sum", 
+        "norm_type": "both", 
+        "residual": true, 
+        "batch_norm": true, 
         "head": true, 
-        "mlp": false, 
-        "learn_eps": true,
-        "graph_norm": true,
-        "batch_norm": true,
-        "residual": true
+        "mlp": false
     }
 }

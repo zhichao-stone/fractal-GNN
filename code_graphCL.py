@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 
 from data.dataset import GraphPredGINDataset
 from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph, sim_matrix2, compute_diag_sum
-from models.gin import GIN
+from models import GIN, ResGCN
 from evaluate import evaluate_with_dataloader
 from logger import ModelLogger
 from utils import load_json
@@ -69,8 +69,8 @@ def train_epoch_contrastive_learning(
         aug_batch_snorm_n = aug_batch_snorm_n.to(device)
 
         optimizer.zero_grad()
-        ori_vector = model.forward(batch_graphs, batch_h, batch_snorm_n)
-        aug_vector = model.forward(aug_batch_graphs, aug_batch_h, aug_batch_snorm_n)
+        ori_vector = model.forward(graph=batch_graphs, h=batch_h, snorm_n=batch_snorm_n)
+        aug_vector = model.forward(graph=aug_batch_graphs, h=aug_batch_h, snorm_n=aug_batch_snorm_n)
 
         contrastive_loss = compute_contrastive_loss(ori_vector, aug_vector)
         contrastive_loss.backward()
@@ -99,7 +99,7 @@ def train_epoch_graph_classification(
         batch_labels = batch_labels.to(device)
 
         optimizer.zero_grad()
-        batch_scores = model.forward(batch_graphs, batch_h, batch_snorm_n)
+        batch_scores = model.forward(graph=batch_graphs, h=batch_h, snorm_n=batch_snorm_n)
         criterion = nn.CrossEntropyLoss()
         loss = criterion(batch_scores, batch_labels)
         loss.backward()
@@ -115,9 +115,10 @@ if __name__ == "__main__":
     # parse args
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str)
+    parser.add_argument("--gpu", type=int)
     args = parser.parse_args()
 
-    if args.config != "":
+    if args.config is not None:
         try:
             configs: dict = load_json(args.config)
             train_params: dict = configs.pop("train_params", {})
@@ -129,7 +130,9 @@ if __name__ == "__main__":
     if configs is None:
         raise Exception(f"There is error in configurations of {args.config}")
 
-    gpu_id = train_params.pop("gpu", 0)
+    gpu_id = train_params.pop("gpu", -1)
+    if args.gpu is not None:
+        gpu_id = args.gpu
     dataset_name = train_params.pop("dataset", "redditbinary")
     random_seed = train_params.pop("seed", 41)
     epochs = train_params.pop("epoch", 80)
@@ -178,8 +181,14 @@ if __name__ == "__main__":
     
     # load data
     if is_pretrain and aug_type in ["renormalization", "drop_fractal_box"]:
-        fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
-        covering_matrix = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{dataset_name}.pt"))
+        try:
+            fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
+        except:
+            fractal_results = []
+        try:
+            covering_matrix = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{dataset_name}.pt"))
+        except:
+            covering_matrix = None
     else:
         fractal_results = []
         covering_matrix = None
@@ -207,6 +216,12 @@ if __name__ == "__main__":
         model = GIN(
             input_dim=input_dim,
             num_classes=num_classes,
+            **model_params
+        )
+    elif model_name == "ResGCN":
+        model = ResGCN(
+            input_dim=input_dim, 
+            num_classes=num_classes, 
             **model_params
         )
     else:

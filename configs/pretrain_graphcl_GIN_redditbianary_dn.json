@@ -11,21 +11,20 @@
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
         "aug_type": "drop_node",
-        "aug_fractal_threshold": 0.85, 
         "is_pretrain": true,
         "load_model": false
     },
     "data_params": {
         "embed_dim": 512, 
-        "train_ratio": 0.55, 
-        "val_ratio": 0.05
+        "train_ratio": 0.9, 
+        "val_ratio": 0.1
     }, 
     "model_params": {
         "model": "GIN",
         "num_layers": 4,
         "mlp_layers": 2,
         "hidden_dim": 128,
-        "neighbor_aggr": "sum",
+        "neighbor_aggr_type": "sum",
         "pooling_type": "sum",
         "dropout": 0.0,
         "head": true,

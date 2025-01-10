@@ -168,7 +168,8 @@ class GIN(nn.Module):
     def forward(self, 
         graph: dgl.DGLGraph, 
         h: torch.Tensor, 
-        snorm_n: torch.Tensor
+        snorm_n: torch.Tensor, 
+        **kwargs
     ):
         with graph.local_scope():
             h = self.node_embeddings(h)
