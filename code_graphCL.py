@@ -180,7 +180,7 @@ if __name__ == "__main__":
     device = torch.device(f"cuda:{gpu_id}" if gpu_id >= 0 else "cpu")
     
     # load data
-    if is_pretrain and aug_type in ["renormalization", "drop_fractal_box"]:
+    if is_pretrain and aug_type in ["renormalization", "renormalization_random_center", "drop_fractal_box"]:
         try:
             fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
         except:
@@ -287,7 +287,8 @@ if __name__ == "__main__":
         )
 
     if is_pretrain:
-        train_time = 0
+
+        total_st = time.time()
         for epoch in range(current_epoch, epochs):
             st = time.time()
 
@@ -302,14 +303,15 @@ if __name__ == "__main__":
             )
 
             epoch_time = time.time() - st
-            train_time += epoch_time
 
             scheduler.step(epoch_train_loss)
-            logger.info(f"# Epoch: {epoch+1:04d} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f} s")
+            logger.info(f"# Epoch: {epoch+1:04d} , Loss: {epoch_train_loss:.4f} , Cost Time: {epoch_time:.2f} s , Totally: {time.time() - total_st:.2f} s")
 
             ### save model
             save_ckpt_path = os.path.join(save_model_dir, f"epoch_{epoch}.pkl")
             torch.save(model.state_dict(), save_ckpt_path)
+        
+        train_time = time.time() - total_st
         logger.info(f"Pre-training finished, Totally cost : {train_time:.2f} s ({train_time/60:.2f} min)")
     else:
         if test_mode:

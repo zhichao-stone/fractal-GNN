@@ -1,19 +1,19 @@
 {   
     "train_params": {
         "gpu": 7, 
-        "dataset": "redditbinary", 
+        "dataset": "proteins", 
         "seed": 41,
-        "epoch": 120,
+        "epoch": 128,
         "batch_size": 128,
         "lr": 5e-4,
         "lr_reduce_factor": 0.5,
         "lr_schedule_patience": 5,
         "min_lr": 1e-6,
         "weight_decay": 1e-6,
-        "aug_type": "drop_node",
-        "aug_fractal_threshold": 0.85, 
+        "aug_type": "renormalization_random_center", 
+        "aug_fractal_threshold": 0.95, 
         "is_pretrain": false, 
-        "test": true,
+        "test": true, 
         "load_model": true
     },
     "data_params": {

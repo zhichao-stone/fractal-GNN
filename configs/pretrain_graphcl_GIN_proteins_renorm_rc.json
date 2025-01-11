@@ -1,7 +1,7 @@
 {   
     "train_params": {
         "gpu": 7, 
-        "dataset": "redditbinary", 
+        "dataset": "proteins", 
         "seed": 41,
         "epoch": 200,
         "batch_size": 128,
@@ -10,15 +10,15 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
-        "aug_type": "renormalization_random_center",
+        "aug_type": "renormalization_random_center", 
         "aug_fractal_threshold": 0.95, 
         "is_pretrain": true,
         "load_model": false
     },
     "data_params": {
         "embed_dim": 512, 
-        "train_ratio": 0.9, 
-        "val_ratio": 0.1
+        "train_ratio": 1.0, 
+        "val_ratio": 0
     }, 
     "model_params": {
         "model": "GIN",
@@ -28,7 +28,7 @@
         "neighbor_aggr_type": "sum",
         "pooling_type": "sum",
         "dropout": 0.0,
-        "head": true, 
+        "head": true,
         "mlp": false, 
         "learn_eps": true,
         "graph_norm": true,

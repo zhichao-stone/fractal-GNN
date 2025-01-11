@@ -68,9 +68,12 @@ def split_train_val_test_GIN(
     train_is_fractals, train_fractal_attrs = [is_fractals[i] for i in train_idxs], [fractal_attrs[i] for i in train_idxs]
     train_diameters = [diameters[i] for i in train_idxs]
 
-    val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
-    val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
-    val_diameters = [diameters[i] for i in val_idxs]
+    if val_size > 0:
+        val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
+        val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
+        val_diameters = [diameters[i] for i in val_idxs]
+    else:
+        val_graphs, val_labels, val_is_fractals, val_fractal_attrs, val_diameters = [], [], [], [], []
 
     if test_size > 0:
         test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
