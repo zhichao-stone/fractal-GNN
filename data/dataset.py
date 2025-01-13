@@ -6,6 +6,7 @@ from torch.utils.data import Dataset
 import dgl
 import dgl.data as dgldata
 import numpy as np
+from sklearn.model_selection import StratifiedKFold
 
 import random
 from typing import List, Dict
@@ -33,6 +34,43 @@ class GINDGL(Dataset):
         return self.graphs[index], self.labels[index], self.is_fractal[index], self.fractal_attr[index], self.diameters[index]
 
 
+def split_into_GINDGL(
+    dataset: dgldata.GINDataset, 
+    is_fractals: List[bool], 
+    fractal_attrs: List[float], 
+    diameters: List[int], 
+    train_idxs: List[List[int]], 
+    val_idxs: List[List[int]], 
+    test_idxs: List[List[int]]
+):
+    if len(train_idxs) > 0:
+        train_graphs, train_labels = zip(*[dataset[i] for i in train_idxs])
+        train_is_fractals, train_fractal_attrs = [is_fractals[i] for i in train_idxs], [fractal_attrs[i] for i in train_idxs]
+        train_diameters = [diameters[i] for i in train_idxs]
+    else:
+        train_graphs, train_labels, train_is_fractals, train_fractal_attrs, train_diameters = [], [], [], [], []
+
+    if len(val_idxs) > 0:
+        val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
+        val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
+        val_diameters = [diameters[i] for i in val_idxs]
+    else:
+        val_graphs, val_labels, val_is_fractals, val_fractal_attrs, val_diameters = [], [], [], [], []
+
+    if len(test_idxs) > 0:
+        test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
+        test_is_fractals, test_fractal_attrs = [is_fractals[i] for i in test_idxs], [fractal_attrs[i] for i in test_idxs]
+        test_diameters = [diameters[i] for i in test_idxs]
+    else:
+        test_graphs, test_labels, test_is_fractals, test_fractal_attrs, test_diameters = [], [], [], [], []
+
+    train = GINDGL(graphs=train_graphs, labels=train_labels, is_fractal=train_is_fractals, fractal_attr=train_fractal_attrs, diameters=train_diameters)
+    val = GINDGL(graphs=val_graphs, labels=val_labels, is_fractal=val_is_fractals, fractal_attr=val_fractal_attrs, diameters=val_diameters)
+    test = GINDGL(graphs=test_graphs, labels=test_labels, is_fractal=test_is_fractals, fractal_attr=test_fractal_attrs, diameters=test_diameters)
+
+    return train, val, test
+
+
 def split_train_val_test_GIN(
     dataset: dgldata.GINDataset, 
     fractal_results: List[Dict[str, str]] = None, 
@@ -44,7 +82,6 @@ def split_train_val_test_GIN(
 
     dataset_size = len(dataset)
     train_size, val_size = int(dataset_size*train_ratio), int(dataset_size*val_ratio)
-    test_size = dataset_size - train_size - val_size
 
     if fractal_results is None or len(fractal_results) == 0:
         is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
@@ -62,32 +99,90 @@ def split_train_val_test_GIN(
 
     indexs = list(range(dataset_size))
     random.shuffle(indexs)
-    train_idxs, val_idxs, test_idxs = indexs[:train_size], indexs[train_size:train_size+val_size], indexs[train_size+val_size:]
     
-    train_graphs, train_labels = zip(*[dataset[i] for i in train_idxs])
-    train_is_fractals, train_fractal_attrs = [is_fractals[i] for i in train_idxs], [fractal_attrs[i] for i in train_idxs]
-    train_diameters = [diameters[i] for i in train_idxs]
-
-    if val_size > 0:
-        val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
-        val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
-        val_diameters = [diameters[i] for i in val_idxs]
-    else:
-        val_graphs, val_labels, val_is_fractals, val_fractal_attrs, val_diameters = [], [], [], [], []
-
-    if test_size > 0:
-        test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
-        test_is_fractals, test_fractal_attrs = [is_fractals[i] for i in test_idxs], [fractal_attrs[i] for i in test_idxs]
-        test_diameters = [diameters[i] for i in test_idxs]
-    else:
-        test_graphs, test_labels, test_is_fractals, test_fractal_attrs, test_diameters = [], [], [], [], []
-
-    train = GINDGL(graphs=train_graphs, labels=train_labels, is_fractal=train_is_fractals, fractal_attr=train_fractal_attrs, diameters=train_diameters)
-    val = GINDGL(graphs=val_graphs, labels=val_labels, is_fractal=val_is_fractals, fractal_attr=val_fractal_attrs, diameters=val_diameters)
-    test = GINDGL(graphs=test_graphs, labels=test_labels, is_fractal=test_is_fractals, fractal_attr=test_fractal_attrs, diameters=test_diameters)
+    train, val, test = split_into_GINDGL(
+        dataset=dataset, 
+        is_fractals=is_fractals, 
+        fractal_attrs=fractal_attrs, 
+        diameters=diameters, 
+        train_idxs=indexs[:train_size], 
+        val_idxs=indexs[train_size:train_size+val_size], 
+        test_idxs=indexs[train_size+val_size:]
+    )
 
     return train, val, test
 
+
+def k_fold(
+    dataset: dgldata.GINDataset, 
+    fractal_results: List[Dict[str, str]] = None, 
+    folds: int = 1, 
+    semi_split: int = 10, 
+): 
+    if folds <= 1:
+        raise Exception("Error: k-fold <= 1")
+
+    dataset_size = len(dataset)
+
+    # k-fold indices
+    train_indices, val_indices, test_indices = [], [], []
+    skf = StratifiedKFold(folds, shuffle=True)
+    labels = torch.tensor(dataset.labels)
+    for _, idxs in skf.split(torch.zeros(len(dataset)), labels):
+        test_indices.append([int(idx) for idx in idxs])
+
+    # val_indices = [test_indices[i-1] for i in range(folds)]
+    val_indices = [test_indices[i] for i in range(folds)]
+
+    if semi_split > 1:
+        skf_semi = StratifiedKFold(semi_split, shuffle=True)
+        
+    for i in range(folds):
+        train_mask = torch.ones(len(dataset), dtype=torch.uint8)
+        train_mask[test_indices[i]] = 0
+        train_mask[val_indices[i]] = 0
+        idx_train = train_mask.nonzero().view(-1)
+
+        if semi_split > 1:
+            for _, idxs in skf_semi.split(torch.zeros(idx_train.size(0)), labels[idx_train]):
+                train_idx = [int(idx) for idx in idx_train[idxs]]
+                break
+        else:
+            train_idx = [int(idx) for idx in idx_train]
+
+        train_indices.append(train_idx)
+
+    if fractal_results is None or len(fractal_results) == 0:
+        is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
+    else:
+        is_fractals, fractal_attrs, diameters = [], [], []
+        for r in fractal_results:
+            diameters.append(r["Statistics of Graph"]["Diameter"])
+            res = r["Linear Regression"]["Origin Graph"]
+            if "Can Test Fractality" in res:
+                is_fractals.append(False)
+                fractal_attrs.append(0.0)
+            else:
+                is_fractals.append(True)
+                fractal_attrs.append(res["R²"])
+
+    trains, vals, tests = [], [], []
+    for fold in range(folds):
+        train_idxs, val_idxs, test_idxs = train_indices[fold], val_indices[fold], test_indices[fold]
+        train, val, test = split_into_GINDGL(
+            dataset=dataset, 
+            is_fractals=is_fractals, 
+            fractal_attrs=fractal_attrs, 
+            diameters=diameters, 
+            train_idxs=train_idxs, 
+            val_idxs=val_idxs, 
+            test_idxs=test_idxs
+        )
+        trains.append(train)
+        vals.append(val)
+        tests.append(test)
+        
+    return trains, vals, tests
 
 
 class GraphPredGINDataset(Dataset):
@@ -98,6 +193,8 @@ class GraphPredGINDataset(Dataset):
         embed_dim: int = 768, 
         train_ratio: float = 0.55, 
         val_ratio: float = 0.05, 
+        folds: int = 1, 
+        semi_split: int = 10, 
         fractal_results: List[Dict[str, str]] = [], 
         covering_matrix: torch.Tensor = None
     ) -> None:
@@ -109,27 +206,35 @@ class GraphPredGINDataset(Dataset):
         if covering_matrix is not None:
             for idx in range(len(dataset)):
                 dataset.graphs[idx].ndata["frac_cover_mat"] = covering_matrix[idx]
+        for idx, graph in enumerate(dataset.graphs):
+            if "feat" not in graph.ndata:
+                dataset.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
 
         self.name = dataset.name
         self.num_classes = dataset.num_classes
         
-        self.train, self.val, self.test = split_train_val_test_GIN(
-            dataset=dataset, 
-            fractal_results=fractal_results, 
-            train_ratio=self.train_ratio,
-            val_ratio=self.val_ratio
-        )
+        self.trains: List[GINDGL] = []
+        self.vals: List[GINDGL] = []
+        self.tests: List[GINDGL] = []
+        if folds == 1:
+            train, val, test = split_train_val_test_GIN(
+                dataset=dataset, 
+                fractal_results=fractal_results, 
+                train_ratio=self.train_ratio,
+                val_ratio=self.val_ratio
+            )
 
-        self.process_feature(self.train, embed_dim)
-        self.process_feature(self.val, embed_dim)
-        self.process_feature(self.test, embed_dim)
-
-        print('train, test, val sizes :',len(self.train),len(self.test),len(self.val))
-
-    def process_feature(self, dataset: GINDGL, embed_dim: int):
-        for idx, graph in enumerate(dataset.graphs):
-            if "feat" not in graph.ndata:
-                dataset.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
+            print('train, test, val sizes :',len(train),len(test),len(val))
+            self.trains.append(train)
+            self.vals.append(val)
+            self.tests.append(test)
+        else:
+            self.trains, self.vals, self.tests = k_fold(
+                dataset=dataset, 
+                fractal_results=fractal_results, 
+                folds=folds, 
+                semi_split=semi_split
+            )
 
     def collate(self, samples):
         graphs, labels, is_fractal, fractal_attr, diameters = map(list, zip(*samples))

@@ -8,6 +8,7 @@ import dgl
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from data.dataset import GraphPredGINDataset
 from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph, sim_matrix2, compute_diag_sum
@@ -35,6 +36,39 @@ def compute_contrastive_loss(vec1:torch.Tensor, vec2:torch.Tensor):
     return contrastive_loss
 
 
+def load_graphcl_model(
+    model_name: str, 
+    checkpoint: dict, 
+    device: torch.device, 
+    input_dim: int, 
+    num_classes: int, 
+    **model_params
+) -> nn.Module:
+    if model_name == "GIN":
+        model = GIN(
+            input_dim=input_dim,
+            num_classes=num_classes,
+            **model_params
+        )
+    elif model_name == "ResGCN":
+        model = ResGCN(
+            input_dim=input_dim, 
+            num_classes=num_classes, 
+            **model_params
+        )
+    else:
+        raise Exception(f"Model {model_name} is not supported!")
+
+    if checkpoint is not None:
+        model_dict = model.state_dict()
+        state_dict = {k:v for k, v in checkpoint.items() if k in model_dict.keys()}
+        model.load_state_dict(state_dict)
+
+    model = model.to(device)
+
+    return model
+
+
 def train_epoch_contrastive_learning(
     model: nn.Module,
     optimizer: torch.optim.Optimizer, 
@@ -46,7 +80,7 @@ def train_epoch_contrastive_learning(
     model.train()
     epoch_loss = 0.0
 
-    for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in data_loader:
+    for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in tqdm(data_loader):
         aug_batch_graphs = dgl.unbatch(batch_graphs)
         aug_graphs_1, aug_graphs_2 = aug_renormalization_graphs(
             graphs=aug_batch_graphs, 
@@ -147,10 +181,13 @@ if __name__ == "__main__":
     is_pretrain = train_params.pop("is_pretrain", False)
     test_mode = train_params.pop("test", False)
     load_model = train_params.pop("load_model", False)
+    load_model_epoch = train_params.pop("load_model_epoch", -1)
 
     embed_dim = data_params.pop("embed_dim", 768)
     train_ratio = data_params.pop("train_ratio", 0.55)
     val_ratio = data_params.pop("val_ratio", 0.05)
+    folds = data_params.pop("folds", 1)
+    semi_split = data_params.pop("semi_split", 10)
 
     model_name = model_params.pop("model", "GIN")
 
@@ -165,6 +202,8 @@ if __name__ == "__main__":
 
     # log setting
     log_file_name = f"{str(os.path.split(args.config)[-1]).split('.')[0]}" if args.config != "" else f"GIN_{dataset_name}"
+    if folds > 1:
+        log_file_name += f"_{folds}_{semi_split}"
     if test_mode:
         log_file_name += "_test"
     logger = ModelLogger(log_file_name, "log", backupCount=7).get_logger()
@@ -178,6 +217,7 @@ if __name__ == "__main__":
 
     # device
     device = torch.device(f"cuda:{gpu_id}" if gpu_id >= 0 else "cpu")
+    logger.info(f"Device: {device}")
     
     # load data
     if is_pretrain and aug_type in ["renormalization", "renormalization_random_center", "drop_fractal_box"]:
@@ -200,6 +240,8 @@ if __name__ == "__main__":
         embed_dim=embed_dim, 
         train_ratio=train_ratio,
         val_ratio=val_ratio, 
+        folds=folds, 
+        semi_split=semi_split, 
         fractal_results=fractal_results, 
         covering_matrix=covering_matrix
     )
@@ -212,37 +254,22 @@ if __name__ == "__main__":
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)
 
-    if model_name == "GIN":
-        model = GIN(
-            input_dim=input_dim,
-            num_classes=num_classes,
-            **model_params
-        )
-    elif model_name == "ResGCN":
-        model = ResGCN(
-            input_dim=input_dim, 
-            num_classes=num_classes, 
-            **model_params
-        )
-    else:
-        raise Exception(f"Model {model_name} is not supported!")
-
     if load_model:
         load_model_path = sorted(glob.glob(save_model_dir + "/*.pkl"), key=lambda x:int(os.path.split(x)[-1].replace("epoch_", "").replace(".pkl", "")))
-        checkpoint = torch.load(load_model_path[-1])
-        model_dict = model.state_dict()
-        state_dict = {k:v for k, v in checkpoint.items() if k in model_dict.keys()}
-        model.load_state_dict(state_dict)
+        if load_model_epoch < 0:
+            checkpoint = torch.load(load_model_path[-1])
+        else:
+            checkpoint = torch.load(load_model_path[load_model_epoch])
+        
         logger.info(f"Success load pre-trained model : {load_model_path[-1]}")
         if is_pretrain:
             current_epoch = 1 + int(os.path.splitext(load_model_path[-1])[-1].replace("epoch_", "").replace(".pkl", ""))
         else:
             current_epoch = 0
     else:
+        checkpoint = None
         logger.info("Train Base Model.")
         current_epoch = 0
-
-    model = model.to(device)
 
     # training
     logger.info("=============== Train Argument ===============")
@@ -257,36 +284,38 @@ if __name__ == "__main__":
         logger.info(f"fractal threshold: {aug_fractal_threshold}")
 
     logger.info("=============== Start Training ===============")
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, 
-        mode="min", 
-        factor=lr_reduce_factor, 
-        patience=lr_schedule_patience, 
-        verbose=True
-    )
-
-    train_loader = DataLoader(
-        dataset.train, 
-        batch_size=batch_size, 
-        shuffle=True, 
-        collate_fn=dataset.collate
-    )
-    if not is_pretrain:
-        val_loader = DataLoader(
-            dataset.val, 
-            batch_size=batch_size, 
-            shuffle=False, 
-            collate_fn=dataset.collate
-        )
-        test_loader = DataLoader(
-            dataset.test, 
-            batch_size=batch_size, 
-            shuffle=False, 
-            collate_fn=dataset.collate
-        )
 
     if is_pretrain:
+        model = load_graphcl_model(model_name, checkpoint, device, input_dim, num_classes, **model_params)
+
+        optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, 
+            mode="min", 
+            factor=lr_reduce_factor, 
+            patience=lr_schedule_patience, 
+            verbose=True
+        )
+
+        train_loader = DataLoader(
+            dataset.trains[0], 
+            batch_size=batch_size, 
+            shuffle=True, 
+            collate_fn=dataset.collate
+        )
+        if not is_pretrain:
+            val_loader = DataLoader(
+                dataset.vals[0], 
+                batch_size=batch_size, 
+                shuffle=False, 
+                collate_fn=dataset.collate
+            )
+            test_loader = DataLoader(
+                dataset.tests[0], 
+                batch_size=batch_size, 
+                shuffle=False, 
+                collate_fn=dataset.collate
+            )
 
         total_st = time.time()
         for epoch in range(current_epoch, epochs):
@@ -315,31 +344,70 @@ if __name__ == "__main__":
         logger.info(f"Pre-training finished, Totally cost : {train_time:.2f} s ({train_time/60:.2f} min)")
     else:
         if test_mode:
-            best_test_acc, best_test_epoch = 0.0, 0
+            best_fold, best_test_acc, best_test_epoch = 0, 0.0, 0
 
-        for epoch in range(current_epoch, epochs):
-            epoch_train_loss, optimizer = train_epoch_graph_classification(
-                model=model,
-                optimizer=optimizer,
-                device=device, 
-                data_loader=train_loader
+        for fold in range(folds):
+            model = load_graphcl_model(model_name, checkpoint, device, input_dim, num_classes, **model_params)
+
+            optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+            scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+                optimizer, 
+                mode="min", 
+                factor=lr_reduce_factor, 
+                patience=lr_schedule_patience, 
+                verbose=True
             )
 
-            epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, criterion=nn.CrossEntropyLoss())
-            if test_mode:
-                _, epoch_test_acc = evaluate_with_dataloader(model, test_loader, device=device)
+            train_loader = DataLoader(
+                dataset.trains[fold], 
+                batch_size=batch_size, 
+                shuffle=True, 
+                collate_fn=dataset.collate
+            )
 
-            scheduler.step(epoch_val_loss)
-            if test_mode:
-                if epoch_test_acc >= best_test_acc:
-                    best_test_acc, best_test_epoch = epoch_test_acc, epoch+1
-                logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Test_Acc: {epoch_test_acc:.4f}")
+            val_loader = DataLoader(
+                dataset.vals[fold], 
+                batch_size=batch_size, 
+                shuffle=False, 
+                collate_fn=dataset.collate
+            )
+            test_loader = DataLoader(
+                dataset.tests[fold], 
+                batch_size=batch_size, 
+                shuffle=False, 
+                collate_fn=dataset.collate
+            )
+
+            logger.info(f"Train Size: {len(train_loader)} , Val Size: {len(val_loader)} , Test Size: {len(test_loader)}")
+
+            for epoch in range(epochs):
+                epoch_train_loss, optimizer = train_epoch_graph_classification(
+                    model=model,
+                    optimizer=optimizer,
+                    device=device, 
+                    data_loader=train_loader
+                )
+
+                epoch_val_loss, epoch_val_acc = evaluate_with_dataloader(model, val_loader, device=device, criterion=nn.CrossEntropyLoss())
+                if test_mode:
+                    _, epoch_test_acc = evaluate_with_dataloader(model, test_loader, device=device)
+
+                scheduler.step(epoch_val_loss)
+                if test_mode:
+                    if epoch_test_acc >= best_test_acc:
+                        best_fold, best_test_acc, best_test_epoch = fold+1, epoch_test_acc, epoch+1
+                    logger.info(f"# Fold: {fold}, Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Test_Acc: {epoch_test_acc:.4f}")
+                else:
+                    logger.info(f"# Fold: {fold}, Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
+
+            logger.info(f"=============== Fold: {fold} , Start Evaluating ===============")
+            if not test_mode:
+                _, test_acc = evaluate_with_dataloader(model, test_loader, device=device)
+                if test_acc >= best_test_acc:
+                    best_fold, best_test_acc, best_test_epoch = fold+1,  test_acc, epoch+1
+                logger.info(f"Test Accuracy: {test_acc:.4f}\n")
             else:
-                logger.info(f"# Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
+                logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n")
 
-        logger.info("=============== Start Evaluating ===============")
-        if not test_mode:
-            _, test_acc = evaluate_with_dataloader(model, test_loader, device=device)
-            logger.info(f"Test Accuracy: {test_acc:.4f}\n")
-        else:
-            logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n")
+        logger.info(f"=============== Best Experiment Results ===============")   
+        logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n\n")

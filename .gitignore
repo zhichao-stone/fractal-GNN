@@ -3,3 +3,4 @@ sh_files/
 run_graphcl_pretrain.sh
 zz_test.py
 *.xlsx
+temp_*
