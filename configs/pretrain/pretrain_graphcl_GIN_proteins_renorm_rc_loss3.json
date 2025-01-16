@@ -10,7 +10,8 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-5,
         "weight_decay": 1e-6,
-        "aug_type": "drop_node",
+        "aug_type": "renormalization_random_center", 
+        "aug_fractal_threshold": 0.95, 
         "is_pretrain": true,
         "load_model": false,
         "loss_type": 3

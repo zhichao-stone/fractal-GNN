@@ -52,7 +52,7 @@ class CLLoss3(ContrastiveLearningLoss):
         row_loss = pos_sim / (sim_matrix.sum(dim=1) - pos_sim)
         col_loss = pos_sim / (sim_matrix.sum(dim=0) - pos_sim)
 
-        contrastive_loss = - (torch.log(row_loss) + torch.log(col_loss)) / (sim_matrix.size(0))
+        contrastive_loss = - (torch.log(row_loss) + torch.log(col_loss)).mean() / 2
 
         return contrastive_loss
     
