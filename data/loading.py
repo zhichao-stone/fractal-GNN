@@ -11,10 +11,8 @@ warnings.filterwarnings("ignore")
 RAW_DIR = "/data/FinAi_Mapping_Knowledge/shizhichao/DGL_data"
 
 
-def load_citeseer_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_citeseer_data(raw_dir=RAW_DIR):
     dataset = data.citation_graph.load_citeseer(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
 
     g = dataset[0]
     num_classes = dataset.num_classes
@@ -25,11 +23,9 @@ def load_citeseer_data(raw_dir=RAW_DIR, return_origin_dataset=False):
     return g, g.ndata["feat"], g.ndata["label"], train_mask, val_mask, test_mask, num_classes
 
 
-def load_cora_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_cora_data(raw_dir=RAW_DIR):
     dataset = data.citation_graph.load_cora(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
-        
+   
     g = dataset[0]
     num_classes = dataset.num_classes
     train_mask = torch.BoolTensor(g.ndata["train_mask"])
@@ -38,10 +34,8 @@ def load_cora_data(raw_dir=RAW_DIR, return_origin_dataset=False):
     return g, g.ndata["feat"], g.ndata["label"], train_mask, val_mask, test_mask, num_classes
 
 
-def load_pubmed_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_pubmed_data(raw_dir=RAW_DIR):
     dataset = data.citation_graph.load_pubmed(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
 
     g = dataset[0]
     num_classes = dataset.num_classes
@@ -51,11 +45,9 @@ def load_pubmed_data(raw_dir=RAW_DIR, return_origin_dataset=False):
     return g, g.ndata["feat"], g.ndata["label"], train_mask, val_mask, test_mask, num_classes
 
 
-def load_reddit_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_reddit_data(raw_dir=RAW_DIR):
     dataset = data.RedditDataset(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
-        
+    
     g = dataset[0]
     num_classes = dataset.num_classes
     train_mask = torch.BoolTensor(g.ndata["train_mask"])
@@ -65,10 +57,8 @@ def load_reddit_data(raw_dir=RAW_DIR, return_origin_dataset=False):
 
 
 # link prediction
-def load_fb15k237_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_fb15k237_data(raw_dir=RAW_DIR):
     dataset = data.FB15k237Dataset(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
 
     g = dataset[0]
     num_classes = dataset.num_rels
@@ -99,10 +89,8 @@ def load_fb15k237_data(raw_dir=RAW_DIR, return_origin_dataset=False):
     return g, features, train_graph, val_graph, test_graph, num_classes
 
 
-def load_wn18_data(raw_dir=RAW_DIR, return_origin_dataset=False):
+def load_wn18_data(raw_dir=RAW_DIR):
     dataset = data.WN18Dataset(raw_dir=raw_dir)
-    if return_origin_dataset:
-        return dataset
 
     g = dataset[0]
     num_classes = dataset.num_rels
@@ -134,41 +122,39 @@ def load_wn18_data(raw_dir=RAW_DIR, return_origin_dataset=False):
 
 
 ### graph classification
-def load_gindataset_data(name:str, raw_dir=RAW_DIR, return_origin_dataset=False):
-    dataset = data.GINDataset(name=name, raw_dir=raw_dir, self_loop=False)
-    if return_origin_dataset:
-        return dataset
+def load_gindataset_data(name:str, raw_dir=RAW_DIR):
+    dataset = data.GINDataset(name=name.upper(), raw_dir=raw_dir, self_loop=False)
 
     num_classes = dataset.num_classes
     graphs, labels = zip(*[dataset[i] for i in range(len(dataset))])
     return graphs, labels, num_classes
 
-def load_mutag_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="MUTAG", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_mutag_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="MUTAG", raw_dir=raw_dir)
 
-def load_collab_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="COLLAB", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_collab_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="COLLAB", raw_dir=raw_dir)
 
-def load_imdbbinary_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="IMDBBINARY", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_imdbbinary_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="IMDBBINARY", raw_dir=raw_dir)
 
-def load_imdbmulti_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="IMDBMULTI", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_imdbmulti_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="IMDBMULTI", raw_dir=raw_dir)
 
-def load_nci1_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="NCI1", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_nci1_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="NCI1", raw_dir=raw_dir)
 
-def load_proteins_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="PROTEINS", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_proteins_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="PROTEINS", raw_dir=raw_dir)
 
-def load_ptc_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="PTC", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_ptc_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="PTC", raw_dir=raw_dir)
 
-def load_redditbinary_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="REDDITBINARY", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_redditbinary_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="REDDITBINARY", raw_dir=raw_dir)
 
-def load_redditmulti5k_data(raw_dir=RAW_DIR, return_origin_dataset=False):
-    return load_gindataset_data(name="REDDITMULTI5K", raw_dir=raw_dir, return_origin_dataset=return_origin_dataset)
+def load_redditmulti5k_data(raw_dir=RAW_DIR):
+    return load_gindataset_data(name="REDDITMULTI5K", raw_dir=raw_dir)
 
 
 LOAD_FUNCTION_MAP = {

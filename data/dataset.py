@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
 import torch
 from torch.utils.data import Dataset
 import dgl
@@ -13,7 +14,7 @@ from typing import List, Dict
 
 
 
-class GINDGL(Dataset):
+class SimpleGCDataset(Dataset):
     def __init__(self, 
         graphs: List[dgl.DGLGraph],
         labels: List[torch.Tensor],
@@ -34,8 +35,9 @@ class GINDGL(Dataset):
         return self.graphs[index], self.labels[index], self.is_fractal[index], self.fractal_attr[index], self.diameters[index]
 
 
-def split_into_GINDGL(
-    dataset: dgldata.GINDataset, 
+def split_into_SimpleGCDataset(
+    graphs: List[dgl.DGLGraph], 
+    labels: List[torch.Tensor], 
     is_fractals: List[bool], 
     fractal_attrs: List[float], 
     diameters: List[int], 
@@ -44,35 +46,36 @@ def split_into_GINDGL(
     test_idxs: List[List[int]]
 ):
     if len(train_idxs) > 0:
-        train_graphs, train_labels = zip(*[dataset[i] for i in train_idxs])
+        train_graphs, train_labels = [graphs[i] for i in train_idxs], [labels[i] for i in train_idxs]
         train_is_fractals, train_fractal_attrs = [is_fractals[i] for i in train_idxs], [fractal_attrs[i] for i in train_idxs]
         train_diameters = [diameters[i] for i in train_idxs]
     else:
         train_graphs, train_labels, train_is_fractals, train_fractal_attrs, train_diameters = [], [], [], [], []
 
     if len(val_idxs) > 0:
-        val_graphs, val_labels = zip(*[dataset[i] for i in val_idxs])
+        val_graphs, val_labels = [graphs[i] for i in val_idxs], [labels[i] for i in val_idxs]
         val_is_fractals, val_fractal_attrs = [is_fractals[i] for i in val_idxs], [fractal_attrs[i] for i in val_idxs]
         val_diameters = [diameters[i] for i in val_idxs]
     else:
         val_graphs, val_labels, val_is_fractals, val_fractal_attrs, val_diameters = [], [], [], [], []
 
     if len(test_idxs) > 0:
-        test_graphs, test_labels = zip(*[dataset[i] for i in test_idxs])
+        test_graphs, test_labels = [graphs[i] for i in test_idxs], [labels[i] for i in test_idxs]
         test_is_fractals, test_fractal_attrs = [is_fractals[i] for i in test_idxs], [fractal_attrs[i] for i in test_idxs]
         test_diameters = [diameters[i] for i in test_idxs]
     else:
         test_graphs, test_labels, test_is_fractals, test_fractal_attrs, test_diameters = [], [], [], [], []
 
-    train = GINDGL(graphs=train_graphs, labels=train_labels, is_fractal=train_is_fractals, fractal_attr=train_fractal_attrs, diameters=train_diameters)
-    val = GINDGL(graphs=val_graphs, labels=val_labels, is_fractal=val_is_fractals, fractal_attr=val_fractal_attrs, diameters=val_diameters)
-    test = GINDGL(graphs=test_graphs, labels=test_labels, is_fractal=test_is_fractals, fractal_attr=test_fractal_attrs, diameters=test_diameters)
+    train = SimpleGCDataset(graphs=train_graphs, labels=train_labels, is_fractal=train_is_fractals, fractal_attr=train_fractal_attrs, diameters=train_diameters)
+    val = SimpleGCDataset(graphs=val_graphs, labels=val_labels, is_fractal=val_is_fractals, fractal_attr=val_fractal_attrs, diameters=val_diameters)
+    test = SimpleGCDataset(graphs=test_graphs, labels=test_labels, is_fractal=test_is_fractals, fractal_attr=test_fractal_attrs, diameters=test_diameters)
 
     return train, val, test
 
 
 def split_train_val_test_GIN(
-    dataset: dgldata.GINDataset, 
+    graphs: List[dgl.DGLGraph], 
+    labels: List[torch.Tensor], 
     fractal_results: List[Dict[str, str]] = None, 
     train_ratio: float = 0.55, 
     val_ratio: float = 0.05
@@ -80,7 +83,7 @@ def split_train_val_test_GIN(
     if train_ratio + val_ratio > 1:
         raise Exception(f"Error: allocate dataset train_ratio + val_ratio = {train_ratio:.2f} + {val_ratio:.2f} = {train_ratio+val_ratio:.2f} > 1.00")
 
-    dataset_size = len(dataset)
+    dataset_size = len(graphs)
     train_size, val_size = int(dataset_size*train_ratio), int(dataset_size*val_ratio)
 
     if fractal_results is None or len(fractal_results) == 0:
@@ -100,8 +103,9 @@ def split_train_val_test_GIN(
     indexs = list(range(dataset_size))
     random.shuffle(indexs)
     
-    train, val, test = split_into_GINDGL(
-        dataset=dataset, 
+    train, val, test = split_into_SimpleGCDataset(
+        graphs=graphs, 
+        labels=labels,
         is_fractals=is_fractals, 
         fractal_attrs=fractal_attrs, 
         diameters=diameters, 
@@ -131,8 +135,8 @@ def k_fold(
     for _, idxs in skf.split(torch.zeros(len(dataset)), labels):
         test_indices.append([int(idx) for idx in idxs])
 
-    # val_indices = [test_indices[i-1] for i in range(folds)]
-    val_indices = [test_indices[i] for i in range(folds)]
+    val_indices = [test_indices[i-1] for i in range(folds)]
+    # val_indices = [test_indices[i] for i in range(folds)]
 
     if semi_split > 1:
         skf_semi = StratifiedKFold(semi_split, shuffle=True)
@@ -169,7 +173,7 @@ def k_fold(
     trains, vals, tests = [], [], []
     for fold in range(folds):
         train_idxs, val_idxs, test_idxs = train_indices[fold], val_indices[fold], test_indices[fold]
-        train, val, test = split_into_GINDGL(
+        train, val, test = split_into_SimpleGCDataset(
             dataset=dataset, 
             is_fractals=is_fractals, 
             fractal_attrs=fractal_attrs, 
@@ -185,43 +189,52 @@ def k_fold(
     return trains, vals, tests
 
 
-class GraphPredGINDataset(Dataset):
+class GraphPredDataset(Dataset):
     def __init__(self, 
         dataset_name: str, 
-        raw_dir: str, 
-        self_loop: bool = False, 
+        graphs: List[dgl.DGLGraph], 
+        labels: List[torch.Tensor], 
         embed_dim: int = 768, 
         train_ratio: float = 0.55, 
         val_ratio: float = 0.05, 
         folds: int = 1, 
         semi_split: int = 10, 
         fractal_results: List[Dict[str, str]] = [], 
-        covering_matrix: torch.Tensor = None
+        device: torch.device = torch.device("cuda")
     ) -> None:
 
-        self.train_ratio = train_ratio
-        self.val_ratio = val_ratio
+        self.device = device
+        self.name = dataset_name
 
-        dataset = dgldata.GINDataset(name=dataset_name.upper(), raw_dir=raw_dir, self_loop=self_loop)
-        if covering_matrix is not None:
-            for idx in range(len(dataset)):
-                dataset.graphs[idx].ndata["frac_cover_mat"] = covering_matrix[idx]
-        for idx, graph in enumerate(dataset.graphs):
+        ### add node features to dataset
+        feat_dir = f"data/features"
+        feat_path = os.path.join(feat_dir, f"{dataset_name.upper()}_node_features.pt")
+        if not os.path.exists(feat_dir):
+            os.makedirs(feat_dir)
+        if os.path.exists(feat_path):
+            features = torch.load(feat_path, map_location=device)
+        else:
+            features = [torch.randn(graph.number_of_nodes(), embed_dim) for graph in graphs]
+
+        for idx, graph in enumerate(graphs):
             if "feat" not in graph.ndata:
-                dataset.graphs[idx].ndata["feat"] = torch.randn(graph.number_of_nodes(), embed_dim)
-
-        self.name = dataset.name
-        self.num_classes = dataset.num_classes
+                graphs[idx].ndata["feat"] = features[idx].to(graph.device)
+            else:
+                features[idx] = graphs[idx].ndata["feat"]
+        torch.save(features, feat_path)
+        del features
         
-        self.trains: List[GINDGL] = []
-        self.vals: List[GINDGL] = []
-        self.tests: List[GINDGL] = []
+        # split train / val / test
+        self.trains: List[SimpleGCDataset] = []
+        self.vals: List[SimpleGCDataset] = []
+        self.tests: List[SimpleGCDataset] = []
         if folds == 1:
             train, val, test = split_train_val_test_GIN(
-                dataset=dataset, 
+                graphs=graphs, 
+                labels=labels, 
                 fractal_results=fractal_results, 
-                train_ratio=self.train_ratio,
-                val_ratio=self.val_ratio
+                train_ratio=train_ratio,
+                val_ratio=val_ratio
             )
 
             print('train, test, val sizes :',len(train),len(test),len(val))
@@ -230,7 +243,8 @@ class GraphPredGINDataset(Dataset):
             self.tests.append(test)
         else:
             self.trains, self.vals, self.tests = k_fold(
-                dataset=dataset, 
+                graphs=graphs, 
+                labels=labels, 
                 fractal_results=fractal_results, 
                 folds=folds, 
                 semi_split=semi_split

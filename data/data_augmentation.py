@@ -80,41 +80,41 @@ def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
     return subgraph
 
 
-def renormalization_graph(graph:dgl.DGLGraph, radius: int, device: torch.device, min_edges: int=1) -> dgl.DGLGraph:
-    if radius <= 0:
-        g = dgl.graph(graph.edges(), num_nodes=graph.number_of_nodes())
-        g.ndata["feat"] = graph.ndata["feat"]
-        return g
+# def renormalization_graph(graph:dgl.DGLGraph, radius: int, device: torch.device, min_edges: int=1) -> dgl.DGLGraph:
+#     if radius <= 0:
+#         g = dgl.graph(graph.edges(), num_nodes=graph.number_of_nodes())
+#         g.ndata["feat"] = graph.ndata["feat"]
+#         return g
 
-    num_nodes = graph.number_of_nodes()
-    center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
+#     num_nodes = graph.number_of_nodes()
+#     center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
     
-    # calculate features of supernodes
-    features = {int(c): [] for c in center_nodes}
-    for n, c in enumerate(center_nodes):
-        features[int(c)].append(graph.ndata["feat"][n])
-    supernodes_idx_dict, supernodes_features = {}, []
-    for i, (c, f) in enumerate(features.items()):
-        supernodes_features.append(torch.mean(torch.stack(f), dim=0))
-        supernodes_idx_dict[c] = i
+#     # calculate features of supernodes
+#     features = {int(c): [] for c in center_nodes}
+#     for n, c in enumerate(center_nodes):
+#         features[int(c)].append(graph.ndata["feat"][n])
+#     supernodes_idx_dict, supernodes_features = {}, []
+#     for i, (c, f) in enumerate(features.items()):
+#         supernodes_features.append(torch.mean(torch.stack(f), dim=0))
+#         supernodes_idx_dict[c] = i
 
-    # calculate supernode edges
-    num_supernodes = len(supernodes_idx_dict)
-    for idx, c in enumerate(supernodes_idx_dict.keys()):
-        supernodes_idx_dict[c] = idx
-    supernodes = [supernodes_idx_dict[int(c)] for c in center_nodes]
+#     # calculate supernode edges
+#     num_supernodes = len(supernodes_idx_dict)
+#     for idx, c in enumerate(supernodes_idx_dict.keys()):
+#         supernodes_idx_dict[c] = idx
+#     supernodes = [supernodes_idx_dict[int(c)] for c in center_nodes]
     
-    S = torch.sparse_coo_tensor(torch.tensor([supernodes, list(range(num_nodes))]), torch.ones(num_nodes), size=(num_supernodes, num_nodes)).to(device)
-    Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), torch.ones(graph.number_of_edges()), size=(num_nodes, num_nodes)).to(device)
+#     S = torch.sparse_coo_tensor(torch.tensor([supernodes, list(range(num_nodes))]), torch.ones(num_nodes), size=(num_supernodes, num_nodes)).to(device)
+#     Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), torch.ones(graph.number_of_edges()), size=(num_nodes, num_nodes)).to(device)
 
-    A = torch.matmul(torch.matmul(S, Adj), S.T).to_dense()
-    A = A - torch.diag_embed(A.diag()).to(device)
-    renorm_edges = torch.where(A.cpu() >= min_edges)
+#     A = torch.matmul(torch.matmul(S, Adj), S.T).to_dense()
+#     A = A - torch.diag_embed(A.diag()).to(device)
+#     renorm_edges = torch.where(A.cpu() >= min_edges)
 
-    renormalization_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
-    renormalization_graph.ndata["feat"] = torch.stack(supernodes_features)
+#     renormalization_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
+#     renormalization_graph.ndata["feat"] = torch.stack(supernodes_features)
 
-    return renormalization_graph
+#     return renormalization_graph
 
 
 def renormalization_graph_random_center(
@@ -134,14 +134,17 @@ def renormalization_graph_random_center(
     # cluster supernodes
     center_nodes = np.zeros(num_nodes, dtype=int)
 
+    edges = torch.stack(graph.edges())
     values = torch.ones(graph.number_of_edges())
-    Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), values, size=(num_nodes, num_nodes)).to(device)
-    N_Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), values, size=(num_nodes, num_nodes)).to(device)
+    Adj = torch.sparse_coo_tensor(edges, values, size=(num_nodes, num_nodes)).to(device)
+    # N_Adj = torch.sparse_coo_tensor(edges, values, size=(num_nodes, num_nodes)).to(device)
+    N_Adj = Adj.clone().to(device)
     for _ in range(1, radius):
         N_Adj = torch.matmul(N_Adj, Adj) + N_Adj
     N_Adj = N_Adj.to_dense()
     if radius > 1:
-        N_Adj = N_Adj.masked_fill(torch.eye(num_nodes, dtype=torch.bool).to(device), 0)
+        # N_Adj = N_Adj.masked_fill(torch.eye(num_nodes, dtype=torch.bool).to(device), 0)
+        N_Adj = N_Adj - torch.diag_embed(N_Adj.diag()).to(device)
 
     all_nodes = list(range(num_nodes))
     remaining_nodes = set(all_nodes)
@@ -150,7 +153,7 @@ def renormalization_graph_random_center(
 
     while len(remaining_nodes) > 0:
         c = random.choice(list(remaining_nodes))
-        balls = torch.where(N_Adj[c] > 0)[0].tolist()
+        balls = torch.where(N_Adj[c] > 0)[0].cpu().tolist()
         balls.append(c)
         center_nodes[balls] = num_supernodes
         remaining_nodes = remaining_nodes.difference(balls)
@@ -171,7 +174,6 @@ def renormalization_graph_random_center(
     S = torch.sparse_coo_tensor(torch.tensor([center_nodes.tolist(), all_nodes]), torch.ones(num_nodes), size=(num_supernodes, num_nodes)).to(device)
     A = torch.matmul(torch.matmul(S, Adj), S.T).to_dense()
     A = A - torch.diag_embed(A.diag()).to(device)
-    # A = A.masked_fill(torch.eye(num_supernodes, dtype=torch.bool).to(device), 0)
     renorm_edges = torch.where(A.cpu() >= min_edges)
 
     renormalization_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
@@ -202,29 +204,30 @@ def aug_renormalization_graphs(
     diameters: List[int], 
     aug_type:str, 
     aug_fractal_threshold: float, 
+    renorm_min_edges: int, 
     device: torch.device
 ):
     aug_graphs_1, aug_graphs_2 = [], []
     for i in range(len(graphs)):
         g, is_fractal, r2, diameter = graphs[i], is_fractals[i], float(fractal_attrs[i]), int(diameters[i])
-        if aug_type == "renormalization":
-            if is_fractal and r2 >= aug_fractal_threshold:
-                radius_scales = list(range(1, max(1, diameter//4)+1))
-                if len(radius_scales) >= 2:
-                    radius_1, radius_2 = random.sample(radius_scales, 2)
-                else:
-                    radius_1, radius_2 = 0, radius_scales[0]
-                aug_graphs_1.append(renormalization_graph(g, radius_1, device))
-                aug_graphs_2.append(renormalization_graph(g, radius_2, device))
-            else:
-                aug_graphs_1.append(aug_drop_node(g, 0.2))
-                aug_graphs_2.append(aug_drop_node(g, 0.2))
-        
-        elif aug_type == "renormalization_random_center":
+        # if aug_type == "renormalization":
+        #     if is_fractal and r2 >= aug_fractal_threshold:
+        #         radius_scales = list(range(1, max(1, diameter//4)+1))
+        #         if len(radius_scales) >= 2:
+        #             radius_1, radius_2 = random.sample(radius_scales, 2)
+        #         else:
+        #             radius_1, radius_2 = 0, radius_scales[0]
+        #         aug_graphs_1.append(renormalization_graph(g, radius_1, device))
+        #         aug_graphs_2.append(renormalization_graph(g, radius_2, device))
+        #     else:
+        #         aug_graphs_1.append(aug_drop_node(g, 0.2))
+        #         aug_graphs_2.append(aug_drop_node(g, 0.2))
+
+        if aug_type == "renormalization_random_center":
             if is_fractal and r2 >= aug_fractal_threshold:
                 radius = 1
-                aug_graphs_1.append(renormalization_graph_random_center(g, radius, device))
-                aug_graphs_2.append(renormalization_graph_random_center(g, radius, device))
+                aug_graphs_1.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
+                aug_graphs_2.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
             else:
                 aug_graphs_1.append(aug_drop_node(g, 0.2))
                 aug_graphs_2.append(aug_drop_node(g, 0.2))
@@ -248,21 +251,3 @@ def aug_renormalization_graphs(
             aug_graphs_2.append(aug_drop_node(g, 0.2))
         
     return aug_graphs_1, aug_graphs_2
-
-
-def sim_matrix2(ori_vector:torch.Tensor, arg_vector:torch.Tensor, temperature=0.5):
-    for i in range(len(ori_vector)):
-        sim = torch.cosine_similarity(ori_vector[i].unsqueeze(0), arg_vector, dim=1) * (1/temperature)
-        if i == 0:
-            sim_tensor = sim.unsqueeze(0)
-        else:
-            sim_tensor = torch.cat((sim_tensor, sim.unsqueeze(0)), dim=0)
-    return sim_tensor
-
-
-def compute_diag_sum(tensor:torch.Tensor):
-    num = len(tensor)
-    diag_sum = 0
-    for i in range(num):
-        diag_sum += tensor[i][i]
-    return diag_sum

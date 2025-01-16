@@ -10,9 +10,11 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from data.dataset import GraphPredGINDataset
-from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph, sim_matrix2, compute_diag_sum
+from data.loading import load_gindataset_data
+from data.dataset import GraphPredDataset
+from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph
 from models import GIN, ResGCN
+from models.loss import ContrastiveLearningLoss, CLLoss1, CLLoss2, CLLoss3
 from evaluate import evaluate_with_dataloader
 from logger import ModelLogger
 from utils import load_json
@@ -20,20 +22,6 @@ from utils import load_json
 
 DATA_RAW_DIR = "/data/FinAi_Mapping_Knowledge/shizhichao/DGL_data"
 
-
-
-def compute_contrastive_loss(vec1:torch.Tensor, vec2:torch.Tensor):
-    sim_matrix = sim_matrix2(vec1, vec2)
-    row_softmax = nn.LogSoftmax(dim=1)
-    row_softmax_matrix = - row_softmax(sim_matrix)
-    col_softmax = nn.LogSoftmax(dim=0)
-    col_softmax_matrix = - col_softmax(sim_matrix)
-
-    row_diag_sum = compute_diag_sum(row_softmax_matrix)
-    col_diag_sum = compute_diag_sum(col_softmax_matrix)
-    contrastive_loss = (row_diag_sum + col_diag_sum) / (2*len(row_softmax_matrix))
-
-    return contrastive_loss
 
 
 def load_graphcl_model(
@@ -75,7 +63,9 @@ def train_epoch_contrastive_learning(
     device: torch.device, 
     data_loader: DataLoader, 
     aug_type: str, 
-    aug_fractal_threshold: float
+    aug_fractal_threshold: float, 
+    renorm_min_edges: int, 
+    loss_fn: ContrastiveLearningLoss
 ):
     model.train()
     epoch_loss = 0.0
@@ -88,7 +78,8 @@ def train_epoch_contrastive_learning(
             fractal_attrs=batch_fractal_attrs, 
             diameters=batch_diameters, 
             aug_type=aug_type, 
-            aug_fractal_threshold=aug_fractal_threshold,
+            aug_fractal_threshold=aug_fractal_threshold, 
+            renorm_min_edges=renorm_min_edges, 
             device=device
         )
 
@@ -106,7 +97,7 @@ def train_epoch_contrastive_learning(
         ori_vector = model.forward(graph=batch_graphs, h=batch_h, snorm_n=batch_snorm_n)
         aug_vector = model.forward(graph=aug_batch_graphs, h=aug_batch_h, snorm_n=aug_batch_snorm_n)
 
-        contrastive_loss = compute_contrastive_loss(ori_vector, aug_vector)
+        contrastive_loss = loss_fn(ori_vector, aug_vector)
         contrastive_loss.backward()
         optimizer.step()
         epoch_loss += float(contrastive_loss.detach().cpu().item())
@@ -135,7 +126,7 @@ def train_epoch_graph_classification(
         optimizer.zero_grad()
         batch_scores = model.forward(graph=batch_graphs, h=batch_h, snorm_n=batch_snorm_n)
         criterion = nn.CrossEntropyLoss()
-        loss = criterion(batch_scores, batch_labels)
+        loss: torch.Tensor = criterion(batch_scores, batch_labels)
         loss.backward()
         optimizer.step()
         epoch_loss += loss.detach().cpu().item()
@@ -182,6 +173,9 @@ if __name__ == "__main__":
     test_mode = train_params.pop("test", False)
     load_model = train_params.pop("load_model", False)
     load_model_epoch = train_params.pop("load_model_epoch", -1)
+    loss_type = train_params.pop("loss_type", 1)
+    loss_temperature = train_params.pop("loss_temperature", 0.5)
+    renorm_min_edges = train_params.pop("renorm_min_edges", 1)
 
     embed_dim = data_params.pop("embed_dim", 768)
     train_ratio = data_params.pop("train_ratio", 0.55)
@@ -202,11 +196,18 @@ if __name__ == "__main__":
 
     # log setting
     log_file_name = f"{str(os.path.split(args.config)[-1]).split('.')[0]}" if args.config != "" else f"GIN_{dataset_name}"
-    if folds > 1:
-        log_file_name += f"_{folds}_{semi_split}"
-    if test_mode:
-        log_file_name += "_test"
-    logger = ModelLogger(log_file_name, "log", backupCount=7).get_logger()
+    if loss_type != 1:
+        if f"_loss{loss_type}" not in log_file_name:
+            log_file_name += f"_loss{loss_type}"
+    if not is_pretrain:
+        if folds > 1:
+            if f"_f{folds}_semi{semi_split}" not in log_file_name:
+                log_file_name += f"_{folds}_{semi_split}"
+        if test_mode:
+            if "_test" not in log_file_name:
+                log_file_name += "_test"
+
+    logger = ModelLogger(log_file_name, "log").get_logger()
     logger.info(f"Logging to {log_file_name}.log")
     logger.info("=============== Configurations ===============")
     logger.info(f"model: {model_name}")
@@ -223,34 +224,31 @@ if __name__ == "__main__":
     if is_pretrain and aug_type in ["renormalization", "renormalization_random_center", "drop_fractal_box"]:
         try:
             fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
-        except:
+        except Exception as e:
+            logger.info(e)
             fractal_results = []
-        try:
-            covering_matrix = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{dataset_name}.pt"))
-        except:
-            covering_matrix = None
     else:
         fractal_results = []
-        covering_matrix = None
 
-    dataset = GraphPredGINDataset(
-        dataset_name=dataset_name, 
-        raw_dir=DATA_RAW_DIR, 
-        self_loop=False, 
+    graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
+    dataset = GraphPredDataset(
+        graphs=graphs, 
+        labels=labels,  
         embed_dim=embed_dim, 
         train_ratio=train_ratio,
         val_ratio=val_ratio, 
         folds=folds, 
         semi_split=semi_split, 
-        fractal_results=fractal_results, 
-        covering_matrix=covering_matrix
+        fractal_results=fractal_results
     )
     input_dim = embed_dim
-    num_classes = dataset.num_classes
     logger.info(f"Load Data: {dataset_name} , input_dim={input_dim} , num_classes={num_classes}")
 
     # model
-    save_model_dir = os.path.join("./contrastive_models", model_name, f"{dataset_name}_{aug_type}")
+    model_last_dir = f"{dataset_name}_{aug_type}"
+    if loss_type != 1:
+        model_last_dir += f"_loss{loss_type}"
+    save_model_dir = os.path.join("./contrastive_models", model_name, model_last_dir)
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)
 
@@ -287,6 +285,15 @@ if __name__ == "__main__":
 
     if is_pretrain:
         model = load_graphcl_model(model_name, checkpoint, device, input_dim, num_classes, **model_params)
+        loss_fn = None
+        if loss_type == 1:
+            loss_fn = CLLoss1(temperature=loss_temperature)
+        elif loss_type == 2:
+            loss_fn = CLLoss2(temperature=loss_temperature)
+        elif loss_type == 3:
+            loss_fn = CLLoss3(temperature=loss_temperature)
+        else:
+            raise NotImplementedError()
 
         optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -328,7 +335,10 @@ if __name__ == "__main__":
                 data_loader=train_loader, 
  
                 aug_type=aug_type, 
-                aug_fractal_threshold=aug_fractal_threshold
+                aug_fractal_threshold=aug_fractal_threshold, 
+                renorm_min_edges = renorm_min_edges, 
+
+                loss_fn = loss_fn
             )
 
             epoch_time = time.time() - st

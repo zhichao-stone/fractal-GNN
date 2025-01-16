@@ -3,6 +3,9 @@
     "Max Nodes": 136,
     "Max Edges": 2498,
     "Max Diameter": 2,
+    "Average Nodes": 19.773,
+    "Average Edges": 193.062,
+    "Average Diameters": 1.861,
     "Fractal Num": 0,
     "R² Abs Distribution": {
         ">= 0.05": 0,
@@ -26,6 +29,7 @@
         ">= 0.95": 0
     },
     "Diameter Distribution": {
-        "< 5": 1000
+        ">= 1": 861,
+        ">= 2": 0
     }
 }
