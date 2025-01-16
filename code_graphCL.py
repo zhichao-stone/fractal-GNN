@@ -136,6 +136,8 @@ def train_epoch_graph_classification(
     return epoch_loss, optimizer
 
 
+
+
 if __name__ == "__main__":
     # parse args
     parser = argparse.ArgumentParser()
@@ -232,6 +234,7 @@ if __name__ == "__main__":
 
     graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
     dataset = GraphPredDataset(
+        dataset_name=dataset_name, 
         graphs=graphs, 
         labels=labels,  
         embed_dim=embed_dim, 
