@@ -20,7 +20,7 @@
     "data_params": {
         "embed_dim": 512, 
         "folds": 10, 
-        "semi_split": 10
+        "semi_split": 1
     }, 
     "model_params": {
         "model": "GIN",
@@ -28,7 +28,7 @@
         "mlp_layers": 2,
         "hidden_dim": 128,
         "neighbor_aggr_type": "sum",
-        "pooling_type": "sum",
+        "pooling_type": "mean",
         "dropout": 0.2,
         "head": true,
         "mlp": true,

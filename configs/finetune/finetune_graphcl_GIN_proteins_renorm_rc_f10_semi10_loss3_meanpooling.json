@@ -28,7 +28,7 @@
         "mlp_layers": 2,
         "hidden_dim": 128,
         "neighbor_aggr_type": "sum",
-        "pooling_type": "sum",
+        "pooling_type": "mean",
         "dropout": 0.2,
         "head": true,
         "mlp": true,

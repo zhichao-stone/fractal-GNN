@@ -186,6 +186,7 @@ if __name__ == "__main__":
     semi_split = data_params.pop("semi_split", 10)
 
     model_name = model_params.pop("model", "GIN")
+    pooling_type = model_params["pooling_type"] if "pooling_type" in model_params else "sum"
 
     # random setting
     os.environ['PYTHONHASHSEED'] = str(random_seed)
@@ -204,6 +205,9 @@ if __name__ == "__main__":
     if renorm_min_edges > 1:
         if f"_me{renorm_min_edges}" not in log_file_name:
             log_file_name += f"_me{renorm_min_edges}"
+    if pooling_type != "sum":
+        if f"_{pooling_type}pooling" not in log_file_name:
+            log_file_name += f"_{pooling_type}pooling" 
     if not is_pretrain:
         if folds > 1:
             if f"_f{folds}_semi{semi_split}" not in log_file_name:
@@ -256,6 +260,8 @@ if __name__ == "__main__":
         model_last_dir += f"_loss{loss_type}"
     if renorm_min_edges > 1:
         model_last_dir += f"_me{renorm_min_edges}"
+    if pooling_type != "sum":
+        model_last_dir += f"_{pooling_type}pooling"
     save_model_dir = os.path.join("./contrastive_models", model_name, model_last_dir)
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)

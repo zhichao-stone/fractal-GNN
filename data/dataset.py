@@ -2,10 +2,10 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import os
+import gc
 import torch
 from torch.utils.data import Dataset
 import dgl
-import dgl.data as dgldata
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 
@@ -201,19 +201,17 @@ class GraphPredDataset(Dataset):
         folds: int = 1, 
         semi_split: int = 10, 
         fractal_results: List[Dict[str, str]] = [], 
-        device: torch.device = torch.device("cuda")
     ) -> None:
 
-        self.device = device
         self.name = dataset_name
 
-        ### add node features to dataset
+        ## add node features to dataset
         feat_dir = f"data/features"
         feat_path = os.path.join(feat_dir, f"{dataset_name.upper()}_node_features.pt")
         if not os.path.exists(feat_dir):
             os.makedirs(feat_dir)
         if os.path.exists(feat_path):
-            features = torch.load(feat_path, map_location=device)
+            features = torch.load(feat_path, map_location=torch.device(graphs[0].device))
         else:
             features = [torch.randn(graph.number_of_nodes(), embed_dim) for graph in graphs]
 
@@ -224,7 +222,7 @@ class GraphPredDataset(Dataset):
                 features[idx] = graphs[idx].ndata["feat"]
         torch.save(features, feat_path)
         del features
-        
+
         # split train / val / test
         self.trains: List[SimpleGCDataset] = []
         self.vals: List[SimpleGCDataset] = []
