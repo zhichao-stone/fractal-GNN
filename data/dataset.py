@@ -118,7 +118,8 @@ def split_train_val_test_GIN(
 
 
 def k_fold(
-    dataset: dgldata.GINDataset, 
+    graphs: List[dgl.DGLGraph], 
+    labels: List[torch.Tensor],  
     fractal_results: List[Dict[str, str]] = None, 
     folds: int = 1, 
     semi_split: int = 10, 
@@ -126,13 +127,12 @@ def k_fold(
     if folds <= 1:
         raise Exception("Error: k-fold <= 1")
 
-    dataset_size = len(dataset)
-
+    dataset_size = len(graphs)
+    labels = torch.tensor(labels)
     # k-fold indices
     train_indices, val_indices, test_indices = [], [], []
     skf = StratifiedKFold(folds, shuffle=True)
-    labels = torch.tensor(dataset.labels)
-    for _, idxs in skf.split(torch.zeros(len(dataset)), labels):
+    for _, idxs in skf.split(torch.zeros(dataset_size), labels):
         test_indices.append([int(idx) for idx in idxs])
 
     val_indices = [test_indices[i-1] for i in range(folds)]
@@ -142,7 +142,7 @@ def k_fold(
         skf_semi = StratifiedKFold(semi_split, shuffle=True)
         
     for i in range(folds):
-        train_mask = torch.ones(len(dataset), dtype=torch.uint8)
+        train_mask = torch.ones(dataset_size, dtype=torch.uint8)
         train_mask[test_indices[i]] = 0
         train_mask[val_indices[i]] = 0
         idx_train = train_mask.nonzero().view(-1)
@@ -174,7 +174,8 @@ def k_fold(
     for fold in range(folds):
         train_idxs, val_idxs, test_idxs = train_indices[fold], val_indices[fold], test_indices[fold]
         train, val, test = split_into_SimpleGCDataset(
-            dataset=dataset, 
+            graphs=graphs, 
+            labels=labels, 
             is_fractals=is_fractals, 
             fractal_attrs=fractal_attrs, 
             diameters=diameters, 
@@ -194,7 +195,7 @@ class GraphPredDataset(Dataset):
         dataset_name: str, 
         graphs: List[dgl.DGLGraph], 
         labels: List[torch.Tensor], 
-        embed_dim: int = 768, 
+        embed_dim: int = 512, 
         train_ratio: float = 0.55, 
         val_ratio: float = 0.05, 
         folds: int = 1, 

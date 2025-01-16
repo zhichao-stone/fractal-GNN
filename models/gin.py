@@ -163,7 +163,7 @@ class GIN(nn.Module):
         elif self.pooling_type == 'max':
             self.pool = MaxPooling()
         else:
-            raise NotImplementedError
+            raise NotImplementedError()
 
     def forward(self, 
         graph: dgl.DGLGraph, 

@@ -201,6 +201,9 @@ if __name__ == "__main__":
     if loss_type != 1:
         if f"_loss{loss_type}" not in log_file_name:
             log_file_name += f"_loss{loss_type}"
+    if renorm_min_edges > 1:
+        if f"_me{renorm_min_edges}" not in log_file_name:
+            log_file_name += f"_me{renorm_min_edges}"
     if not is_pretrain:
         if folds > 1:
             if f"_f{folds}_semi{semi_split}" not in log_file_name:
@@ -251,6 +254,8 @@ if __name__ == "__main__":
     model_last_dir = f"{dataset_name}_{aug_type}"
     if loss_type != 1:
         model_last_dir += f"_loss{loss_type}"
+    if renorm_min_edges > 1:
+        model_last_dir += f"_me{renorm_min_edges}"
     save_model_dir = os.path.join("./contrastive_models", model_name, model_last_dir)
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)
@@ -391,7 +396,7 @@ if __name__ == "__main__":
                 collate_fn=dataset.collate
             )
 
-            logger.info(f"Train Size: {len(train_loader)} , Val Size: {len(val_loader)} , Test Size: {len(test_loader)}")
+            logger.info(f"Train Size: {len(train_loader.dataset)} , Val Size: {len(val_loader.dataset)} , Test Size: {len(test_loader.dataset)}")
 
             for epoch in range(epochs):
                 epoch_train_loss, optimizer = train_epoch_graph_classification(
