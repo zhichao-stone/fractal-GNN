@@ -376,6 +376,7 @@ if __name__ == "__main__":
         if test_mode:
             best_fold, best_test_acc, best_test_epoch = 0, 0.0, 0
 
+        test_accs = []
         for fold in range(folds):
             model = load_graphcl_model(model_name, checkpoint, device, input_dim, num_classes, **model_params)
 
@@ -410,6 +411,7 @@ if __name__ == "__main__":
 
             logger.info(f"Train Size: {len(train_loader.dataset)} , Val Size: {len(val_loader.dataset)} , Test Size: {len(test_loader.dataset)}")
 
+            fold_best_test_acc, fold_best_test_epoch = 0.0, 0
             for epoch in range(epochs):
                 epoch_train_loss, optimizer = train_epoch_graph_classification(
                     model=model,
@@ -424,8 +426,8 @@ if __name__ == "__main__":
 
                 scheduler.step(epoch_val_loss)
                 if test_mode:
-                    if epoch_test_acc >= best_test_acc:
-                        best_fold, best_test_acc, best_test_epoch = fold+1, epoch_test_acc, epoch+1
+                    if epoch_test_acc >= fold_best_test_acc:
+                        fold_best_test_acc, fold_best_test_epoch = epoch_test_acc, epoch+1
                     logger.info(f"# Fold: {fold}, Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f} | Test_Acc: {epoch_test_acc:.4f}")
                 else:
                     logger.info(f"# Fold: {fold}, Epoch: {epoch+1:04d} | Train_Loss: {epoch_train_loss:.4f} | Val_Loss: {epoch_val_loss:.4f} , Val_Acc: {epoch_val_acc:.4f}")
@@ -433,11 +435,21 @@ if __name__ == "__main__":
             logger.info(f"=============== Fold: {fold} , Start Evaluating ===============")
             if not test_mode:
                 _, test_acc = evaluate_with_dataloader(model, test_loader, device=device)
-                if test_acc >= best_test_acc:
-                    best_fold, best_test_acc, best_test_epoch = fold+1,  test_acc, epoch+1
+                fold_best_test_acc, fold_best_test_epoch = test_acc, epoch+1
                 logger.info(f"Test Accuracy: {test_acc:.4f}\n")
             else:
-                logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n")
+                logger.info(f"Best Test Accuracy: {fold_best_test_acc:.4f} , Best Test Epoch: {fold_best_test_epoch}\n")
 
-        logger.info(f"=============== Best Experiment Results ===============")   
-        logger.info(f"Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n\n")
+            test_accs.append(fold_best_test_acc)
+            if fold_best_test_acc >= best_test_acc:
+                best_fold, best_test_acc, best_test_epoch = fold+1, fold_best_test_acc, fold_best_test_epoch
+            
+
+        logger.info(f"=============== Best Experiment Results ===============")
+        logger.info(f"Test Accs of All Fold: {[round(a, 4) for a in test_accs]}")  
+        logger.info(f"Best Fold: {best_fold:2d}, Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n\n")
+        test_accs = sorted(test_accs)
+        logger.info(f"Acc Statistic: min={test_accs[0]:.4f} , max={test_accs[-1]:.4f}")
+        medium_index = int((folds-1)/2)
+        logger.info(f"Acc Statistic: medium_l={test_accs[medium_index]:.4f} , medium_r={test_accs[-medium_index]:.4f} , medium={(test_accs[medium_index]+test_accs[-medium_index])/2:.4f}")
+        logger.info(f"Average Accs of {folds} Folds: {sum(test_accs)/folds:.4f}")

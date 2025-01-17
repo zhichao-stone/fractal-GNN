@@ -11,6 +11,7 @@ import dgl
 import networkx as nx
 import numpy as np
 
+import math
 import copy
 from typing import List
 
@@ -226,6 +227,16 @@ def aug_renormalization_graphs(
         if aug_type == "renormalization_random_center":
             if is_fractal and r2 >= aug_fractal_threshold:
                 radius = 1
+                aug_graphs_1.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
+                aug_graphs_2.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
+            else:
+                aug_graphs_1.append(aug_drop_node(g, 0.2))
+                aug_graphs_2.append(aug_drop_node(g, 0.2))
+
+        elif aug_type == "renormalization_rc_rr":
+            if is_fractal and r2 >= aug_fractal_threshold:
+                radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
+                radius = random.choice(radius_scales)
                 aug_graphs_1.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
                 aug_graphs_2.append(renormalization_graph_random_center(g, radius, device, renorm_min_edges))
             else:
