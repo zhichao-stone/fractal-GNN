@@ -13,7 +13,7 @@ from tqdm import tqdm
 from data.loading import load_gindataset_data
 from data.dataset import GraphPredDataset
 from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph
-from models import GIN, ResGCN
+from models import GIN, ResGCN, GAT
 from models.loss import ContrastiveLearningLoss, CLLoss1, CLLoss2, CLLoss3
 from evaluate import evaluate_with_dataloader
 from logger import ModelLogger
@@ -40,6 +40,12 @@ def load_graphcl_model(
         )
     elif model_name == "ResGCN":
         model = ResGCN(
+            input_dim=input_dim, 
+            num_classes=num_classes, 
+            **model_params
+        )
+    elif model_name == "GAT":
+        model = GAT(
             input_dim=input_dim, 
             num_classes=num_classes, 
             **model_params
