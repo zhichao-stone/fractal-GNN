@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 from data.loading import load_gindataset_data
 from data.dataset import GraphPredDataset
-from data.data_augmentation import aug_renormalization_graphs, collate_batched_graph
+from data.data_augmentation import DataAugmentator, collate_batched_graph
 from models import GIN, ResGCN, GAT
 from models.loss import ContrastiveLearningLoss, CLLoss1, CLLoss2, CLLoss3
 from evaluate import evaluate_with_dataloader
@@ -68,9 +68,8 @@ def train_epoch_contrastive_learning(
     optimizer: torch.optim.Optimizer, 
     device: torch.device, 
     data_loader: DataLoader, 
+    data_augmentor: DataAugmentator, 
     aug_type: str, 
-    aug_fractal_threshold: float, 
-    renorm_min_edges: int, 
     loss_fn: ContrastiveLearningLoss
 ):
     model.train()
@@ -78,15 +77,12 @@ def train_epoch_contrastive_learning(
 
     for batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e, batch_is_fractal, batch_fractal_attrs, batch_diameters in tqdm(data_loader):
         aug_batch_graphs = dgl.unbatch(batch_graphs)
-        aug_graphs_1, aug_graphs_2 = aug_renormalization_graphs(
+        aug_graphs_1, aug_graphs_2 = data_augmentor.augment_graphs(
             graphs=aug_batch_graphs, 
             is_fractals=batch_is_fractal, 
             fractal_attrs=batch_fractal_attrs, 
             diameters=batch_diameters, 
-            aug_type=aug_type, 
-            aug_fractal_threshold=aug_fractal_threshold, 
-            renorm_min_edges=renorm_min_edges, 
-            device=device
+            aug_type=aug_type
         )
 
         batch_graphs, batch_snorm_n, _ = collate_batched_graph(aug_graphs_1)
@@ -184,6 +180,7 @@ if __name__ == "__main__":
     loss_type = train_params.pop("loss_type", 1)
     loss_temperature = train_params.pop("loss_temperature", 0.5)
     renorm_min_edges = train_params.pop("renorm_min_edges", 1)
+    drop_ratio = train_params.pop("drop_ratio", 0.2)
 
     embed_dim = data_params.pop("embed_dim", 768)
     train_ratio = data_params.pop("train_ratio", 0.55)
@@ -264,6 +261,8 @@ if __name__ == "__main__":
     model_last_dir = f"{dataset_name}_{aug_type}"
     if loss_type != 1:
         model_last_dir += f"_loss{loss_type}"
+    if "aug_sum" in log_file_name:
+        model_last_dir += f"_aug_sum"
     if renorm_min_edges > 1:
         model_last_dir += f"_me{renorm_min_edges}"
     if pooling_type != "sum":
@@ -344,6 +343,13 @@ if __name__ == "__main__":
                 collate_fn=dataset.collate
             )
 
+        augmentor = DataAugmentator(
+            drop_ratio=drop_ratio, 
+            aug_fractal_threshold=aug_fractal_threshold, 
+            renorm_min_edges=renorm_min_edges, 
+            device=device
+        )
+
         total_st = time.time()
         for epoch in range(current_epoch, epochs):
             st = time.time()
@@ -353,11 +359,8 @@ if __name__ == "__main__":
                 optimizer=optimizer, 
                 device=device, 
                 data_loader=train_loader, 
- 
+                data_augmentor=augmentor, 
                 aug_type=aug_type, 
-                aug_fractal_threshold=aug_fractal_threshold, 
-                renorm_min_edges = renorm_min_edges, 
-
                 loss_fn = loss_fn
             )
 
@@ -447,9 +450,9 @@ if __name__ == "__main__":
 
         logger.info(f"=============== Best Experiment Results ===============")
         logger.info(f"Test Accs of All Fold: {[round(a, 4) for a in test_accs]}")  
-        logger.info(f"Best Fold: {best_fold:2d}, Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}\n\n")
+        logger.info(f"Best Fold: {best_fold:2d}, Best Test Accuracy: {best_test_acc:.4f} , Best Test Epoch: {best_test_epoch}")
         test_accs = sorted(test_accs)
         logger.info(f"Acc Statistic: min={test_accs[0]:.4f} , max={test_accs[-1]:.4f}")
         medium_index = int((folds-1)/2)
         logger.info(f"Acc Statistic: medium_l={test_accs[medium_index]:.4f} , medium_r={test_accs[-medium_index]:.4f} , medium={(test_accs[medium_index]+test_accs[-medium_index])/2:.4f}")
-        logger.info(f"Average Accs of {folds} Folds: {sum(test_accs)/folds:.4f}")
+        logger.info(f"Average Accs of {folds} Folds: {sum(test_accs)/folds:.4f}\n\n")
