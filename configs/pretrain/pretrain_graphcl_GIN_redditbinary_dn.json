@@ -3,7 +3,7 @@
         "gpu": 7, 
         "dataset": "redditbinary", 
         "seed": 41,
-        "epoch": 200,
+        "epoch": 100,
         "batch_size": 128,
         "lr": 0.001,
         "lr_reduce_factor": 0.5,
@@ -12,7 +12,8 @@
         "weight_decay": 1e-6,
         "aug_type": "drop_node",
         "is_pretrain": true,
-        "load_model": false
+        "load_model": false, 
+        "loss_type": 1
     },
     "data_params": {
         "embed_dim": 512, 

@@ -1,6 +1,7 @@
 exp_results/
 sh_files/
 run_graphcl_pretrain.sh
-zz_test.py
+zz_*
 *.xlsx
 temp_*
+simple_data_test_graphCL.py

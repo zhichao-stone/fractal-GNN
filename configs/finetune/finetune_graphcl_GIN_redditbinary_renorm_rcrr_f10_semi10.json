@@ -1,7 +1,7 @@
 {   
     "train_params": {
         "gpu": 7, 
-        "dataset": "redditmulti5k", 
+        "dataset": "redditbinary", 
         "seed": 41,
         "epoch": 100,
         "batch_size": 128,
@@ -10,7 +10,8 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-6,
         "weight_decay": 1e-6,
-        "aug_type": "drop_node",
+        "aug_type": "renormalization_rc_rr", 
+        "aug_fractal_threshold": 0.95, 
         "is_pretrain": false, 
         "test": true, 
         "load_model": true,

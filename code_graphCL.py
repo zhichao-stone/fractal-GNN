@@ -181,6 +181,7 @@ if __name__ == "__main__":
     loss_temperature = train_params.pop("loss_temperature", 0.5)
     renorm_min_edges = train_params.pop("renorm_min_edges", 1)
     drop_ratio = train_params.pop("drop_ratio", 0.2)
+    weighted = train_params.pop("weighted", False)
 
     embed_dim = data_params.pop("embed_dim", 768)
     train_ratio = data_params.pop("train_ratio", 0.55)
@@ -210,7 +211,9 @@ if __name__ == "__main__":
             log_file_name += f"_me{renorm_min_edges}"
     if pooling_type != "sum":
         if f"_{pooling_type}pooling" not in log_file_name:
-            log_file_name += f"_{pooling_type}pooling" 
+            log_file_name += f"_{pooling_type}pooling"
+    if weighted:
+        log_file_name += "_weighted"
     if not is_pretrain:
         if folds > 1:
             if f"_f{folds}_semi{semi_split}" not in log_file_name:
@@ -243,6 +246,10 @@ if __name__ == "__main__":
         fractal_results = []
 
     graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
+    if not is_pretrain:
+        indices_path = os.path.join("./data", "indices", f"{dataset_name}_f{folds}_semi{semi_split}.json")
+    else:
+        indices_path = ""
     dataset = GraphPredDataset(
         dataset_name=dataset_name, 
         graphs=graphs, 
@@ -252,7 +259,8 @@ if __name__ == "__main__":
         val_ratio=val_ratio, 
         folds=folds, 
         semi_split=semi_split, 
-        fractal_results=fractal_results
+        fractal_results=fractal_results, 
+        indices_path=indices_path
     )
     input_dim = embed_dim
     logger.info(f"Load Data: {dataset_name} , input_dim={input_dim} , num_classes={num_classes}")
@@ -267,6 +275,8 @@ if __name__ == "__main__":
         model_last_dir += f"_me{renorm_min_edges}"
     if pooling_type != "sum":
         model_last_dir += f"_{pooling_type}pooling"
+    if weighted:
+        model_last_dir += "_weighted"
     save_model_dir = os.path.join("./contrastive_models", model_name, model_last_dir)
     if not os.path.exists(save_model_dir):
         os.makedirs(save_model_dir)
@@ -329,24 +339,12 @@ if __name__ == "__main__":
             shuffle=True, 
             collate_fn=dataset.collate
         )
-        if not is_pretrain:
-            val_loader = DataLoader(
-                dataset.vals[0], 
-                batch_size=batch_size, 
-                shuffle=False, 
-                collate_fn=dataset.collate
-            )
-            test_loader = DataLoader(
-                dataset.tests[0], 
-                batch_size=batch_size, 
-                shuffle=False, 
-                collate_fn=dataset.collate
-            )
 
         augmentor = DataAugmentator(
             drop_ratio=drop_ratio, 
             aug_fractal_threshold=aug_fractal_threshold, 
             renorm_min_edges=renorm_min_edges, 
+            weighted=weighted, 
             device=device
         )
 

@@ -17,7 +17,7 @@ from typing import List
 
 
 
-def aug_drop_node(graph:dgl.DGLGraph, drop_percent:float=0.2):
+def aug_drop_node(graph: dgl.DGLGraph, drop_percent: float = 0.2, weighted: bool = False):
     # aug_graph = copy.deepcopy(graph)
     num = graph.number_of_nodes()
     aug_graph = dgl.graph(graph.edges(), num_nodes=num)
@@ -26,10 +26,12 @@ def aug_drop_node(graph:dgl.DGLGraph, drop_percent:float=0.2):
     all_node_list = [i for i in range(num)]
     drop_node_list = random.sample(all_node_list, drop_num)
     aug_graph.remove_nodes(drop_node_list)
+    if weighted:
+        aug_graph.edata["e"] = torch.ones((aug_graph.number_of_edges(), 1), dtype=torch.float)
     return aug_graph
 
 
-def aug_drop_fractal_box(graph:dgl.DGLGraph, radius:int=2, drop_percent:float=0.2):
+def aug_drop_fractal_box(graph: dgl.DGLGraph, radius: int = 2, drop_percent: float = 0.2, weighted: bool = False):
     node_num = graph.number_of_nodes()
 
     center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
@@ -51,11 +53,13 @@ def aug_drop_fractal_box(graph:dgl.DGLGraph, radius:int=2, drop_percent:float=0.
     
     aug_graph = copy.deepcopy(graph)
     aug_graph.remove_nodes(drop_nodes)
+    if weighted:
+        aug_graph.edata["e"] = torch.ones((aug_graph.number_of_edges(), 1), dtype=torch.float)
     return aug_graph
 
 
 
-def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
+def simple_random_walk(graph: dgl.DGLGraph, weighted: bool = False) -> dgl.DGLGraph:
     G = dgl.to_networkx(graph)
     num_nodes = len(G.nodes)
 
@@ -77,6 +81,8 @@ def simple_random_walk(graph:dgl.DGLGraph) -> dgl.DGLGraph:
     subgraph.add_edges_from(visited_edges)
     subgraph = dgl.from_networkx(subgraph)
     subgraph.ndata["feat"] = torch.stack([graph.ndata["feat"][n] for n in visited_nodes])
+    if weighted:
+        subgraph.edata["e"] = torch.ones((subgraph.number_of_edges(), 1), dtype=torch.float)
 
     return subgraph
 
@@ -122,7 +128,8 @@ def renormalization_graph_random_center(
     graph:dgl.DGLGraph, 
     radius: int, 
     device: torch.device, 
-    min_edges: int = 1
+    min_edges: int = 1, 
+    weighted: bool = False
 ) -> dgl.DGLGraph:
 
     if radius <= 0:
@@ -159,8 +166,7 @@ def renormalization_graph_random_center(
         center_nodes[balls] = num_supernodes
         remaining_nodes = remaining_nodes.difference(balls)
 
-        ball_size = len(balls)
-        # supernode_size.append(ball_size)
+        # supernode_size.append(len(balls))
         num_supernodes += 1
 
         N_Adj[balls, :] = 0
@@ -178,10 +184,12 @@ def renormalization_graph_random_center(
     A = A - torch.diag_embed(A.diag()).to(device)
     renorm_edges = torch.where(A.cpu() >= min_edges)
 
-    renormalization_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
-    renormalization_graph.ndata["feat"] = supernodes_features
+    renorm_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
+    renorm_graph.ndata["feat"] = supernodes_features.to(renorm_graph.device)
+    if weighted:
+        renorm_graph.edata["e"] = A[renorm_edges].unsqueeze(-1).to(renorm_graph.device)
 
-    return renormalization_graph
+    return renorm_graph
 
 
 def collate_batched_graph(graphs:List[dgl.DGLGraph]):
@@ -205,11 +213,13 @@ class DataAugmentator:
         drop_ratio: float = 0.2, 
         aug_fractal_threshold: float = 0.95, 
         renorm_min_edges: int = 1, 
+        weighted: bool = False, 
         device: torch.device = torch.device("cuda")
     ) -> None:
         self.drop_ratio = drop_ratio
         self.aug_fractal_threshold = aug_fractal_threshold
         self.renorm_min_edges = renorm_min_edges
+        self.weighted = weighted
         self.device = device
 
         self.non_fractal_aug_types = ["drop_node", "simple_random_walk"]
@@ -229,31 +239,31 @@ class DataAugmentator:
                 if is_fractal and r2 >= self.aug_fractal_threshold:
                     if aug_type == "renormalization_random_center":
                         radius = 1
-                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges))
-                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges))
+                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                     elif aug_type == "renormalization_rc_rr":
                         radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
                         radius = random.choice(radius_scales)
-                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges))
-                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges))
+                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                     elif aug_type == "drop_fractal_box":
                         radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
                         radius = random.choice(radius_scales)
-                        aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio))
-                        aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio))
+                        aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                        aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
                     else:
                         raise NotImplementedError(f"Augmentation method {aug_type} is not supported!")
                 else:
                     # default method is drop_node
-                    aug_graphs_1.append(aug_drop_node(g, self.drop_ratio))
-                    aug_graphs_2.append(aug_drop_node(g, self.drop_ratio))
+                    aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                    aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
             else:
                 if aug_type == "drop_node":
-                    aug_graphs_1.append(aug_drop_node(g, self.drop_ratio))
-                    aug_graphs_2.append(aug_drop_node(g, self.drop_ratio))
+                    aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                    aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
                 elif aug_type == "simple_random_walk":
-                    aug_graphs_1.append(simple_random_walk(g))
-                    aug_graphs_2.append(simple_random_walk(g))
+                    aug_graphs_1.append(simple_random_walk(g, self.weighted))
+                    aug_graphs_2.append(simple_random_walk(g, self.weighted))
                 else:
                     raise NotImplementedError(f"Augmentation method {aug_type} is not supported!")
         

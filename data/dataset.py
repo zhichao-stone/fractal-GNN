@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import os
-import gc
+import json
 import torch
 from torch.utils.data import Dataset
 import dgl
@@ -34,6 +34,22 @@ class SimpleGCDataset(Dataset):
     def __getitem__(self, index):
         return self.graphs[index], self.labels[index], self.is_fractal[index], self.fractal_attr[index], self.diameters[index]
 
+
+def process_fractal_results(fractal_results: List[Dict[str, str]], dataset_size: int):
+    if fractal_results is None or len(fractal_results) == 0:
+        is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
+    else:
+        is_fractals, fractal_attrs, diameters = [], [], []
+        for r in fractal_results:
+            diameters.append(r["Statistics of Graph"]["Diameter"])
+            res = r["Linear Regression"]["Origin Graph"]
+            if "Can Test Fractality" in res:
+                is_fractals.append(False)
+                fractal_attrs.append(0.0)
+            else:
+                is_fractals.append(True)
+                fractal_attrs.append(res["R²"])
+    return is_fractals, fractal_attrs, diameters
 
 def split_into_SimpleGCDataset(
     graphs: List[dgl.DGLGraph], 
@@ -86,22 +102,11 @@ def split_train_val_test_GIN(
     dataset_size = len(graphs)
     train_size, val_size = int(dataset_size*train_ratio), int(dataset_size*val_ratio)
 
-    if fractal_results is None or len(fractal_results) == 0:
-        is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
-    else:
-        is_fractals, fractal_attrs, diameters = [], [], []
-        for r in fractal_results:
-            diameters.append(r["Statistics of Graph"]["Diameter"])
-            res = r["Linear Regression"]["Origin Graph"]
-            if "Can Test Fractality" in res:
-                is_fractals.append(False)
-                fractal_attrs.append(0.0)
-            else:
-                is_fractals.append(True)
-                fractal_attrs.append(res["R²"])
+    is_fractals, fractal_attrs, diameters = process_fractal_results(fractal_results, dataset_size)
 
     indexs = list(range(dataset_size))
     random.shuffle(indexs)
+    train_idxs, val_idxs, test_idxs = indexs[:train_size], indexs[train_size:train_size+val_size], indexs[train_size+val_size:]
     
     train, val, test = split_into_SimpleGCDataset(
         graphs=graphs, 
@@ -109,12 +114,12 @@ def split_train_val_test_GIN(
         is_fractals=is_fractals, 
         fractal_attrs=fractal_attrs, 
         diameters=diameters, 
-        train_idxs=indexs[:train_size], 
-        val_idxs=indexs[train_size:train_size+val_size], 
-        test_idxs=indexs[train_size+val_size:]
+        train_idxs=train_idxs, 
+        val_idxs=val_idxs, 
+        test_idxs=test_idxs
     )
 
-    return train, val, test
+    return train, val, test, [train_idxs], [val_idxs], [test_idxs]
 
 
 def k_fold(
@@ -130,7 +135,10 @@ def k_fold(
     dataset_size = len(graphs)
     labels = torch.tensor(labels)
     # k-fold indices
-    train_indices, val_indices, test_indices = [], [], []
+    train_indices: List[List[int]] = []
+    val_indices: List[List[int]] = []
+    test_indices: List[List[int]] = []
+
     skf = StratifiedKFold(folds, shuffle=True)
     for _, idxs in skf.split(torch.zeros(dataset_size), labels):
         test_indices.append([int(idx) for idx in idxs])
@@ -156,21 +164,11 @@ def k_fold(
 
         train_indices.append(train_idx)
 
-    if fractal_results is None or len(fractal_results) == 0:
-        is_fractals, fractal_attrs, diameters = [False for _ in range(dataset_size)], [0.0 for _ in range(dataset_size)], [0 for _ in range(dataset_size)]
-    else:
-        is_fractals, fractal_attrs, diameters = [], [], []
-        for r in fractal_results:
-            diameters.append(r["Statistics of Graph"]["Diameter"])
-            res = r["Linear Regression"]["Origin Graph"]
-            if "Can Test Fractality" in res:
-                is_fractals.append(False)
-                fractal_attrs.append(0.0)
-            else:
-                is_fractals.append(True)
-                fractal_attrs.append(res["R²"])
+    is_fractals, fractal_attrs, diameters = process_fractal_results(fractal_results, dataset_size)
 
-    trains, vals, tests = [], [], []
+    trains: List[SimpleGCDataset] = []
+    vals: List[SimpleGCDataset] = []
+    tests: List[SimpleGCDataset] = []
     for fold in range(folds):
         train_idxs, val_idxs, test_idxs = train_indices[fold], val_indices[fold], test_indices[fold]
         train, val, test = split_into_SimpleGCDataset(
@@ -187,6 +185,39 @@ def k_fold(
         vals.append(val)
         tests.append(test)
         
+    return trains, vals, tests, train_indices, val_indices, test_indices
+
+def load_train_val_test_GIN(
+    graphs: List[dgl.DGLGraph], 
+    labels: List[torch.Tensor], 
+    fractal_results: List[Dict[str, str]] = None, 
+    train_idxs: List[List[int]] = [], 
+    val_idxs: List[List[int]] = [], 
+    test_idxs: List[List[int]] = []
+):
+    assert len(train_idxs) == len(val_idxs) and len(val_idxs) == len(test_idxs)
+
+    is_fractals, fractal_attrs, diameters = process_fractal_results(fractal_results, len(graphs))
+
+    trains: List[SimpleGCDataset] = []
+    vals: List[SimpleGCDataset] = []
+    tests: List[SimpleGCDataset] = []
+
+    for i in range(len(train_idxs)):
+        train, val, test = split_into_SimpleGCDataset(
+            graphs=graphs, 
+            labels=labels, 
+            is_fractals=is_fractals, 
+            fractal_attrs=fractal_attrs, 
+            diameters=diameters, 
+            train_idxs=train_idxs[i], 
+            val_idxs=val_idxs[i], 
+            test_idxs=test_idxs[i]
+        )
+        trains.append(train)
+        vals.append(val)
+        tests.append(test)
+
     return trains, vals, tests
 
 
@@ -201,6 +232,7 @@ class GraphPredDataset(Dataset):
         folds: int = 1, 
         semi_split: int = 10, 
         fractal_results: List[Dict[str, str]] = [], 
+        indices_path: str = None
     ) -> None:
 
         self.name = dataset_name
@@ -227,27 +259,49 @@ class GraphPredDataset(Dataset):
         self.trains: List[SimpleGCDataset] = []
         self.vals: List[SimpleGCDataset] = []
         self.tests: List[SimpleGCDataset] = []
-        if folds == 1:
-            train, val, test = split_train_val_test_GIN(
-                graphs=graphs, 
-                labels=labels, 
-                fractal_results=fractal_results, 
-                train_ratio=train_ratio,
-                val_ratio=val_ratio
-            )
 
-            print('train, test, val sizes :',len(train),len(test),len(val))
-            self.trains.append(train)
-            self.vals.append(val)
-            self.tests.append(test)
+        if indices_path is None or not os.path.exists(indices_path):
+            if folds == 1:
+                train, val, test, train_indices, val_indices, test_indices = split_train_val_test_GIN(
+                    graphs=graphs, 
+                    labels=labels, 
+                    fractal_results=fractal_results, 
+                    train_ratio=train_ratio,
+                    val_ratio=val_ratio
+                )
+
+                print('train, test, val sizes :',len(train),len(test),len(val))
+                self.trains.append(train)
+                self.vals.append(val)
+                self.tests.append(test)
+            else:
+                self.trains, self.vals, self.tests, train_indices, val_indices, test_indices = k_fold(
+                    graphs=graphs, 
+                    labels=labels, 
+                    fractal_results=fractal_results, 
+                    folds=folds, 
+                    semi_split=semi_split
+                )
+            if indices_path is not None:
+                indices_dir = os.path.split(indices_path)[0]
+                if indices_dir != "" and not os.path.exists(indices_dir):
+                    os.makedirs(indices_dir)
+                indices = {"train": train_indices, "val": val_indices, "test": test_indices}
+                with open(indices_path, "w", encoding="utf-8") as fw:
+                    json.dump(indices, fw, ensure_ascii=False, indent=4)
         else:
-            self.trains, self.vals, self.tests = k_fold(
+            with open(indices_path, "r", encoding="utf-8") as fr:
+                indices = json.load(fr)
+            train_indices, val_indices, test_indices = indices["train"], indices["val"], indices["test"]
+            self.trains, self.vals, self.tests = load_train_val_test_GIN(
                 graphs=graphs, 
                 labels=labels, 
                 fractal_results=fractal_results, 
-                folds=folds, 
-                semi_split=semi_split
+                train_idxs=train_indices, 
+                val_idxs=val_indices,  
+                test_idxs=test_indices
             )
+            
 
     def collate(self, samples):
         graphs, labels, is_fractal, fractal_attr, diameters = map(list, zip(*samples))

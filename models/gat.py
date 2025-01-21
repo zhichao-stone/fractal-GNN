@@ -111,7 +111,7 @@ class GAT(nn.Module):
         self.fractal = fractal
         self.head = head
         self.mlp = mlp
-        self.is_graph_classification = (gc_pooling_type == "none")
+        self.is_graph_classification = (gc_pooling_type != "none")
         if gc_pooling_type == "sum":
             self.pool = SumPooling()
         elif gc_pooling_type == "mean":

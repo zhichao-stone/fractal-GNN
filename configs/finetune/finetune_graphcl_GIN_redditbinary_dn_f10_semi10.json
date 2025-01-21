@@ -13,7 +13,8 @@
         "aug_type": "drop_node",
         "is_pretrain": false, 
         "test": true,
-        "load_model": true
+        "load_model": true,
+        "loss_type": 1
     },
     "data_params": {
         "embed_dim": 512, 
