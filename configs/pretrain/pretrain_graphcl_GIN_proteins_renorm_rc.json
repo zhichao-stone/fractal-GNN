@@ -13,7 +13,8 @@
         "aug_type": "renormalization_random_center", 
         "aug_fractal_threshold": 0.95, 
         "is_pretrain": true,
-        "load_model": false
+        "load_model": false,
+        "loss_type": 1
     },
     "data_params": {
         "embed_dim": 512, 

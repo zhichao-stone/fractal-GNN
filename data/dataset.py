@@ -231,13 +231,14 @@ class GraphPredDataset(Dataset):
         val_ratio: float = 0.05, 
         folds: int = 1, 
         semi_split: int = 10, 
+        weighted: bool = False, 
         fractal_results: List[Dict[str, str]] = [], 
         indices_path: str = None
     ) -> None:
 
         self.name = dataset_name
 
-        ## add node features to dataset
+        # add node features to dataset
         feat_dir = f"data/features"
         feat_path = os.path.join(feat_dir, f"{dataset_name.upper()}_node_features.pt")
         if not os.path.exists(feat_dir):
@@ -254,6 +255,12 @@ class GraphPredDataset(Dataset):
                 features[idx] = graphs[idx].ndata["feat"]
         torch.save(features, feat_path)
         del features
+
+        # add edge weights to dataset
+        if weighted:
+            for idx, graph in enumerate(graphs):
+                if "e" not in graph.edata:
+                    graphs[idx].edata["e"] = torch.ones((graph.number_of_edges(), 1), dtype=torch.float)
 
         # split train / val / test
         self.trains: List[SimpleGCDataset] = []

@@ -213,7 +213,8 @@ if __name__ == "__main__":
         if f"_{pooling_type}pooling" not in log_file_name:
             log_file_name += f"_{pooling_type}pooling"
     if weighted:
-        log_file_name += "_weighted"
+        if f"_weighted" not in log_file_name:
+            log_file_name += "_weighted"
     if not is_pretrain:
         if folds > 1:
             if f"_f{folds}_semi{semi_split}" not in log_file_name:
@@ -249,7 +250,7 @@ if __name__ == "__main__":
     if not is_pretrain:
         indices_path = os.path.join("./data", "indices", f"{dataset_name}_f{folds}_semi{semi_split}.json")
     else:
-        indices_path = ""
+        indices_path = None
     dataset = GraphPredDataset(
         dataset_name=dataset_name, 
         graphs=graphs, 
@@ -259,6 +260,7 @@ if __name__ == "__main__":
         val_ratio=val_ratio, 
         folds=folds, 
         semi_split=semi_split, 
+        weighted=weighted and not is_pretrain, 
         fractal_results=fractal_results, 
         indices_path=indices_path
     )
@@ -282,6 +284,7 @@ if __name__ == "__main__":
         os.makedirs(save_model_dir)
 
     if load_model:
+        logger.info(f"Load Model from {save_model_dir}")
         load_model_path = sorted(glob.glob(save_model_dir + "/*.pkl"), key=lambda x:int(os.path.split(x)[-1].replace("epoch_", "").replace(".pkl", "")))
         if load_model_epoch < 0:
             checkpoint = torch.load(load_model_path[-1])
