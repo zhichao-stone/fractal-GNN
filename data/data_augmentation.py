@@ -187,7 +187,7 @@ def renormalization_graph_random_center(
     renorm_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
     renorm_graph.ndata["feat"] = supernodes_features.to(renorm_graph.device)
     if weighted:
-        renorm_graph.edata["e"] = A[renorm_edges].unsqueeze(-1).to(renorm_graph.device)
+        renorm_graph.edata["e"] = torch.log(A[renorm_edges].unsqueeze(-1) + 1).to(renorm_graph.device)
 
     return renorm_graph
 

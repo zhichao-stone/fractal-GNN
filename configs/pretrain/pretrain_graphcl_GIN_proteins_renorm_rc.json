@@ -3,7 +3,7 @@
         "gpu": 7, 
         "dataset": "proteins", 
         "seed": 41,
-        "epoch": 200,
+        "epoch": 100,
         "batch_size": 128,
         "lr": 0.001,
         "lr_reduce_factor": 0.5,
