@@ -1,7 +1,7 @@
 {   
     "train_params": {
         "gpu": 7, 
-        "dataset": "proteins", 
+        "dataset": "mutag", 
         "seed": 41,
         "epoch": 100,
         "batch_size": 128,

@@ -1,7 +1,7 @@
 {   
     "train_params": {
         "gpu": 7, 
-        "dataset": "ptc", 
+        "dataset": "proteins_r095", 
         "seed": 41,
         "epoch": 100,
         "batch_size": 128,
@@ -10,7 +10,7 @@
         "lr_schedule_patience": 5,
         "min_lr": 1e-6,
         "weight_decay": 1e-6,
-        "aug_type": "renormalization_rc_rr", 
+        "aug_type": "renormalization_random_center", 
         "aug_fractal_threshold": 0.95, 
         "is_pretrain": false, 
         "test": true, 

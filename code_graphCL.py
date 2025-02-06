@@ -17,7 +17,7 @@ from models import GIN, ResGCN, GAT
 from models.loss import ContrastiveLearningLoss, CLLoss1, CLLoss2, CLLoss3
 from evaluate import evaluate_with_dataloader
 from logger import ModelLogger
-from utils import load_json
+from utils import load_json, dump_json
 
 
 DATA_RAW_DIR = "/data/FinAi_Mapping_Knowledge/shizhichao/DGL_data"
@@ -237,20 +237,61 @@ if __name__ == "__main__":
     logger.info(f"Device: {device}")
     
     # load data
-    if is_pretrain and aug_type in ["renormalization", "renormalization_random_center", "drop_fractal_box"]:
+    is_load_fractal = is_pretrain and (aug_type in ["drop_fractal_box", "mix"] or "renorm" in aug_type)
+    logger.info(f"Is loading fractal results: {is_load_fractal}")
+    if is_load_fractal:
+        if dataset_name.split("_")[-1].startswith("r"):
+            postfix = dataset_name.split("_")[-1]
+            gin_name = dataset_name.replace(f"_{postfix}", "")
+        else:
+            gin_name = dataset_name
         try:
-            fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
+            fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{gin_name}.json"))
         except Exception as e:
             logger.info(e)
             fractal_results = []
     else:
         fractal_results = []
 
-    graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
+    if dataset_name.split("_")[-1].startswith("r"):
+        postfix = dataset_name.split("_")[-1]
+        gin_name = dataset_name.replace(f"_{postfix}", "")
+        all_graphs, all_labels, num_classes = load_gindataset_data(gin_name, raw_dir=DATA_RAW_DIR)
+
+        data_indices_path = os.path.join("./data", "indices", f"{dataset_name}.json")
+        if os.path.exists(data_indices_path):
+            logger.info(f"Loading fractal dataset indices from {data_indices_path}")
+            data_indices = load_json(data_indices_path)
+        else:
+            logger.info(f"Extract fractal indices from {gin_name} to {data_indices_path}")
+            if len(fractal_results) <= 0:
+                try:
+                    fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{gin_name}.json"))
+                except:
+                    raise Exception("The fractal results is None, when trying to extract fractal dataset indices.")
+            
+            data_indices = []
+            for i, r in enumerate(fractal_results):
+                res = r["Linear Regression"]["Origin Graph"]
+                if "Can Test Fractality" not in res:
+                    r2 = res["R²"]
+                    if r2 >= aug_fractal_threshold:
+                        data_indices.append(i)
+            dump_json(data_indices, data_indices_path)
+
+        graphs = [all_graphs[i] for i in data_indices]
+        labels = [all_labels[i] for i in data_indices]
+
+    else:
+        graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
+
+    logger.info(f"Length of datasets: {len(graphs)}")
+
     if not is_pretrain:
         indices_path = os.path.join("./data", "indices", f"{dataset_name}_f{folds}_semi{semi_split}.json")
     else:
         indices_path = None
+
     dataset = GraphPredDataset(
         dataset_name=dataset_name, 
         graphs=graphs, 

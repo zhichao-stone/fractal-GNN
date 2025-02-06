@@ -5,4 +5,5 @@ zz_*
 *.xlsx
 temp_*
 simple_data_test_graphCL.py
+get_fractal_datasets.py
 exp_results_statistic/

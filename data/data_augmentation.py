@@ -246,6 +246,24 @@ class DataAugmentator:
                         radius = random.choice(radius_scales)
                         aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                    elif aug_type == "renormalization_rc_r2prob":
+                        if random.random() < r2:
+                            radius = 1
+                            aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                            aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        else:
+                            aug_graphs_1.append(simple_random_walk(g, self.weighted))
+                            aug_graphs_2.append(simple_random_walk(g, self.weighted))
+                    elif aug_type == "mix":
+                        radius = 1
+                        if random.random() < 0.5:
+                            aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        else:
+                            aug_graphs_1.append(simple_random_walk(g, self.weighted))
+                        if random.random() < 0.5:
+                            aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        else:
+                            aug_graphs_2.append(simple_random_walk(g, self.weighted))
                     elif aug_type == "drop_fractal_box":
                         radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
                         radius = random.choice(radius_scales)

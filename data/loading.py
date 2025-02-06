@@ -126,7 +126,12 @@ def load_gindataset_data(name:str, raw_dir=RAW_DIR):
     dataset = data.GINDataset(name=name.upper(), raw_dir=raw_dir, self_loop=False)
 
     num_classes = dataset.num_classes
-    graphs, labels = zip(*[dataset[i] for i in range(len(dataset))])
+    graphs, labels = [], []
+    for i in range(len(dataset)):
+        graph, label = dataset[i]
+        graphs.append(graph)
+        labels.append(label)
+        
     return graphs, labels, num_classes
 
 def load_mutag_data(raw_dir=RAW_DIR):
