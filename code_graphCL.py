@@ -253,6 +253,13 @@ if __name__ == "__main__":
     else:
         fractal_results = []
 
+    if is_pretrain and (aug_type in ["renorm_drop"]):
+        postfix = dataset_name.split("_")[-1]
+        gin_name = dataset_name.replace(f"_{postfix}", "")
+        frac_cov_mats = torch.load(os.path.join("fractal_results", f"fractal_covering_matrix_{gin_name}.pt"))
+    else:
+        frac_cov_mats = None
+
     if dataset_name.split("_")[-1].startswith("r"):
         postfix = dataset_name.split("_")[-1]
         gin_name = dataset_name.replace(f"_{postfix}", "")
@@ -281,9 +288,14 @@ if __name__ == "__main__":
 
         graphs = [all_graphs[i] for i in data_indices]
         labels = [all_labels[i] for i in data_indices]
+        frac_cov_mats = [frac_cov_mats[i] for i in data_indices] if frac_cov_mats is not None else None
 
     else:
         graphs, labels, num_classes = load_gindataset_data(dataset_name, raw_dir=DATA_RAW_DIR)
+
+    if frac_cov_mats is not None:
+        for i in range(len(frac_cov_mats)):
+            graphs[i].ndata["frac_cover_mat"] = frac_cov_mats[i].to(graphs[i].device)
 
     logger.info(f"Length of datasets: {len(graphs)}")
 

@@ -87,41 +87,48 @@ def simple_random_walk(graph: dgl.DGLGraph, weighted: bool = False) -> dgl.DGLGr
     return subgraph
 
 
-# def renormalization_graph(graph:dgl.DGLGraph, radius: int, device: torch.device, min_edges: int=1) -> dgl.DGLGraph:
-#     if radius <= 0:
-#         g = dgl.graph(graph.edges(), num_nodes=graph.number_of_nodes())
-#         g.ndata["feat"] = graph.ndata["feat"]
-#         return g
+def renormalization_graph(
+    graph:dgl.DGLGraph, 
+    radius: int, 
+    device: torch.device, 
+    min_edges: int = 1, 
+    weighted: bool = False
+) -> dgl.DGLGraph:
 
-#     num_nodes = graph.number_of_nodes()
-#     center_nodes = graph.ndata["frac_cover_mat"][:, radius-1]
+    if radius <= 0:
+        g = dgl.graph(graph.edges(), num_nodes=graph.number_of_nodes())
+        g.ndata["feat"] = graph.ndata["feat"]
+        return g
+
+    num_nodes = graph.number_of_nodes()
+    center_nodes: torch.Tensor = graph.ndata["frac_cover_mat"][:, radius-1]
     
-#     # calculate features of supernodes
-#     features = {int(c): [] for c in center_nodes}
-#     for n, c in enumerate(center_nodes):
-#         features[int(c)].append(graph.ndata["feat"][n])
-#     supernodes_idx_dict, supernodes_features = {}, []
-#     for i, (c, f) in enumerate(features.items()):
-#         supernodes_features.append(torch.mean(torch.stack(f), dim=0))
-#         supernodes_idx_dict[c] = i
-
-#     # calculate supernode edges
-#     num_supernodes = len(supernodes_idx_dict)
-#     for idx, c in enumerate(supernodes_idx_dict.keys()):
-#         supernodes_idx_dict[c] = idx
-#     supernodes = [supernodes_idx_dict[int(c)] for c in center_nodes]
+    supernodes_idx_dict = {}
+    for i, c in enumerate(set(center_nodes.tolist())):
+        supernodes_idx_dict[int(c)] = i
+    num_supernodes = len(supernodes_idx_dict)
     
-#     S = torch.sparse_coo_tensor(torch.tensor([supernodes, list(range(num_nodes))]), torch.ones(num_nodes), size=(num_supernodes, num_nodes)).to(device)
-#     Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), torch.ones(graph.number_of_edges()), size=(num_nodes, num_nodes)).to(device)
+    supernodes_features = torch.zeros((num_supernodes, graph.ndata["feat"].size(-1)))
+    for n, c in enumerate(center_nodes):
+        supernodes_features[supernodes_idx_dict[int(c)]] += graph.ndata["feat"][n]
 
-#     A = torch.matmul(torch.matmul(S, Adj), S.T).to_dense()
-#     A = A - torch.diag_embed(A.diag()).to(device)
-#     renorm_edges = torch.where(A.cpu() >= min_edges)
+    # calculate supernode edges
+    supernodes = [supernodes_idx_dict[int(c)] for c in center_nodes]
+    
+    S = torch.sparse_coo_tensor(torch.tensor([supernodes, list(range(num_nodes))]), torch.ones(num_nodes), size=(num_supernodes, num_nodes)).to(device)
+    Adj = torch.sparse_coo_tensor(torch.stack(graph.edges()), torch.ones(graph.number_of_edges()), size=(num_nodes, num_nodes)).to(device)
 
-#     renormalization_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
-#     renormalization_graph.ndata["feat"] = torch.stack(supernodes_features)
+    A = torch.matmul(torch.matmul(S, Adj), S.T).to_dense()
+    A = A - torch.diag_embed(A.diag()).to(device)
+    renorm_edges = torch.where(A.cpu() >= min_edges)
 
-#     return renormalization_graph
+    renorm_graph = dgl.graph(renorm_edges, num_nodes=num_supernodes)
+    renorm_graph.ndata["feat"] = supernodes_features.to(renorm_graph.device)
+
+    if weighted:
+        renorm_graph.edata["e"] = torch.log(A[renorm_edges].unsqueeze(-1) + 1).to(renorm_graph.device)
+
+    return renorm_graph
 
 
 def renormalization_graph_random_center(
@@ -161,9 +168,11 @@ def renormalization_graph_random_center(
 
     while len(remaining_nodes) > 0:
         c = random.choice(list(remaining_nodes))
+
         balls = torch.where(N_Adj[c] > 0)[0].cpu().tolist()
         balls.append(c)
         center_nodes[balls] = num_supernodes
+
         remaining_nodes = remaining_nodes.difference(balls)
 
         # supernode_size.append(len(balls))
@@ -242,7 +251,7 @@ class DataAugmentator:
                         aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                     elif aug_type == "renormalization_rc_rr":
-                        radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
+                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
                         radius = random.choice(radius_scales)
                         aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
@@ -252,20 +261,35 @@ class DataAugmentator:
                             aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                             aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_1.append(simple_random_walk(g, self.weighted))
-                            aug_graphs_2.append(simple_random_walk(g, self.weighted))
+                            aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                            aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
                     elif aug_type == "mix":
                         radius = 1
                         if random.random() < 0.5:
                             aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_1.append(simple_random_walk(g, self.weighted))
+                            aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
                         if random.random() < 0.5:
                             aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_2.append(simple_random_walk(g, self.weighted))
+                            aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                    elif aug_type == "mix_sep":
+                        radius = 1
+                        if random.random() < 0.5:
+                            aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                            aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                        else:
+                            aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                            aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                    elif aug_type == "renorm_drop":
+                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
+                        radius = random.choice(radius_scales)
+                        aug_g1 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
+                        aug_graphs_1.append(aug_drop_node(aug_g1, self.drop_ratio, self.weighted))
+                        aug_g2 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
+                        aug_graphs_2.append(aug_drop_node(aug_g2, self.drop_ratio, self.weighted))
                     elif aug_type == "drop_fractal_box":
-                        radius_scales = list(range(1, max(1, int(math.log2(diameter/2)))))
+                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
                         radius = random.choice(radius_scales)
                         aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
                         aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))

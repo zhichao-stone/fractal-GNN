@@ -1,5 +1,6 @@
 import os
 import gc
+import math
 import argparse
 from tqdm import tqdm
 
@@ -39,7 +40,8 @@ if __name__ == "__main__":
 
     fractal_results = load_json(os.path.join("fractal_results", f"linear_regression_{dataset_name}.json"))
     diameters = [r["Statistics of Graph"]["Diameter"] for r in fractal_results]
-    scales = list(range(1, max(1, max(diameters)//3)+1))
+    # scales = list(range(1, max(1, max(diameters)//3)+1))
+    scales = list(range(1, max(2, int(math.log2(max(diameters)/2)))))
 
 
     covering_matrix = []
