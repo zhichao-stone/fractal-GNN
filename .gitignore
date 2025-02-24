@@ -1,9 +1,10 @@
 exp_results/
 sh_files/
+new_exp_results/
+exp_results_statistic/
 run_graphcl_pretrain.sh
 zz_*
 *.xlsx
 temp_*
 simple_data_test_graphCL.py
 get_fractal_datasets.py
-exp_results_statistic/

@@ -145,6 +145,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str)
     parser.add_argument("--gpu", type=int)
+    parser.add_argument("--dataset", type=str)
+    parser.add_argument("--origin_dataset", type=str)
+    parser.add_argument("--epoch", type=int)
     args = parser.parse_args()
 
     if args.config is not None:
@@ -163,8 +166,13 @@ if __name__ == "__main__":
     if args.gpu is not None:
         gpu_id = args.gpu
     dataset_name = train_params.pop("dataset", "redditbinary")
+    if args.dataset is not None:
+        dataset_name = args.dataset
+    origin_dataset_name = args.origin_dataset
     random_seed = train_params.pop("seed", 41)
     epochs = train_params.pop("epoch", 80)
+    if args.epoch is not None:
+        epochs = args.epoch
     batch_size = train_params.pop("batch_size", 128)
     lr = train_params.pop("lr", 0.001)
     lr_reduce_factor = train_params.pop("lr_reduce_factor", 0.5)
@@ -222,6 +230,8 @@ if __name__ == "__main__":
         if test_mode:
             if "_test" not in log_file_name:
                 log_file_name += "_test"
+    if origin_dataset_name is not None:
+        log_file_name = log_file_name.replace(origin_dataset_name, dataset_name)
 
     logger = ModelLogger(log_file_name, "log").get_logger()
     logger.info(f"Logging to {log_file_name}.log")
@@ -237,10 +247,12 @@ if __name__ == "__main__":
     logger.info(f"Device: {device}")
     
     # load data
-    is_load_fractal = is_pretrain and (aug_type in ["drop_fractal_box", "mix"] or "renorm" in aug_type)
+    is_load_fractal = is_pretrain and (aug_type in ["drop_fractal_box"] or "renorm" in aug_type or "mix" in aug_type)
     logger.info(f"Is loading fractal results: {is_load_fractal}")
+    split_dataset_name = dataset_name.split("_")
+    only_fractal = len(split_dataset_name) > 1 and split_dataset_name[-1].startswith("r")
     if is_load_fractal:
-        if dataset_name.split("_")[-1].startswith("r"):
+        if only_fractal:
             postfix = dataset_name.split("_")[-1]
             gin_name = dataset_name.replace(f"_{postfix}", "")
         else:
@@ -260,7 +272,7 @@ if __name__ == "__main__":
     else:
         frac_cov_mats = None
 
-    if dataset_name.split("_")[-1].startswith("r"):
+    if only_fractal:
         postfix = dataset_name.split("_")[-1]
         gin_name = dataset_name.replace(f"_{postfix}", "")
         all_graphs, all_labels, num_classes = load_gindataset_data(gin_name, raw_dir=DATA_RAW_DIR)

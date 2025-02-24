@@ -245,34 +245,25 @@ class DataAugmentator:
         for i in range(len(graphs)):
             g, is_fractal, r2, diameter = graphs[i], is_fractals[i], fractal_attrs[i], diameters[i]
             if aug_type not in self.non_fractal_aug_types:
-                if is_fractal and r2 >= self.aug_fractal_threshold:
-                    if aug_type == "renormalization_random_center":
-                        radius = 1
-                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
-                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
-                    elif aug_type == "renormalization_rc_rr":
-                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
-                        radius = random.choice(radius_scales)
-                        aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
-                        aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
-                    elif aug_type == "renormalization_rc_r2prob":
+                if aug_type in ["renormalization_rc_r2prob", "mix", "mix_sep"]:
+                    if aug_type == "renormalization_rc_r2prob":
                         if random.random() < r2:
                             radius = 1
                             aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                             aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
-                            aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                            aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                            aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
                     elif aug_type == "mix":
                         radius = 1
                         if random.random() < 0.5:
                             aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                            aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
                         if random.random() < 0.5:
                             aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
                         else:
-                            aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                            aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
                     elif aug_type == "mix_sep":
                         radius = 1
                         if random.random() < 0.5:
@@ -281,24 +272,35 @@ class DataAugmentator:
                         else:
                             aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
                             aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
-                    elif aug_type == "renorm_drop":
-                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
-                        radius = random.choice(radius_scales)
-                        aug_g1 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
-                        aug_graphs_1.append(aug_drop_node(aug_g1, self.drop_ratio, self.weighted))
-                        aug_g2 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
-                        aug_graphs_2.append(aug_drop_node(aug_g2, self.drop_ratio, self.weighted))
-                    elif aug_type == "drop_fractal_box":
-                        radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
-                        radius = random.choice(radius_scales)
-                        aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
-                        aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
-                    else:
-                        raise NotImplementedError(f"Augmentation method {aug_type} is not supported!")
                 else:
-                    # default method is drop_node
-                    aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
-                    aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                    if is_fractal and r2 >= self.aug_fractal_threshold:
+                        if aug_type == "renormalization_random_center":
+                            radius = 1
+                            aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                            aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        elif aug_type == "renormalization_rc_rr":
+                            radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
+                            radius = random.choice(radius_scales)
+                            aug_graphs_1.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                            aug_graphs_2.append(renormalization_graph_random_center(g, radius, self.device, self.renorm_min_edges, self.weighted))
+                        elif aug_type == "renorm_drop":
+                            radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
+                            radius = random.choice(radius_scales)
+                            aug_g1 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
+                            aug_graphs_1.append(aug_drop_node(aug_g1, self.drop_ratio, self.weighted))
+                            aug_g2 = renormalization_graph(g, radius, self.device, self.renorm_min_edges, self.weighted)
+                            aug_graphs_2.append(aug_drop_node(aug_g2, self.drop_ratio, self.weighted))
+                        elif aug_type == "drop_fractal_box":
+                            radius_scales = list(range(1, max(2, int(math.log2(diameter/2)))))
+                            radius = random.choice(radius_scales)
+                            aug_graphs_1.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                            aug_graphs_2.append(aug_drop_fractal_box(g, radius, self.drop_ratio, self.weighted))
+                        else:
+                            raise NotImplementedError(f"Augmentation method {aug_type} is not supported!")
+                    else:
+                        # default method is drop_node
+                        aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))
+                        aug_graphs_2.append(aug_drop_node(g, self.drop_ratio, self.weighted))
             else:
                 if aug_type == "drop_node":
                     aug_graphs_1.append(aug_drop_node(g, self.drop_ratio, self.weighted))

@@ -243,6 +243,7 @@ class GraphPredDataset(Dataset):
         feat_path = os.path.join(feat_dir, f"{dataset_name.upper()}_node_features.pt")
         if not os.path.exists(feat_dir):
             os.makedirs(feat_dir)
+        print(f"Load Node features from {feat_path}")
         if os.path.exists(feat_path):
             features = torch.load(feat_path, map_location=torch.device(graphs[0].device))
         else:
